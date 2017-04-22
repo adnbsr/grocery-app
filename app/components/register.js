@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Text, StyleSheet, Dimensions} from 'react-native'
+import {View, Text, StyleSheet, Dimensions, AsyncStorage} from 'react-native'
 
 export default class Regiter extends Component {
 
@@ -19,12 +19,33 @@ export default class Regiter extends Component {
           alignItems: 'flex-end',
           alignSelf: 'flex-end'
         }}>
-          <Text style={styles.signup}>Kayıt Ol</Text>
-          <Text style={[styles.signup, styles.login]}>Giriş Yap</Text>
+          <Text style={styles.signup} onPress={this._onSignup}>Kayıt Ol</Text>
+          <Text style={[styles.signup, styles.login]} onPress={this._onLogin}>Giriş Yap</Text>
         </View>
       </View>
     )
   }
+
+  _onSignup = () => {
+    console.log("signup!");
+    this._changeUserLoginState(true)
+  }
+
+  _onLogin = () => {
+    console.log("login!");
+    this._changeUserLoginState(false)
+  }
+
+
+  _changeUserLoginState = async (isUserLoggedIn) => {
+    try {
+        await AsyncStorage.setItem('userLoggedIn', `${isUserLoggedIn}`)
+        console.log(`Saving userLoggedIn as ${isUserLoggedIn}`);
+    } catch (e) {
+
+    }
+  }
+
 
 }
 
