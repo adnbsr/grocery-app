@@ -8,7 +8,7 @@ registerScreens()
 
 Navigation.startSingleScreenApp({
   screen : {
-    screen : 'sepetim.Register',
-    title : 'Register'
+    screen : 'sepetim.Home',
+    title : 'Home'
   }
 })
