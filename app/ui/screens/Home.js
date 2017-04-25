@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => {
-    return {products: state.products}
+    return {products: state.product.all}
 }
 
 export default connect(mapStateToProps)(Home)

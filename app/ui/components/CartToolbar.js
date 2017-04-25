@@ -2,20 +2,26 @@ import React from 'react'
 import {View, Text, StyleSheet} from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
-const CartToolbar = ({cartSize}) => {
+class CartToolbar extends React.Component {
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>
-        Sepettekiler
-      </Text>
-      <FontAwesome.Button style={styles.size} name="shopping-basket" backgroundColor="#F44336">
-        <Text style={{
-          color: 'white'
-        }}>{cartSize}</Text>
-      </FontAwesome.Button>
-    </View>
-  )
+  props: {
+    cartSize: string
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>
+          Sepettekiler
+        </Text>
+        <FontAwesome.Button style={styles.size} name="shopping-basket" backgroundColor="#F44336">
+          <Text style={{
+            color: 'white'
+          }}>{this.props.cartSize}</Text>
+        </FontAwesome.Button>
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
@@ -40,9 +46,5 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   }
 })
-
-CartToolbar.propTypes = {
-  cartSize: React.PropTypes.number.isRequired
-}
 
 export default CartToolbar

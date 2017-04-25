@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react'
 import {Text, View, ListView, StyleSheet} from 'react-native'
 import CartToolbar from '../components/CartToolbar'
@@ -6,34 +8,58 @@ import {connect} from 'react-redux'
 
 class Cart extends React.Component {
 
+  props: {
+    data : Array<Object>
+  }
+
+  state: {
+    dataSource: ListView.DataSource
+  }
+
+  static defaultProps = {
+    data : []
+  }
+
   constructor(props) {
     super(props)
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     })
-    this.dataSource = ds.cloneWithRows([])
-
+    this.state = {
+      getRowData: (dataBlob, sid, rid,) => dataBlob[sid][rid],
+      dataSource: ds.cloneWithRows(this.props.data)
+    }
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <CartToolbar cartSize={this.props.cartItems.length}/>
-        <ListView dataSource={this.dataSource} renderRow={this.renderRow} enableEmptySections={true}/>
+        <CartToolbar cartSize={this.props.data.length}/>
+        <ListView dataSource={this.state.dataSource} renderRow={this.renderRow} enableEmptySections={true}/>
       </View>
     );
   }
 
-  renderRow(cartItem) {
-    return (<CartListItem title={cartItem}/>)
+  renderRow(row: Object, section: number) {
+    return (<CartListItem title="adnan"/>)
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    const ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2
-    })
-    this.dataSource = ds.cloneWithRows(nextProps.cartItems)
+  componentWillReceiveProps(nextProps) {
+    if (this.props.data !== nextProps.data) {
+      this.setState({
+        dataSource: cloneWithRows(this.state.dataSource, nextProps.data)
+      })
+    }
   }
+}
+
+const cloneWithRows = (ds: ListView.DataSource, data: Array<Object>) => {
+
+  if (!data) {
+    return ds.cloneWithRows([])
+  }
+
+  return ds.cloneWithRows(data)
 }
 
 const styles = StyleSheet.create({
@@ -46,7 +72,7 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state, ownProps) => {
-  return {cartItems: state.cartItems}
+  return {data: state.cart.items}
 }
 
 export default connect(mapStateToProps)(Cart)

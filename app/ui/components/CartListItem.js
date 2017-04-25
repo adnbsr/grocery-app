@@ -1,15 +1,28 @@
+// @flow
+
 import React from 'react'
 import {View, Text, StyleSheet} from 'react-native'
+import Parse from 'parse/react-native'
 
-const CartListItem = ({title}) => {
+class CartListItem extends React.Component {
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>
-        {title}
-      </Text>
-    </View>
-  )
+  props: {
+    title: string
+  }
+
+  static propTypes = {
+    title: React.PropTypes.string.isRequired
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>
+          {this.props.title}
+        </Text>
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
@@ -26,12 +39,6 @@ const styles = StyleSheet.create({
       fontSize: 14,
       textAlign: 'center'
     }
-
 })
-
-
-// CartListItem.propTypes = {
-//   title: React.PropTypes.string.isRequired
-// }
 
 export default CartListItem
