@@ -8,32 +8,45 @@ import {
   Button
 } from 'react-native'
 import CartListItem from '../components/CartListItem'
+import SearchBarHolder from '../components/SearchBarHolder'
+import CartBottomBar from '../components/CartBottomBar'
 import {IconsLoaded, IconsMap} from '../../utils/icons'
 import {connect} from 'react-redux'
 import {addToCart,fetchProducts} from '../../actions'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 
-const ds = new ListView.DataSource({
-  rowHasChanged: (r1, r2) => r1 !== r2
-})
-
 class Home extends React.Component {
+
+  state: {
+    dataSource: ListView.DataSource
+  }
+
+  props: {
+    data: Array<Object>
+  }
+
+  static defaultProps = {
+    data:  []
+  }
 
   constructor(props) {
     super(props)
+    const ds = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1 !== r2
+    })
 
     this.state = {
-      counter: 0
+      dataSource : ds.cloneWithRows(this.props.data)
     }
-
-    this.dataSource = ds.cloneWithRows([])
 
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     this._renderRightNavButtons()
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    this.dataSource = ds.cloneWithRows(nextProps.products)
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      dataSource : this.state.dataSource.cloneWithRows(nextProps.data)
+    })
   }
 
   _renderRightNavButtons() {
@@ -55,22 +68,23 @@ class Home extends React.Component {
 
     return (
       <View style={styles.container}>
-        <Text>{this.state.counter}</Text>
+        <SearchBarHolder goToSearchView={this.goToSearchView.bind(this)}/>
         <Button title="Fetch Items from Parse Server" onPress={this.fetchProducts.bind(this)}/>
         <MaterialIcon.Button name="add-shopping-cart" backgroundColor="#000000" onPress={this._onButtonPress.bind(this)}>
-          Sepete Ekle
+          Sepet
         </MaterialIcon.Button>
         <ListView
           style={styles.list}
           enableEmptySections={true}
-          dataSource={this.dataSource}
+          dataSource={this.state.dataSource}
           renderRow={this.renderRow}/>
+          <CartBottomBar goToCart= {() => {console.log('Melih');}}/>
       </View>
     )
   }
 
   renderRow(row){
-    return <CartListItem title={row.id} />
+    return <CartListItem title={row.get('name')} id={row.id}/>
   }
 
   onNavigatorEvent(event) {
@@ -102,6 +116,14 @@ class Home extends React.Component {
     this.props.dispatch(fetchProducts())
   }
 
+  goToSearchView(){
+    this.props.navigator.push({
+      screen: 'sepetim.Search',
+      animated: true,
+      backButtonHidden: false
+    })
+  }
+
 }
 
 const styles = StyleSheet.create({
@@ -114,7 +136,8 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => {
-    return {products: state.product.all}
+    console.log(state);
+    return {data: state.product.all}
 }
 
 export default connect(mapStateToProps)(Home)

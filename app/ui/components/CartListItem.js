@@ -7,11 +7,13 @@ import Parse from 'parse/react-native'
 class CartListItem extends React.Component {
 
   props: {
-    title: string
+    title: string,
+    id: string
   }
 
   static propTypes = {
-    title: React.PropTypes.string.isRequired
+    title: React.PropTypes.string.isRequired,
+    id: React.PropTypes.string
   }
 
   render() {
@@ -19,6 +21,10 @@ class CartListItem extends React.Component {
       <View style={styles.container}>
         <Text style={styles.title}>
           {this.props.title}
+        </Text>
+
+        <Text style={styles.title}>
+          {this.props.id}
         </Text>
       </View>
     )
@@ -32,7 +38,7 @@ const styles = StyleSheet.create({
       borderRadius: 4,
       backgroundColor: '#EEEEEE',
       height: 56,
-      flexDirection: 'row',
+      flexDirection: 'column',
       justifyContent: 'center'
     },
     title: {

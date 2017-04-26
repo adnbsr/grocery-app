@@ -8,7 +8,8 @@ const icons = {
   "plus": [Ionicons, 'md-add', 32, '#FFFFFF'],
   "camera": [Evilicons, 'camera', 32, '#FFFFFF'],
   'cart': [Evilicons, 'cart', 32, '#FFFFFF'],
-  'add_to_cart' : [MaterialIcons, 'add-shopping-cart', 32, '#000000']
+  'add_to_cart' : [MaterialIcons, 'add-shopping-cart', 32, '#000000'],
+  'add' : [MaterialIcons, 'add', 32, '#FFFFFF']
 };
 
 const IconsMap = {};

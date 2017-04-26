@@ -13,7 +13,9 @@ const navigatorStyle = {
   statusBarColor: '#F44336',
   navBarBackgroundColor: '#F44336',
   navBarTextColor: 'white',
-  navBarButtonColor: 'white'
+  navBarButtonColor: 'white',
+  navBarNoBorder: true
+
 }
 
 const App = () => {
