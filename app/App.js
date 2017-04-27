@@ -10,8 +10,8 @@ import Parse from 'parse/react-native'
 registerScreens(configureStore(appReducer), Provider)
 
 const navigatorStyle = {
-  statusBarColor: '#F44336',
-  navBarBackgroundColor: '#F44336',
+    statusBarColor: '#F44336',
+    navBarBackgroundColor: '#F44336',
   navBarTextColor: 'white',
   navBarButtonColor: 'white',
   navBarNoBorder: true
@@ -29,6 +29,9 @@ const App = () => {
       drawer: {
         right: {
           screen: 'sepetim.Cart'
+        },
+        left: {
+          screen: 'sepetim.Drawer'
         }
       }
     })
