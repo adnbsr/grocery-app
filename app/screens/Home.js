@@ -1,3 +1,6 @@
+// @flow
+'use strict';
+
 import React from 'react'
 import {
     View,
@@ -5,15 +8,20 @@ import {
     StyleSheet,
     AsyncStorage,
     ListView,
-    Button
+    Button,
+    Platform,
+    TextInput
 } from 'react-native'
 import CartListItem from '../components/CartListItem'
+import ProductItem from '../components/ProductItem'
 import SearchBarHolder from '../components/SearchBarHolder'
 import CartBottomBar from '../components/CartBottomBar'
-import {IconsLoaded, IconsMap} from '../../utils/icons'
+import {IconsLoaded, IconsMap} from '../utils/icons'
 import {connect} from 'react-redux'
-import {addToCart, fetchProducts} from '../../actions'
+import {addToCart, fetchProducts, searchProducts} from '../actions/index'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
+
+import type {Product} from '../types'
 
 
 class Home extends React.Component {
@@ -23,11 +31,18 @@ class Home extends React.Component {
     }
 
     props: {
-        data: Array<Object>
+        data: Array<Product>,
+        navigator: any,
+        quantity: number
     }
 
     static defaultProps = {
-        data: []
+        data: [],
+        quantity: 0
+    }
+
+    static navigatorStyle = {
+        navBarNoBorder: true
     }
 
     constructor(props) {
@@ -40,6 +55,7 @@ class Home extends React.Component {
             dataSource: ds.cloneWithRows(this.props.data)
         }
 
+        this.renderRow = this.renderRow.bind(this)
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
         this.renderNavigationBarButtons()
     }
@@ -54,33 +70,53 @@ class Home extends React.Component {
 
         return (
             <View style={styles.container}>
-                <SearchBarHolder goToSearchView={this.goToSearchView.bind(this)}/>
-                <Button title="Fetch Items from Parse Server" onPress={this.fetchProducts.bind(this)}/>
-                <MaterialIcon.Button name="add-shopping-cart" backgroundColor="#000000"
-                                     onPress={this._addToCart.bind(this)}>
-                    Sepet
-                </MaterialIcon.Button>
+                <SearchBarHolder search={(keyword) => this._searchProducts(keyword)}/>
+
                 <ListView
                     style={styles.list}
                     enableEmptySections={true}
                     dataSource={this.state.dataSource}
                     renderRow={this.renderRow}/>
-                <CartBottomBar goToCart={this._goToCart.bind(this)}/>
+                <CartBottomBar goToCart={this._goToCart.bind(this)} quantity={this.props.quantity}/>
 
             </View>
         )
     }
 
-    renderRow(row) {
-        return <CartListItem title={row.get('name')} id={row.id}/>
+    renderRow(row: Product) {
+        return <ProductItem product={row} addToCart={(product) => this._addToCart(product)}/>
+    }
+
+    goToProductDetail(id: string) {
+        console.log(id);
+        this.props.navigator.push({
+            screen: 'sepetim.ProductDetail'
+        })
     }
 
     onNavigatorEvent(event) {
 
         if (event.id === 'cart') {
-            this.props.navigator.toggleDrawer({side: 'right', animated: true})
-        } else if (event.id === 'menu') {
+            this.fetchProducts()
+        } else if (event.id === 'sideMenu') {
             this.props.navigator.toggleDrawer({side: 'left', animated: true})
+        } else if (event.type = "DeepLink") {
+
+            if (event.link === "notifications") {
+                this.props.navigator.push({
+                    screen: "sepetim.Notifications",
+                    title: "Notifications",
+                    backButtonTitle: "Back",
+                    backButtonHidden: false
+                })
+            }else if (event.link === "account") {
+                this.props.navigator.push({
+                    screen: "sepetim.Account",
+                    title: "My Account",
+                    backButtonTitle: "Back",
+                    backButtonHidden: false
+                })
+            }
         }
     }
 
@@ -92,22 +128,34 @@ class Home extends React.Component {
                     disableIconTint: true,
                     icon: IconsMap['notifications']
                 }],
-                leftButtons: [{
-                    id: 'menu',
-                    icon: IconsMap['menu']
-                }],
+                leftButtons: [
+                    Platform.select({
+                        ios: {
+                            id: 'sideMenu',
+                            icon: IconsMap['menu']
+                        }, android: {
+                            id: 'sideMenu'
+                        }
+                    })
+                ],
                 animated: true
             })
         })
     }
 
 
-    _addToCart() {
-        this.props.dispatch(addToCart('adnan'))
+    _addToCart(product: Product) {
+        this.props.dispatch(addToCart(product))
     }
 
     fetchProducts() {
         this.props.dispatch(fetchProducts())
+    }
+
+    _searchProducts(keyword) {
+        if (keyword !== undefined && keyword.length > 2) {
+            this.props.dispatch(searchProducts(keyword))
+        }
     }
 
     goToSearchView() {
@@ -137,7 +185,7 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => {
-    return {data: state.product.all}
+    return {data: state.product.all, quantity: state.cart.items.entrySeq().toArray().length}
 }
 
 export default connect(mapStateToProps)(Home)

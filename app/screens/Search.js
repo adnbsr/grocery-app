@@ -1,9 +1,10 @@
+// @flow
+
 import React from 'react'
 import {View, StyleSheet} from 'react-native'
-import {MD_RED_500} from '../../utils/constants'
 import SplashIcon from '../components/SplashIcon'
 
-export default class Splash extends React.Component {
+class Search extends React.Component {
 
   render() {
     return (
@@ -12,23 +13,15 @@ export default class Splash extends React.Component {
       </View>
     );
   }
-
-  componentDidMount() {
-      setTimeout(() => {
-        this.props.navigator.push({
-          screen: 'sepetim.Home',
-          title: 'Home'
-        })
-      },2000)
-  }
-
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: MD_RED_500,
+    backgroundColor: '#FAFAFA',
     alignItems: 'center',
     justifyContent: 'center'
   }
 })
+
+export default Search

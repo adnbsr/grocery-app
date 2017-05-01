@@ -13,7 +13,7 @@ const icons = {
     'menu': [MaterialIcons, 'menu', 24, '#FFFFFF'],
     'ios-menu': [Ionicons, 'ios-menu-outline', 24, '#FFFFFF'],
     'notifications': [Ionicons, 'md-notifications', 24, '#FFFFFF'],
-    'close': [Ionicons, 'md-close', 24, '#FFFFFF']
+    'cancel': [Ionicons, 'md-close', 24, '#FFFFFF']
 };
 
 const IconsMap = {};
