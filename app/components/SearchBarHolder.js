@@ -15,6 +15,7 @@ class SearchBarHolder extends React.Component {
     }
 
     render() {
+
         return (
             <View style={styles.container}>
                 <View style={styles.barContainer}>
@@ -23,6 +24,7 @@ class SearchBarHolder extends React.Component {
                         multiline={false}
                         placeholder={"Search"}
                         style={styles.input}
+                        underlineColorAndroid={'transparent'}
                         returnKeyType={"search"}
                         onSubmitEditing={(event) => {
                             this.props.search(event.nativeEvent.text)

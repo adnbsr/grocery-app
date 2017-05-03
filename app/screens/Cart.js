@@ -2,8 +2,9 @@
 
 import React from 'react'
 import {Text, View, ListView, StyleSheet, Platform} from 'react-native'
-import CartToolbar from '../components/CartToolbar'
+import {Map} from 'immutable'
 import CartListItem from '../components/CartListItem'
+import CartToolbar from '../components/CartToolbar'
 import {addToCart, removeFromCart} from '../actions'
 import {connect} from 'react-redux'
 import {IconsLoaded, IconsMap} from '../utils/icons'
@@ -79,9 +80,9 @@ class Cart extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                {/*<CartToolbar cartSize={this.props.data.length}/>*/}
+                <CartToolbar cartSize={this.props.data.length} total={this.props.cartTotal}/>
                 <ListView dataSource={this.state.dataSource} renderRow={this.renderRow} enableEmptySections={true}/>
-                <Text style={styles.checkout}>{this.props.cartTotal} TMT</Text>
+                <Text style={styles.checkout}>CHECKOUT</Text>
             </View>
         );
     }
@@ -105,8 +106,6 @@ class Cart extends React.Component {
     decrement(item){
         this.props.dispatch(removeFromCart(item))
     }
-
-
 }
 
 const cloneWithRows = (ds: ListView.DataSource, data: Array<Object>) => {
@@ -133,13 +132,20 @@ const styles = StyleSheet.create({
         padding: 16,
         backgroundColor: '#424242',
         textAlign: 'center',
-        color: 'yellow'
+        color: COLOR_WHITE
     }
 
 })
 
 const mapStateToProps = (state, ownProps) => {
-    return {data: state.cart.items.entrySeq().toArray(), cartTotal: state.cart.total.toFixed(2)}
+
+    const items = state.cart.items
+
+    if (items instanceof Map) {
+        return {data: state.cart.items.entrySeq().toArray(), cartTotal: state.cart.total.toFixed(2)}
+    }
+
+    return {data: [], cartTotal: 0 }
 }
 
 export default connect(mapStateToProps)(Cart)

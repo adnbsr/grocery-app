@@ -17,6 +17,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  
+  [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleLightContent];
+  
   NSURL *jsCodeLocation;
 
 #ifdef DEBUG

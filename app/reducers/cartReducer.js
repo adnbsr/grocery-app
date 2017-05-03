@@ -8,8 +8,7 @@ const initialState = {
     total: 0
 }
 
-
-const cartReducer = (state = initialState, action) => {
+export default function cartReducer(state = initialState, action) {
 
     if (action.type === 'ADD_TO_CART') {
 
@@ -52,5 +51,3 @@ const cartReducer = (state = initialState, action) => {
 
     return state
 }
-
-export default cartReducer

@@ -5,13 +5,12 @@ import {
     View,
     Text,
     StyleSheet,
-    TouchableHighlight,
     TouchableNativeFeedback,
     Platform,
     TouchableOpacity
 } from 'react-native'
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons'
-import Touchable from './Touchable'
+import {MD_LIGHT_BLUE_500, MD_RED_400} from '../utils/constants'
 
 class CartBottomBar extends React.Component {
 
@@ -27,6 +26,7 @@ class CartBottomBar extends React.Component {
     }
 
     render() {
+        const Touchable = Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity
 
         return (
             <View style={styles.container}>
@@ -38,9 +38,12 @@ class CartBottomBar extends React.Component {
                         EXPRESS: By Tomorrow 8:30 AM
                     </Text>
                 </View>
-                <TouchableHighlight style={styles.cartIconBar} onPress={this.props.goToCart}>
-                    <MaterialIcon name="shopping" color="#FFFFFF" size={24}/>
-                </TouchableHighlight>
+                <Touchable onPress={this.props.goToCart} style={{flexGrow: 1, backgroundColor: 'blue', minWidth: 56}}>
+                    <View style={styles.cartIconBar}>
+                        <MaterialIcon name="shopping" color="#FFFFFF" size={24}/>
+                        <Text style={styles.quantity}>{this.props.quantity}</Text>
+                    </View>
+                </Touchable>
             </View>
         )
     }
@@ -49,11 +52,10 @@ class CartBottomBar extends React.Component {
 const styles = StyleSheet.create({
     container: {
         height: 56,
-        justifyContent: 'center',
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     informationBar: {
-        flex: 4,
+        flexGrow: 4,
         flexDirection: 'column',
         backgroundColor: '#424242',
         justifyContent: 'center',
@@ -63,20 +65,24 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     cartIconBar: {
-        flex: 1,
-        backgroundColor: '#F44336',
-        justifyContent: 'center',
-        alignItems: 'center'
+        minWidth: 56,
+        height: 56,
+        backgroundColor: MD_RED_400,
+        padding: 16,
+        alignItems: 'stretch'
     },
-    badgeSize: {
-        height: 20,
-        width: 20,
+    quantity: {
+        height: 16,
+        width: 16,
         overflow: 'hidden',
-        borderRadius: 10,
-        fontSize: 10,
+        borderRadius: 8,
+        fontSize: 8,
         color: 'white',
+        marginTop: -32,
+        marginLeft: 12,
         textAlign: 'center',
-        backgroundColor: 'green'
+        padding: 2,
+        backgroundColor: MD_LIGHT_BLUE_500
     }
 
 })

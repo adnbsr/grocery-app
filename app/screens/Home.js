@@ -12,13 +12,14 @@ import {
     Platform,
     TextInput
 } from 'react-native'
+import SnackBar from 'react-native-snackbar'
 import CartListItem from '../components/CartListItem'
 import ProductItem from '../components/ProductItem'
 import SearchBarHolder from '../components/SearchBarHolder'
 import CartBottomBar from '../components/CartBottomBar'
 import {IconsLoaded, IconsMap} from '../utils/icons'
 import {connect} from 'react-redux'
-import {addToCart, fetchProducts, searchProducts} from '../actions/index'
+import {addToCart, fetchProducts, searchProducts, logOut} from '../actions/index'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 
 import type {Product} from '../types'
@@ -116,6 +117,8 @@ class Home extends React.Component {
                     backButtonTitle: "Back",
                     backButtonHidden: false
                 })
+            }else if (event.link === "logout") {
+                this.props.dispatch(logOut())
             }
         }
     }
@@ -146,6 +149,12 @@ class Home extends React.Component {
 
     _addToCart(product: Product) {
         this.props.dispatch(addToCart(product))
+
+        SnackBar.show({
+            title: 'Urun listeye eklendi',
+            duration: SnackBar.LENGTH_SHORT
+        })
+
     }
 
     fetchProducts() {

@@ -131,6 +131,7 @@ android {
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
 dependencies {
+    compile project(':react-native-snackbar')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:25.0.3"
     compile "com.facebook.react:react-native:+"  // From node_modules
