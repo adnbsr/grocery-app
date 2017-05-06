@@ -12,6 +12,7 @@
 #import <React/RCTRootView.h>
 #import <React/RCTBundleURLProvider.h>
 #import "RCCManager.h"
+#import <GoogleMaps/GoogleMaps.h>
 
 @implementation AppDelegate
 
@@ -21,6 +22,9 @@
   [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleLightContent];
   
   NSURL *jsCodeLocation;
+  
+  [GMSServices provideAPIKey:@"AIzaSyDNHnkJkLt3XSQBeeor_qtuBmF_otQHsZo"];
+  
 
 #ifdef DEBUG
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];

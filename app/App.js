@@ -26,8 +26,6 @@ function observeStore(store, select, onChange) {
     return unsubscribe;
 }
 
-
-
 console.disableYellowBox = true;
 
 const navigatorStyle = {
@@ -46,7 +44,7 @@ function startApp() {
         Navigation.startSingleScreenApp({
             screen: {
                 screen: 'sepetim.Home',
-                title: 'Sebetim',
+                title: 'Sebetim ',
                 navigatorStyle
             },
             drawer: {
@@ -96,6 +94,5 @@ const App = () => {
             }
         })
 }
-
 
 export default App

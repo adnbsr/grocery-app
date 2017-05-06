@@ -28,7 +28,8 @@ import type {Product} from '../types'
 class Home extends React.Component {
 
     state: {
-        dataSource: ListView.DataSource
+        dataSource: ListView.DataSource,
+        name: string
     }
 
     props: {
@@ -72,7 +73,6 @@ class Home extends React.Component {
         return (
             <View style={styles.container}>
                 <SearchBarHolder search={(keyword) => this._searchProducts(keyword)}/>
-
                 <ListView
                     style={styles.list}
                     enableEmptySections={true}
@@ -119,6 +119,13 @@ class Home extends React.Component {
                 })
             }else if (event.link === "logout") {
                 this.props.dispatch(logOut())
+            }else if (event.link === 'editAddress') {
+                this.props.navigator.push({
+                    screen: "sepetim.MapHelper",
+                    title: "Edit Address",
+                    backButtonTitle: "Back",
+                    backButtonHidden: false
+                })
             }
         }
     }
@@ -165,6 +172,11 @@ class Home extends React.Component {
         if (keyword !== undefined && keyword.length > 2) {
             this.props.dispatch(searchProducts(keyword))
         }
+
+        this.setState({
+            name: keyword
+        })
+
     }
 
     goToSearchView() {
@@ -193,8 +205,8 @@ const styles = StyleSheet.create({
     }
 })
 
-const mapStateToProps = (state) => {
-    return {data: state.product.all, quantity: state.cart.items.entrySeq().toArray().length}
+function mapStateToProps(state) {
+    return {data: state.product.all, quantity: state.cart.items.entrySeq().toArray().length, address: state.user.address}
 }
 
 export default connect(mapStateToProps)(Home)

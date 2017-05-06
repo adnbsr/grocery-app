@@ -11,6 +11,7 @@
     "parse": "git+https://github.com/allmaxgit/Parse-SDK-JS.git",
     "react": "16.0.0-alpha.6",
     "react-native": "0.43.4",
+    "react-native-maps": "^0.14.0",
     "react-native-md-textinput": "^2.0.4",
     "react-native-navigation": "^1.1.16",
     "react-native-snackbar": "^0.3.6",
@@ -21,6 +22,7 @@
   },
   "devDependencies": {
     "babel-jest": "19.0.0",
+    "babel-plugin-module-resolver": "^2.7.0",
     "babel-preset-react-native": "1.9.1",
     "flow-bin": "^0.40.0",
     "jest": "19.0.2",

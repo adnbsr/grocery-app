@@ -23,6 +23,7 @@ class SearchBarHolder extends React.Component {
                     <TextInput
                         multiline={false}
                         placeholder={"Search"}
+                        autoCapitalize={'none'}
                         style={styles.input}
                         underlineColorAndroid={'transparent'}
                         returnKeyType={"search"}

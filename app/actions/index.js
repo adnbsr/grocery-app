@@ -5,7 +5,7 @@ import type {Product} from '../types'
 
 const _Product = Parse.Object.extend('Product')
 
-loadParseQuery = (type, query) => {
+function loadParseQuery(type, query) {
     return (dispatch) => {
         return query.find({
             success: (list) => {
@@ -57,9 +57,20 @@ export async function checkCurrentUser() {
     }
 }
 
+export async function updateUserAddress(address: string) {
+    const user = await Parse.User.currentAsync()
+    user.set('address', address)
+    await user.save(null)
+    return {
+        type: "UPDATE_USER_ADDRESS",
+        payload: address
+    }
+}
+
+
 export async function logIn(username: string, password: string): Promise {
 
-    const  user  = await Parse.User.logIn(username, password)
+    const user = await Parse.User.logIn(username, password)
 
     return {
         type: "LOGGED_IN",
@@ -77,14 +88,6 @@ export function logOut() {
             type: "LOGGED_OUT"
         })
     }
-
-}
-
-
-export const loadLibraries = () => {
-    return {
-        type: "LOAD_LIBRARIES"
-    }
 }
 
 export function addToCart(item: Product) {
@@ -94,14 +97,20 @@ export function addToCart(item: Product) {
     }
 }
 
-export const removeFromCart = (item: Object) => {
+export function removeFromCart(item: Object) {
     return {
         type: 'REMOVE_FROM_CART',
         payload: item
     }
 }
 
-export const fetchProducts = () => {
+export function clearCart() {
+    return {
+        type: 'CLEAR_CART'
+    }
+}
+
+export function fetchProducts() {
 
     const query = new Parse.Query(_Product)
     query.include('category')
@@ -109,11 +118,37 @@ export const fetchProducts = () => {
     return loadParseQuery('FETCH_PRODUCTS', query)
 }
 
-export const searchProducts = (keyword: string) => {
+export function searchProducts(keyword: string) {
 
     const query = new Parse.Query(_Product)
     query.include('category')
-    query.contains("name", keyword)
+    query.matches("name", keyword, 'i')
 
     return loadParseQuery('SEARCH_PRODUCTS', query)
+}
+
+export async function giveOrder(user: Object, items: Array<Object>, total: number, address: string, deliveryType: string = 'standard', orderState: string = 'nonApproved') {
+
+    const parseUser = new Parse.User()
+    parseUser.id = user.id
+
+    const order = new Parse.Object('Order')
+    order.set('user', parseUser);
+    order.set('items', items);
+    order.set('total', total);
+    order.set('address', address);
+    order.set('deliveryType', deliveryType);
+    order.set('orderState', orderState);
+
+    await order.save(null)
+
+    return {
+        type: 'GIVE_ORDER'
+    }
+}
+
+export function clearOrder() {
+    return {
+        type: 'CLEAR_ORDER'
+    }
 }

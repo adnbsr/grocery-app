@@ -49,11 +49,16 @@ class Drawer extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <DrawerHeader editAddress={() => {
-                    console.log("edit adress here!")
-                }} name={this.props.name} address={this.props.address}/>
-                <ListView dataSource={this.state.dataSource} renderRow={this.renderRow} enableEmptySections={true}
-                          style={styles.list}/>
+                <DrawerHeader
+                    editAddress={() => this.handleRowSelect({type: 'editAddress'})}
+                    name={this.props.name}
+                    address={this.props.address}/>
+
+                <ListView
+                    dataSource={this.state.dataSource}
+                    renderRow={this.renderRow}
+                    enableEmptySections={true}
+                    style={styles.list}/>
             </View>
         )
     }

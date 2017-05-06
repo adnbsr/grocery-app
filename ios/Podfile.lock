@@ -1,0 +1,64 @@
+PODS:
+  - GoogleMaps (2.1.1):
+    - GoogleMaps/Maps (= 2.1.1)
+  - GoogleMaps/Base (2.1.1)
+  - GoogleMaps/Maps (2.1.1):
+    - GoogleMaps/Base
+  - React/Core (0.43.4):
+    - React/cxxreact
+    - Yoga (= 0.43.4.React)
+  - React/cxxreact (0.43.4):
+    - React/jschelpers
+  - React/jschelpers (0.43.4)
+  - React/RCTActionSheet (0.43.4):
+    - React/Core
+  - React/RCTAnimation (0.43.4):
+    - React/Core
+  - React/RCTGeolocation (0.43.4):
+    - React/Core
+  - React/RCTImage (0.43.4):
+    - React/Core
+    - React/RCTNetwork
+  - React/RCTLinkingIOS (0.43.4):
+    - React/Core
+  - React/RCTNetwork (0.43.4):
+    - React/Core
+  - React/RCTSettings (0.43.4):
+    - React/Core
+  - React/RCTText (0.43.4):
+    - React/Core
+  - React/RCTVibration (0.43.4):
+    - React/Core
+  - React/RCTWebSocket (0.43.4):
+    - React/Core
+  - Yoga (0.43.4.React)
+
+DEPENDENCIES:
+  - GoogleMaps (= 2.1.1)
+  - React/Core (from `../node_modules/react-native`)
+  - React/RCTActionSheet (from `../node_modules/react-native`)
+  - React/RCTAnimation (from `../node_modules/react-native`)
+  - React/RCTGeolocation (from `../node_modules/react-native`)
+  - React/RCTImage (from `../node_modules/react-native`)
+  - React/RCTLinkingIOS (from `../node_modules/react-native`)
+  - React/RCTNetwork (from `../node_modules/react-native`)
+  - React/RCTSettings (from `../node_modules/react-native`)
+  - React/RCTText (from `../node_modules/react-native`)
+  - React/RCTVibration (from `../node_modules/react-native`)
+  - React/RCTWebSocket (from `../node_modules/react-native`)
+  - Yoga (from `../node_modules/react-native/ReactCommon/yoga/Yoga.podspec`)
+
+EXTERNAL SOURCES:
+  React:
+    :path: ../node_modules/react-native
+  Yoga:
+    :path: ../node_modules/react-native/ReactCommon/yoga/Yoga.podspec
+
+SPEC CHECKSUMS:
+  GoogleMaps: a5b5bbe47734e2443bde781a6aa64e69fdb6d785
+  React: 607aa7eb8b0e44b102f95f43fd49dc8aedefa93f
+  Yoga: 2a70bc5ab41486a272b9fd5b76c482ba9268c5dd
+
+PODFILE CHECKSUM: cf0e0acb827fe9d55b02d1e077906d28608a43f3
+
+COCOAPODS: 1.2.1.beta.1

@@ -49,5 +49,9 @@ export default function cartReducer(state = initialState, action) {
         }
     }
 
+    if (action.type === 'CLEAR_CART') {
+        return initialState
+    }
+
     return state
 }

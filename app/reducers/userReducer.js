@@ -54,6 +54,11 @@ export default function userReducer(state = initialState, action) {
 
     }
 
+
+    if (action.type === 'UPDATE_USER_ADDRESS') {
+        return {...state, address: action.payload}
+    }
+
     return state
 }
 
