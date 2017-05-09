@@ -16,13 +16,12 @@ class CartBottomBar extends React.Component {
 
     props: {
         goToCart: () => any,
-        badgeSize: number,
         quantity: number
     }
 
     static propTypes = {
         goToCart: React.PropTypes.func.isRequired,
-        badgeSize: React.PropTypes.number
+        quantity: React.PropTypes.number.isRequired
     }
 
     render() {

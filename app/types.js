@@ -3,10 +3,12 @@
  * @flow
  */
 
+type ParseObject = Object
 
 export type Category = {
     id: string,
-    name: string
+    name: string,
+    thumbnail?: string
 }
 
 export type Product = {
@@ -17,8 +19,17 @@ export type Product = {
     category: Category
 }
 
-//Abstract Drawer Item Type
-export type IItem = {
+export type DrawerAbstractItem = {
     type: string,
     label: string
 }
+
+export type Action = { type: 'FETCH_PRODUCTS', list: Array<ParseObject> }
+    | { type: 'SEARCH_PRODUCTS', list: Array<ParseObject> }
+    | { type: 'FETCH_CATEGORIES', list: Array<ParseObject> }
+    | { type: 'ADD_TO_CART', product: Product }
+    | { type: 'REMOVE_FROM_CART', product: Product }
+    | { type: 'CLEAR_CART' }
+
+
+export type Dispatch = (action: Action) => any;

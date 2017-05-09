@@ -8,15 +8,17 @@ import {View, Text, ListView, StyleSheet} from 'react-native'
 import DrawerHeader from '../components/DrawerHeader'
 import DrawerItem from '../components/DrawerItem'
 import {COLOR_WHITE, COLOR_PRIMARY} from '../utils/constants'
-import {IItem} from '../types'
 import {connect} from 'react-redux'
+
+import type {DrawerAbstractItem} from '../types'
 
 class Drawer extends React.Component {
 
     props: {
         name: string,
         address: string,
-        data: Array<IItem>
+        data: Array<DrawerAbstractItem>,
+        navigator: any
     }
 
     state: {
@@ -42,32 +44,30 @@ class Drawer extends React.Component {
         this.state = {
             dataSource: ds.cloneWithRows(this.props.data)
         }
-
-        this.renderRow = this.renderRow.bind(this)
     }
 
     render() {
         return (
             <View style={styles.container}>
                 <DrawerHeader
-                    editAddress={() => this.handleRowSelect({type: 'editAddress'})}
+                    editAddress={() => this.handleRowSelect({type: 'editAddress', label: "Address"})}
                     name={this.props.name}
                     address={this.props.address}/>
 
                 <ListView
                     dataSource={this.state.dataSource}
-                    renderRow={this.renderRow}
+                    renderRow={this.renderRow.bind(this)}
                     enableEmptySections={true}
                     style={styles.list}/>
             </View>
         )
     }
 
-    renderRow(row: IItem) {
+    renderRow(row: DrawerAbstractItem) {
         return <DrawerItem item={row} select={(item) => this.handleRowSelect(item)} />
     }
 
-    handleRowSelect(row: IItem){
+    handleRowSelect(row: DrawerAbstractItem){
         this.props.navigator.toggleDrawer({
             side: 'left',
             animated: true,

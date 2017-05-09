@@ -1,6 +1,6 @@
 //@flow
 
-import type {Product} from '../types'
+import type {Product, Action} from '../types'
 import {Map} from 'immutable'
 
 const initialState = {
@@ -8,44 +8,52 @@ const initialState = {
     total: 0
 }
 
-export default function cartReducer(state = initialState, action) {
+type State = {
+    items: Map<Product, number>,
+    total: number
+}
+
+export default function cartReducer(state: State = initialState, action: Action) {
 
     if (action.type === 'ADD_TO_CART') {
 
-        if (action.payload.price === undefined){
+        const {product} = action;
+
+        if (product.price === undefined){
             return state
         }
         
-        if (!state.items.has(action.payload)) {
+        if (!state.items.has(product)) {
             return {
-                items: state.items.set(action.payload, 1),
-                total: state.total + action.payload.price
+                items: state.items.set(product, 1),
+                total: state.total + product.price
             }
         } else {
             return {
-                items: state.items.update(action.payload, (value) => {
+                items: state.items.update(product, (value) => {
                     return value = value + 1;
                 }),
-                total: state.total + action.payload.price
+                total: state.total + product.price
             }
         }
+    }
 
-        return state
+    if (action.type === 'REMOVE_FROM_CART') {
 
-    } else if (action.type === 'REMOVE_FROM_CART') {
+        const {product} = action
 
-        if (state.items.get(action.payload) === 1) {
+        if (state.items.get(product) === 1) {
             return {
-                items: state.items.remove(action.payload),
-                total: state.total - action.payload.price
+                items: state.items.remove(product),
+                total: state.total - product.price
             }
         }
 
         return {
-            items: state.items.update(action.payload, (value) => {
+            items: state.items.update(product, (value) => {
                 return value = value - 1
             }),
-            total: state.total - action.payload.price
+            total: state.total - product.price
         }
     }
 

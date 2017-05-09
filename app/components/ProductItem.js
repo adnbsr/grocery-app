@@ -3,14 +3,15 @@
 import React from 'react'
 import {View, Text, StyleSheet, Image} from 'react-native'
 import Parse from 'parse/react-native'
-import {Product} from '../types'
 import {MD_RED_400, COLOR_WHITE} from '../utils/constants'
+
+import type {Product} from '../types'
 
 class ProductItem extends React.Component {
 
     props: {
         product: Product,
-        addToCart: (id: string) => void
+        addToCart: (product: Product) => void
     }
 
     render() {
@@ -39,7 +40,7 @@ class ProductItem extends React.Component {
                   <Text style={styles.price}>
                       {this.props.product.price && this.props.product.price.toFixed(2)}
                   </Text>
-                  <Text style={styles.addToCart} onPress={() => this.handleAddToCart()}>
+                  <Text style={styles.addToCart} onPress={this.handleAddToCart.bind(this)}>
                     Add
                   </Text>
                 </View>

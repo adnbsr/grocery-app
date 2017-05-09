@@ -12,12 +12,17 @@ import {IconsLoaded, IconsMap} from '../utils/icons'
 import {COLOR_PRIMARY, COLOR_WHITE} from '../utils/constants'
 import SnackBar from 'react-native-snackbar'
 
+import type {Dispatch} from '../types'
+
 class Cart extends React.Component {
 
     props: {
         data: Array<Object>,
         cartTotal: number,
-        navigator: any
+        navigator: any,
+        address: string,
+        dispatch: Dispatch,
+        user: any
     }
 
     state: {
@@ -50,7 +55,6 @@ class Cart extends React.Component {
             deliveryType: STANDARD
         }
 
-        this.renderRow = this.renderRow.bind(this)
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this))
 
     }
@@ -100,7 +104,10 @@ class Cart extends React.Component {
             <View style={styles.container}>
                 <CartToolbar cartSize={this.props.data.length} total={this.props.cartTotal}/>
                 <DeliveryPicker type={this.state.deliveryType} onDeliverySelected={(type) => {this.setState({deliveryType: type})}}/>
-                <ListView dataSource={this.state.dataSource} renderRow={this.renderRow} enableEmptySections={true}/>
+                <ListView
+                    dataSource={this.state.dataSource}
+                    renderRow={this.renderRow.bind(this)}
+                    enableEmptySections={true}/>
                 <Text style={styles.checkout} onPress={() => this.onCheckout()}>CHECKOUT</Text>
             </View>
         );

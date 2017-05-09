@@ -1,16 +1,43 @@
+/**
+ * @flow
+ */
+
+import type {Category, Product, Action} from '../types'
+
 const initialState = {
-    all: []
+    all: [],
+    categories: []
 }
 
-const productReducer = (state = initialState, action) => {
+type State = {
+    all: Array<Product>,
+    categories: Array<Category>
+}
+
+const productReducer = (state: State = initialState, action: Action) => {
 
     if (action.type === 'FETCH_PRODUCTS') {
-        return {all: action.list.map(fromParseObject)}
-    }else if (action.type === 'SEARCH_PRODUCTS'){
-        return {all: action.list.map(fromParseObject)}
+        return {...state, all: action.list.map(fromParseObject)}
+    }
+
+    if (action.type === 'SEARCH_PRODUCTS'){
+        return {...state, all: action.list.map(fromParseObject)}
+    }
+
+    if (action.type === 'FETCH_CATEGORIES') {
+        return {...state, categories: action.list.map(fromParseObjectToCategory)}
     }
 
     return state
+}
+
+
+function fromParseObjectToCategory(object: Object): Category {
+    return {
+        id: object.id,
+        name: object.get('name'),
+        thumbnail: object.get('thumbnail') && object.get('thumbnail').url()
+    }
 }
 
 const fromParseObject = (object: Object): Product => {

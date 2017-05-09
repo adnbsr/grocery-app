@@ -19,7 +19,7 @@ import {Provider} from 'react-redux'
 import {Store} from  'redux'
 
 export function registerScreens(store: Store, provider: Provider) {
-    Navigation.registerComponent('sepetim.Welcome', () => Welcome)
+    Navigation.registerComponent('sepetim.Welcome', () => Welcome, store, provider)
     Navigation.registerComponent('sepetim.Signup', () => Signup, store, provider)
     Navigation.registerComponent('sepetim.Login', () => Login, store, provider)
 

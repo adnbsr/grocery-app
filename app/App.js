@@ -4,7 +4,7 @@ import {View, Text} from 'react-native'
 import {Provider} from 'react-redux'
 import {configureStore} from './store'
 import {registerScreens} from './registerScreens'
-import {checkCurrentUser} from './actions'
+import {checkCurrentUser, getCurrentInstallation} from './actions'
 import {IconsLoaded} from './utils/icons'
 import {COLOR_PRIMARY, COLOR_WHITE, APPLICATION_ID, SERVER_URL, MASTER_KEY} from './utils/constants'
 import Parse from 'parse/react-native'
@@ -37,7 +37,6 @@ const navigatorStyle = {
     topBarElevationShadowEnabled: false,
     navBarTitleTextCentered: false
 }
-
 
 function startApp() {
     IconsLoaded.then(() => {

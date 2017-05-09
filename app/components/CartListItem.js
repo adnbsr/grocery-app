@@ -4,8 +4,9 @@ import React from 'react'
 import {View, Text, StyleSheet, Image} from 'react-native'
 import Parse from 'parse/react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
-import {Product} from '../types'
 import {MD_RED_400} from '../utils/constants'
+
+import type {Product} from '../types'
 
 class CartListItem extends React.Component {
 
@@ -58,15 +59,17 @@ class CartListItem extends React.Component {
                         </Text>
 
                         <View style={{
-                            height: 28,
+                            height: 36,
                             backgroundColor: MD_RED_400,
                             borderRadius: 2,
                             overflow: 'hidden',
                             flexDirection: 'row',
                             alignItems: 'center',
-                            justifyContent: 'center',
+                            justifyContent: 'space-between',
                             flex: 4,
-                            margin: 4
+                            margin: 4,
+                            paddingLeft: 8,
+                            paddingRight: 8
 
                         }}>
                             <Icon name="ios-remove" color="white" size={24}

@@ -1,9 +1,10 @@
 import Parse from 'parse/react-native'
-import {InteractionManager, AsyncStorage} from 'react-native'
+import {InteractionManager, AsyncStorage, Platform} from 'react-native'
 
 import type {Product} from '../types'
 
 const _Product = Parse.Object.extend('Product')
+const _Category = Parse.Object.extend('Category')
 
 function loadParseQuery(type, query) {
     return (dispatch) => {
@@ -90,17 +91,17 @@ export function logOut() {
     }
 }
 
-export function addToCart(item: Product) {
+export function addToCart(product: Product) {
     return {
         type: 'ADD_TO_CART',
-        payload: item
+        product: product
     }
 }
 
-export function removeFromCart(item: Object) {
+export function removeFromCart(product: Product) {
     return {
         type: 'REMOVE_FROM_CART',
-        payload: item
+        product: product
     }
 }
 
@@ -108,6 +109,13 @@ export function clearCart() {
     return {
         type: 'CLEAR_CART'
     }
+}
+
+export function fetchCategories() {
+
+    const query = new Parse.Query(_Category)
+
+    return loadParseQuery('FETCH_CATEGORIES', query)
 }
 
 export function fetchProducts() {
@@ -147,8 +155,45 @@ export async function giveOrder(user: Object, items: Array<Object>, total: numbe
     }
 }
 
+/**
+ * Action to clear order after order is given
+ * @returns Action: {{type: string}}
+ */
 export function clearOrder() {
     return {
         type: 'CLEAR_ORDER'
     }
 }
+
+/**
+ * Gets current parse installation from Parse which is stored after initialization
+ * @returns {Promise.<*>}
+ */
+export async function getCurrentInstallation(): Promise {
+
+    const installationId = await Parse._getInstallationId()
+    return new Parse.Installation({
+        installationId,
+        appName: 'Sebetim',
+        deviceType: Platform.OS,
+        appIdentifier: 'com.sebetim'
+    });
+}
+
+export async function updateInstallation(params: Object = {}): Promise {
+    const installation = await getCurrentInstallation()
+    await installation.save(params)
+}
+
+export async function storeDeviceToken(deviceToken: Object) {
+    const pushType = Platform.OS === 'android' ? 'gcm' : undefined;
+    await updateInstallation({
+        pushType,
+        deviceToken: deviceToken.token,
+        deviceTokenLastModified: Date.now()
+    })
+    return {
+        type: "REGISTERED_NOTIFICATIONS"
+    }
+}
+

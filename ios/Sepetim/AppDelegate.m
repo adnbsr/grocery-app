@@ -13,6 +13,7 @@
 #import <React/RCTBundleURLProvider.h>
 #import "RCCManager.h"
 #import <GoogleMaps/GoogleMaps.h>
+#import "RCTPushNotificationManager.h"
 
 @implementation AppDelegate
 
@@ -37,8 +38,32 @@
   [[RCCManager sharedIntance] initBridgeWithBundleURL:jsCodeLocation];
   
   
-  
   return YES;
+}
+
+-(void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
+
+  [RCTPushNotificationManager didRegisterUserNotificationSettings: notificationSettings];
+  
+}
+
+-(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+
+  [RCTPushNotificationManager didRegisterForRemoteNotificationsWithDeviceToken: deviceToken];
+  
+}
+
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+
+  [RCTPushNotificationManager didReceiveRemoteNotification: userInfo fetchCompletionHandler: completionHandler];
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+  [RCTPushNotificationManager didFailToRegisterForRemoteNotificationsWithError: error];
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+  [RCTPushNotificationManager didReceiveLocalNotification: notification];
 }
 
 @end

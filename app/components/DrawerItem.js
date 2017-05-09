@@ -7,14 +7,14 @@
 import React from 'react'
 import {StyleSheet, View, Text} from 'react-native'
 import {COLOR_BLACK, COLOR_WHITE} from '../utils/constants'
-import Icon from 'react-native-vector-icons/Ionicons'
-import {IItem} from '../types'
+
+import type {DrawerAbstractItem} from '../types'
 
 class DrawerItem extends React.Component {
 
     props: {
-        item: IItem,
-        select: (item: IItem) => any
+        item: DrawerAbstractItem,
+        select: (item: DrawerAbstractItem) => any
     }
 
     static defaultProps = {

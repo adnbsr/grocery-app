@@ -5,37 +5,42 @@ import React from 'react'
 import {
     View,
     Text,
+    Image,
     StyleSheet,
     AsyncStorage,
     ListView,
     Button,
     Platform,
-    TextInput
+    TextInput,
+    ScrollView
 } from 'react-native'
 import SnackBar from 'react-native-snackbar'
 import CartListItem from '../components/CartListItem'
 import ProductItem from '../components/ProductItem'
 import SearchBarHolder from '../components/SearchBarHolder'
 import CartBottomBar from '../components/CartBottomBar'
+import AppSwiper from '../components/AppSwiper'
+import GridView from '../components/GridView'
 import {IconsLoaded, IconsMap} from '../utils/icons'
 import {connect} from 'react-redux'
-import {addToCart, fetchProducts, searchProducts, logOut} from '../actions/index'
+import {addToCart, fetchProducts, searchProducts, logOut, fetchCategories} from '../actions/index'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 
-import type {Product} from '../types'
+import type {Product, Dispatch, Category} from '../types'
 
 
 class Home extends React.Component {
 
     state: {
-        dataSource: ListView.DataSource,
-        name: string
+        dataSource: ListView.DataSource
     }
 
     props: {
         data: Array<Product>,
         navigator: any,
-        quantity: number
+        quantity: number,
+        dispatch: Dispatch,
+        categories: Array<Category>
     }
 
     static defaultProps = {
@@ -49,6 +54,8 @@ class Home extends React.Component {
 
     constructor(props) {
         super(props)
+
+
         const ds = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
         })
@@ -57,9 +64,12 @@ class Home extends React.Component {
             dataSource: ds.cloneWithRows(this.props.data)
         }
 
-        this.renderRow = this.renderRow.bind(this)
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
         this.renderNavigationBarButtons()
+    }
+
+    componentDidMount(){
+        this.props.dispatch(fetchCategories())
     }
 
     componentWillReceiveProps(nextProps) {
@@ -73,26 +83,40 @@ class Home extends React.Component {
         return (
             <View style={styles.container}>
                 <SearchBarHolder search={(keyword) => this._searchProducts(keyword)}/>
-                <ListView
-                    style={styles.list}
-                    enableEmptySections={true}
-                    dataSource={this.state.dataSource}
-                    renderRow={this.renderRow}/>
+
+                <ScrollView>
+                    <AppSwiper />
+
+                    <GridView
+                        fillMissingItems={true}
+                        itemsPerRow={3}
+                        data={this.props.categories}
+                        renderItem={this.renderCategoryItem.bind(this)}/>
+
+                    <ListView
+                        style={styles.list}
+                        enableEmptySections={true}
+                        dataSource={this.state.dataSource}
+                        renderRow={this.renderRow.bind(this)}/>
+
+                </ScrollView>
                 <CartBottomBar goToCart={this._goToCart.bind(this)} quantity={this.props.quantity}/>
 
             </View>
         )
     }
 
-    renderRow(row: Product) {
-        return <ProductItem product={row} addToCart={(product) => this._addToCart(product)}/>
+    renderRow(product: Product) {
+        return <ProductItem product={product} addToCart={this._addToCart.bind(this)}/>
     }
 
-    goToProductDetail(id: string) {
-        console.log(id);
-        this.props.navigator.push({
-            screen: 'sepetim.ProductDetail'
-        })
+    renderCategoryItem(item: Category) {
+        return (
+            <View style={styles.categoryItem}>
+                <Image source={{uri: item.thumbnail}} style={{padding:2, flexGrow: 1}} resizeMode={'contain'}/>
+                <Text style={{textAlign: 'center', padding: 8, fontWeight: '600'}}>{item.name}</Text>
+            </View>
+        )
     }
 
     onNavigatorEvent(event) {
@@ -110,16 +134,16 @@ class Home extends React.Component {
                     backButtonTitle: "Back",
                     backButtonHidden: false
                 })
-            }else if (event.link === "account") {
+            } else if (event.link === "account") {
                 this.props.navigator.push({
                     screen: "sepetim.Account",
                     title: "My Account",
                     backButtonTitle: "Back",
                     backButtonHidden: false
                 })
-            }else if (event.link === "logout") {
+            } else if (event.link === "logout") {
                 this.props.dispatch(logOut())
-            }else if (event.link === 'editAddress') {
+            } else if (event.link === 'editAddress') {
                 this.props.navigator.push({
                     screen: "sepetim.MapHelper",
                     title: "Edit Address",
@@ -172,19 +196,6 @@ class Home extends React.Component {
         if (keyword !== undefined && keyword.length > 2) {
             this.props.dispatch(searchProducts(keyword))
         }
-
-        this.setState({
-            name: keyword
-        })
-
-    }
-
-    goToSearchView() {
-        this.props.navigator.push({
-            screen: 'sepetim.Search',
-            animated: true,
-            backButtonHidden: false
-        })
     }
 
     _goToCart() {
@@ -202,11 +213,27 @@ const styles = StyleSheet.create({
     },
     list: {
         flex: 1
+    },
+    categoryItem: {
+        flex: 1,
+        height: 168,
+        flexDirection: 'column',
+        borderWidth: 1,
+        borderColor: 'black',
+        alignItems: 'stretch',
+        justifyContent: 'center',
+        margin: 4
     }
 })
 
 function mapStateToProps(state) {
-    return {data: state.product.all, quantity: state.cart.items.entrySeq().toArray().length, address: state.user.address}
+
+    return {
+        data: state.product.all,
+        quantity: state.cart.items.entrySeq().toArray().length,
+        address: state.user.address,
+        categories: state.product.categories
+    }
 }
 
 export default connect(mapStateToProps)(Home)
