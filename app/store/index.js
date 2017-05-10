@@ -16,7 +16,7 @@ if (__DEV__) {
     middleware = [...middleware];
 }
 
-const configureStore = () => {
+function configureStore() {
 
     return createStore(
         appReducer,
