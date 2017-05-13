@@ -42,12 +42,25 @@ export async function signUp(newUser) {
     user.set('phone', newUser.phone)
     user.set('address', newUser.address)
 
-    const payload = await user.signUp(null)
+    try {
 
-    return {
-        type: 'SIGN_UP',
-        payload: payload
+        const parseUser = await user.signUp(null)
+
+        return {
+            type: 'SIGN_UP',
+            payload: parseUser
+        }
+    }catch (error) {
+
+        if (error.code === 202) {
+            return {
+                type: 'USERNAME_EXISTS',
+                message: 'This username is already registered!'
+            }
+        }
     }
+
+
 }
 
 export async function checkCurrentUser() {
@@ -134,6 +147,17 @@ export function searchProducts(keyword: string) {
 
     return loadParseQuery('SEARCH_PRODUCTS', query)
 }
+
+export function searchProductsInCategory(id: string) {
+    const category = new Parse.Object('Category')
+    category.id = id
+    const query = new Parse.Query(_Product)
+    query.include('category')
+    query.equalTo('category', category)
+
+    return loadParseQuery('SEARCH_PRODUCTS', query)
+}
+
 
 export async function giveOrder(user: Object, items: Array<Object>, total: number, address: string, deliveryType: string = 'standard', orderState: string = 'nonApproved') {
 

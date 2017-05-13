@@ -5,23 +5,23 @@
 import type {Category, Product, Action} from '../types'
 
 const initialState = {
-    all: [],
-    categories: []
+    categories: [],
+    results: []
 }
 
 type State = {
-    all: Array<Product>,
-    categories: Array<Category>
+    categories: Array<Category>,
+    results: Array<Product>
 }
 
 const productReducer = (state: State = initialState, action: Action) => {
 
     if (action.type === 'FETCH_PRODUCTS') {
-        return {...state, all: action.list.map(fromParseObject)}
+        return {...state, results: action.list.map(fromParseObject)}
     }
 
     if (action.type === 'SEARCH_PRODUCTS'){
-        return {...state, all: action.list.map(fromParseObject)}
+        return {...state, results: action.list.map(fromParseObject)}
     }
 
     if (action.type === 'FETCH_CATEGORIES') {

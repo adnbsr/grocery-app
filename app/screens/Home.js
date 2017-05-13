@@ -4,39 +4,26 @@
 import React from 'react'
 import {
     View,
-    Text,
-    Image,
     StyleSheet,
-    AsyncStorage,
-    ListView,
-    Button,
     Platform,
-    TextInput,
     ScrollView
 } from 'react-native'
-import SnackBar from 'react-native-snackbar'
-import CartListItem from '../components/CartListItem'
 import ProductItem from '../components/ProductItem'
 import SearchBarHolder from '../components/SearchBarHolder'
 import CartBottomBar from '../components/CartBottomBar'
 import AppSwiper from '../components/AppSwiper'
 import GridView from '../components/GridView'
+import CategoryItem from "../components/CategoryItem";
 import {IconsLoaded, IconsMap} from '../utils/icons'
 import {connect} from 'react-redux'
-import {addToCart, fetchProducts, searchProducts, logOut, fetchCategories} from '../actions/index'
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
+import {addToCart, fetchProducts, logOut, fetchCategories} from '../actions/index'
 
 import type {Product, Dispatch, Category} from '../types'
 
 
 class Home extends React.Component {
 
-    state: {
-        dataSource: ListView.DataSource
-    }
-
     props: {
-        data: Array<Product>,
         navigator: any,
         quantity: number,
         dispatch: Dispatch,
@@ -44,7 +31,6 @@ class Home extends React.Component {
     }
 
     static defaultProps = {
-        data: [],
         quantity: 0
     }
 
@@ -55,51 +41,37 @@ class Home extends React.Component {
     constructor(props) {
         super(props)
 
-
-        const ds = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2
-        })
-
-        this.state = {
-            dataSource: ds.cloneWithRows(this.props.data)
-        }
-
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
         this.renderNavigationBarButtons()
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.props.dispatch(fetchCategories())
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            dataSource: this.state.dataSource.cloneWithRows(nextProps.data)
-        })
     }
 
     render() {
 
         return (
             <View style={styles.container}>
-                <SearchBarHolder search={(keyword) => this._searchProducts(keyword)}/>
+                <SearchBarHolder search={(keyword) => {
+                    this.props.navigator.push({
+                        screen: 'sepetim.Search',
+                        title: "Search",
+                        passProps: {
+                            keyword: keyword
+                        }
+                    })
+                }}/>
 
                 <ScrollView>
                     <AppSwiper />
-
                     <GridView
                         fillMissingItems={true}
                         itemsPerRow={3}
                         data={this.props.categories}
                         renderItem={this.renderCategoryItem.bind(this)}/>
-
-                    <ListView
-                        style={styles.list}
-                        enableEmptySections={true}
-                        dataSource={this.state.dataSource}
-                        renderRow={this.renderRow.bind(this)}/>
-
                 </ScrollView>
+
                 <CartBottomBar goToCart={this._goToCart.bind(this)} quantity={this.props.quantity}/>
 
             </View>
@@ -111,11 +83,19 @@ class Home extends React.Component {
     }
 
     renderCategoryItem(item: Category) {
+
         return (
-            <View style={styles.categoryItem}>
-                <Image source={{uri: item.thumbnail}} style={{padding:2, flexGrow: 1}} resizeMode={'contain'}/>
-                <Text style={{textAlign: 'center', padding: 8, fontWeight: '600'}}>{item.name}</Text>
-            </View>
+            <CategoryItem
+                category={item}
+                onPress={(category) => {
+                    this.props.navigator.push({
+                        screen: 'sepetim.CategoryDetail',
+                        title: category.name,
+                        passProps: {
+                            category: category
+                        }
+                    })
+                }}/>
         )
     }
 
@@ -180,22 +160,10 @@ class Home extends React.Component {
 
     _addToCart(product: Product) {
         this.props.dispatch(addToCart(product))
-
-        SnackBar.show({
-            title: 'Urun listeye eklendi',
-            duration: SnackBar.LENGTH_SHORT
-        })
-
     }
 
     fetchProducts() {
         this.props.dispatch(fetchProducts())
-    }
-
-    _searchProducts(keyword) {
-        if (keyword !== undefined && keyword.length > 2) {
-            this.props.dispatch(searchProducts(keyword))
-        }
     }
 
     _goToCart() {
@@ -213,25 +181,13 @@ const styles = StyleSheet.create({
     },
     list: {
         flex: 1
-    },
-    categoryItem: {
-        flex: 1,
-        height: 168,
-        flexDirection: 'column',
-        borderWidth: 1,
-        borderColor: 'black',
-        alignItems: 'stretch',
-        justifyContent: 'center',
-        margin: 4
     }
 })
 
 function mapStateToProps(state) {
 
     return {
-        data: state.product.all,
         quantity: state.cart.items.entrySeq().toArray().length,
-        address: state.user.address,
         categories: state.product.categories
     }
 }

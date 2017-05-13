@@ -4,24 +4,20 @@
 
 
 import React from 'react'
-import {View, StyleSheet} from 'react-native'
+import {View, Text, StyleSheet} from 'react-native'
 import CompatListView from '../components/CompatListView'
 import ProductItem from '../components/ProductItem'
 import {connect} from 'react-redux'
-import {searchProducts,addToCart} from '../actions'
+import {searchProductsInCategory,addToCart} from '../actions'
 
-import type {Product, Dispatch} from '../types'
+import type {Product, Dispatch, Category} from '../types'
 
-class Search extends React.Component {
+class CategoryDetail extends React.Component {
 
     props: {
-        keyword: string,
+        category: Category,
         data: Array<Product>,
         dispatch: Dispatch,
-    }
-
-    static propTypes = {
-      keyword: React.PropTypes.string.isRequired
     }
 
     static defaultProps = {
@@ -29,16 +25,16 @@ class Search extends React.Component {
     }
 
     componentDidMount() {
-        this.props.dispatch(searchProducts(this.props.keyword))
+        this.props.dispatch(searchProductsInCategory(this.props.category.id))
     }
 
     render() {
         return (<View style={styles.container}>
-          <CompatListView
-              style={styles.list}
-              data={this.props.data}
-              renderRow={this.renderRow.bind(this)}
-          />
+            <CompatListView
+                style={styles.list}
+                data={this.props.data}
+                renderRow={this.renderRow.bind(this)}
+            />
         </View> )
     }
 
@@ -66,4 +62,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps)(Search)
+export default connect(mapStateToProps)(CategoryDetail)

@@ -1,7 +1,9 @@
 //@flow
 
-import type {Product, Action} from '../types'
 import {Map} from 'immutable'
+import SnackBar from 'react-native-snackbar'
+
+import type {Product, Action} from '../types'
 
 const initialState = {
     items: Map(),
@@ -16,6 +18,11 @@ type State = {
 export default function cartReducer(state: State = initialState, action: Action) {
 
     if (action.type === 'ADD_TO_CART') {
+
+        SnackBar.show({
+            title: 'Urun listeye eklendi',
+            duration: SnackBar.LENGTH_SHORT
+        })
 
         const {product} = action;
 
@@ -40,6 +47,11 @@ export default function cartReducer(state: State = initialState, action: Action)
 
     if (action.type === 'REMOVE_FROM_CART') {
 
+        SnackBar.show({
+            title: 'Urun listeden cikarildi!',
+            duration: SnackBar.LENGTH_SHORT
+        })
+
         const {product} = action
 
         if (state.items.get(product) === 1) {
@@ -55,6 +67,8 @@ export default function cartReducer(state: State = initialState, action: Action)
             }),
             total: state.total - product.price
         }
+
+
     }
 
     if (action.type === 'CLEAR_CART') {

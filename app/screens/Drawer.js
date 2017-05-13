@@ -4,9 +4,10 @@
  */
 
 import React from 'react'
-import {View, Text, ListView, StyleSheet} from 'react-native'
+import {View, Text, StyleSheet} from 'react-native'
 import DrawerHeader from '../components/DrawerHeader'
 import DrawerItem from '../components/DrawerItem'
+import CompatListView from '../components/CompatListView'
 import {COLOR_WHITE, COLOR_PRIMARY} from '../utils/constants'
 import {connect} from 'react-redux'
 
@@ -19,10 +20,6 @@ class Drawer extends React.Component {
         address: string,
         data: Array<DrawerAbstractItem>,
         navigator: any
-    }
-
-    state: {
-        dataSource: ListView.DataSource
     }
 
     static defaultProps = {
@@ -38,14 +35,6 @@ class Drawer extends React.Component {
         ]
     }
 
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            dataSource: ds.cloneWithRows(this.props.data)
-        }
-    }
-
     render() {
         return (
             <View style={styles.container}>
@@ -54,10 +43,9 @@ class Drawer extends React.Component {
                     name={this.props.name}
                     address={this.props.address}/>
 
-                <ListView
-                    dataSource={this.state.dataSource}
+                <CompatListView
+                    data={this.props.data}
                     renderRow={this.renderRow.bind(this)}
-                    enableEmptySections={true}
                     style={styles.list}/>
             </View>
         )
@@ -80,10 +68,6 @@ class Drawer extends React.Component {
 
     }
 }
-
-const ds = new ListView.DataSource({
-    rowHasChanged: (r1, r2) => r1 !== r2
-})
 
 const styles = StyleSheet.create({
     container: {

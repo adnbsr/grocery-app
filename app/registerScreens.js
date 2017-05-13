@@ -9,6 +9,7 @@ import Login from './screens/Login'
 import Home from './screens/Home'
 import Drawer from './screens/Drawer'
 import Cart from './screens/Cart'
+import CategoryDetail from './screens/CategoryDetail'
 import Search from './screens/Search'
 import ProductDetail from './screens/ProductDetail'
 import Account from './screens/Account'
@@ -25,6 +26,7 @@ export function registerScreens(store: Store, provider: Provider) {
 
     Navigation.registerComponent('sepetim.Home', () => Home, store, provider)
     Navigation.registerComponent('sepetim.Cart', () => Cart, store, provider)
+    Navigation.registerComponent('sepetim.CategoryDetail', () => CategoryDetail, store, provider)
     Navigation.registerComponent('sepetim.ProductDetail', () => ProductDetail)
     Navigation.registerComponent('sepetim.Search', () => Search, store, provider)
     Navigation.registerComponent('sepetim.Drawer', () => Drawer, store, provider)

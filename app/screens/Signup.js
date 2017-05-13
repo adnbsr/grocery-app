@@ -53,33 +53,33 @@ class Signup extends Component {
             <View style={styles.container}>
 
 
-              <TextField multiline={false}
-                         label={"Name"}
-                         value={this.state.name}
-                         highlightColor={COLOR_PRIMARY}
-                         inputStyle={styles.input}
-                         autoCorrect={false}
-                         autoCapitalize={'none'}
-                         onChangeText={(text) => this.setState({name: text})}/>
+                <TextField multiline={false}
+                           label={"Name"}
+                           value={this.state.name}
+                           highlightColor={COLOR_PRIMARY}
+                           inputStyle={styles.input}
+                           autoCorrect={false}
+                           autoCapitalize={'none'}
+                           onChangeText={(text) => this.setState({name: text})}/>
 
-              <TextField multiline={false}
-                         label={"Username"}
-                         value={this.state.username}
-                         inputStyle={styles.input}
-                         autoCapitalize={'none'}
-                         autoCorrect={false}
-                         highlightColor={COLOR_PRIMARY}
-                         returnKeyType={'done'}
-                         onChangeText={(text) => this.setState({username: text})}/>
+                <TextField multiline={false}
+                           label={"Username"}
+                           value={this.state.username}
+                           inputStyle={styles.input}
+                           autoCapitalize={'none'}
+                           autoCorrect={false}
+                           highlightColor={COLOR_PRIMARY}
+                           returnKeyType={'done'}
+                           onChangeText={(text) => this.setState({username: text})}/>
 
-              <TextField multiline={false}
-                         label={"Password"}
-                         value={this.state.password}
-                         inputStyle={styles.input}
-                         highlightColor={COLOR_PRIMARY}
-                         returnKeyType={'done'}
-                         secureTextEntry={true}
-                         onChangeText={(text) => this.setState({password: text})}/>
+                <TextField multiline={false}
+                           label={"Password"}
+                           value={this.state.password}
+                           inputStyle={styles.input}
+                           highlightColor={COLOR_PRIMARY}
+                           returnKeyType={'done'}
+                           secureTextEntry={true}
+                           onChangeText={(text) => this.setState({password: text})}/>
 
                 <TextField multiline={false}
                            label={"Phone"}
@@ -90,17 +90,17 @@ class Signup extends Component {
                            maxLength={10}
                            onChangeText={(text) => this.setState({phone: text})}/>
 
-              <TextField multiline={false}
-                         label={"Address"}
-                         value={this.state.address}
-                         inputStyle={styles.input}
-                         autoCapitalize={'none'}
-                         autoCorrect={false}
-                         highlightColor={COLOR_PRIMARY}
-                         returnKeyType={'done'}
-                         onChangeText={(text) => this.setState({address: text})}/>
+                <TextField multiline={false}
+                           label={"Address"}
+                           value={this.state.address}
+                           inputStyle={styles.input}
+                           autoCapitalize={'none'}
+                           autoCorrect={false}
+                           highlightColor={COLOR_PRIMARY}
+                           returnKeyType={'done'}
+                           onChangeText={(text) => this.setState({address: text})}/>
 
-              <Button title="Sign Up" onPress={() => this.onSubmitPress()} style={styles.submit}/>
+                <Button title="Sign Up" onPress={() => this.onSubmitPress()} style={styles.submit}/>
             </View>
         )
     }
@@ -113,14 +113,11 @@ class Signup extends Component {
         }
     }
 
-    sendAlert(message: string){
+    sendAlert(message: string) {
         Alert.alert("Sebetim", message)
     }
 
     onSubmitPress() {
-
-       console.log(this.state)
-
         this.props.dispatch(signUp(this.state))
     }
 }

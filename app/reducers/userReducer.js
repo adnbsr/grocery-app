@@ -2,6 +2,7 @@
  * Created by adnanbasar on 02/05/2017.
  */
 
+import SnackBar from 'react-native-snackbar'
 
 const initialState = {
     isUserLoggedIn: false,
@@ -13,8 +14,6 @@ const initialState = {
 export default function userReducer(state = initialState, action) {
 
     if (action.type === "LOAD_CONFIG") {
-
-        console.log(JSON.parse(action.payload))
 
         return {
             isUserLoggedIn: action.payload
@@ -52,6 +51,16 @@ export default function userReducer(state = initialState, action) {
 
         return initialState
 
+    }
+
+    if (action.type === 'USERNAME_EXISTS') {
+
+        SnackBar.show({
+            title: action.message,
+            length: SnackBar.LENGTH_SHORT
+        })
+
+        return initialState
     }
 
 
