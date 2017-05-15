@@ -9,7 +9,7 @@ import DeliveryPicker, {STANDARD, EXPRESS} from '../components/DeliveryPicker'
 import {addToCart, removeFromCart, giveOrder, clearCart, clearOrder} from '../actions'
 import {connect} from 'react-redux'
 import {IconsLoaded, IconsMap} from '../utils/icons'
-import {COLOR_PRIMARY, COLOR_WHITE} from '../utils/constants'
+import {COLOR_PRIMARY, COLOR_WHITE} from '../utils/colors'
 import SnackBar from 'react-native-snackbar'
 
 import type {Dispatch} from '../types'

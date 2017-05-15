@@ -4,7 +4,7 @@
 
 import React from 'react'
 import {View,Text, StyleSheet} from 'react-native'
-import {MD_GREY_300, MD_DEEP_ORANGE_900} from '../utils/constants'
+import {MD_GREY_300, MD_DEEP_ORANGE_900} from '../utils/colors'
 
 class DeliveryPicker extends React.Component{
 

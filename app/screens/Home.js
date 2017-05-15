@@ -121,9 +121,30 @@ class Home extends React.Component {
                     backButtonTitle: "Back",
                     backButtonHidden: false
                 })
+            } else if (event.link === 'categories') {
+
+                this.props.navigator.push({
+                    screen: "sepetim.ShopCategories",
+                    title: "Categories",
+                    backButtonTitle: "Back",
+                    backButtonHidden: false
+                })
+
+            } else if (event.link === 'offers') {
+
+                this.props.navigator.push({
+                    screen: "sepetim.ShopOffers",
+                    title: "Offers",
+                    backButtonTitle: "Back",
+                    backButtonHidden: false
+                })
+
             } else if (event.link === "logout") {
+
                 this.props.dispatch(logOut())
+
             } else if (event.link === 'editAddress') {
+
                 this.props.navigator.push({
                     screen: "sepetim.MapHelper",
                     title: "Edit Address",

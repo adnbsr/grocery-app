@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 
 import com.airbnb.android.react.maps.MapsPackage;
 import com.azendoo.reactnativesnackbar.SnackbarPackage;
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -20,7 +21,8 @@ public class MainApplication extends NavigationApplication {
         return Arrays.<ReactPackage>asList(
                 new VectorIconsPackage(),
                 new SnackbarPackage(),
-                new MapsPackage()
+                new MapsPackage(),
+                new ReactNativePushNotificationPackage()
         );
     }
 

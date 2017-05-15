@@ -9,10 +9,18 @@ import CompatListView from '../components/CompatListView'
 import ProductItem from '../components/ProductItem'
 import {connect} from 'react-redux'
 import {searchProductsInCategory,addToCart} from '../actions'
+import {COLOR_PRIMARY, COLOR_WHITE} from '../utils/colors'
 
 import type {Product, Dispatch, Category} from '../types'
 
 class CategoryDetail extends React.Component {
+
+    static navigatorStyle = {
+        statusBarColor: COLOR_PRIMARY,
+        navBarBackgroundColor: COLOR_PRIMARY,
+        navBarTextColor: COLOR_WHITE,
+        navBarButtonColor: COLOR_WHITE
+    }
 
     props: {
         category: Category,

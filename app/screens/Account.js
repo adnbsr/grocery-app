@@ -8,7 +8,7 @@ import React from 'react'
 import {View, StyleSheet} from 'react-native'
 import SplashIcon from '../components/SplashIcon'
 import {IconsLoaded, IconsMap} from '../utils/icons'
-import {COLOR_PRIMARY, COLOR_WHITE} from '../utils/constants'
+import {COLOR_PRIMARY, COLOR_WHITE} from '../utils/colors'
 
 class Account extends React.Component {
 

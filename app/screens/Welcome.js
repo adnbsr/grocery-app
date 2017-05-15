@@ -6,7 +6,7 @@ import React from 'react'
 import {View, StyleSheet, Text, PushNotificationIOS, Platform} from 'react-native'
 import PushNotification from 'react-native-push-notification'
 import Button from '../components/Button'
-import {COLOR_WHITE, MD_BLUE_GRAY_800, COLOR_PRIMARY} from '../utils/constants'
+import {COLOR_WHITE, MD_BLUE_GRAY_800, COLOR_PRIMARY} from '../utils/colors'
 import {connect} from 'react-redux'
 import {storeDeviceToken, updateInstallation} from '../actions'
 import SplashIcon from '../components/SplashIcon'
@@ -32,13 +32,14 @@ class Welcome extends React.Component {
 
         PushNotification.configure({
             onRegister: (token) => {
+                console.log(token)
                 dispatch(storeDeviceToken(token))
             },
             onNotification: (notification) => {
                 console.log(notification)
             },
             popInitialNotification: true,
-            senderID: "gcm_id",
+            senderID: "1000220300077",
             requestPermissions: true,
             permissions: {
                 alert: true,

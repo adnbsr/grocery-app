@@ -8,7 +8,7 @@ import {View, Text, StyleSheet} from 'react-native'
 import DrawerHeader from '../components/DrawerHeader'
 import DrawerItem from '../components/DrawerItem'
 import CompatListView from '../components/CompatListView'
-import {COLOR_WHITE, COLOR_PRIMARY} from '../utils/constants'
+import {COLOR_WHITE, COLOR_PRIMARY} from '../utils/colors'
 import {connect} from 'react-redux'
 
 import type {DrawerAbstractItem} from '../types'
@@ -28,7 +28,7 @@ class Drawer extends React.Component {
         data: [
             {type: "home", label: "Home"},
             {type: "account", label: "My Account"},
-            {type: "category", label: "Shop By Category"},
+            {type: "categories", label: "Shop By Category"},
             {type: "offers", label: "Shop By Offers"},
             {type: "notifications", label: "Notifications"},
             {type: "logout", label: "Logout"}

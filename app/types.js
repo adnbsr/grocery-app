@@ -16,7 +16,8 @@ export type Product = {
     name: string,
     price: number,
     thumbnail: string,
-    category: Category
+    category: Category,
+    offer?: boolean
 }
 
 export type DrawerAbstractItem = {
@@ -33,3 +34,18 @@ export type Action = { type: 'FETCH_PRODUCTS', list: Array<ParseObject> }
 
 
 export type Dispatch = (action: Action) => any;
+
+
+//Map Types
+
+export type Region = {
+    latitude: number,
+    longitude: number,
+    latitudeDelta: number,
+    longitudeDelta: number
+}
+
+export type Point = {
+    latitude: number,
+    longitude: number
+}

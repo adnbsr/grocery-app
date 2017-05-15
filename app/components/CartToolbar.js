@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, Text, StyleSheet} from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import {COLOR_PRIMARY, COLOR_WHITE} from '../utils/constants'
+import {COLOR_PRIMARY, COLOR_WHITE} from '../utils/colors'
 
 class CartToolbar extends React.Component {
 

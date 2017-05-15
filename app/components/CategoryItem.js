@@ -20,14 +20,18 @@ class CategoryItem extends React.Component {
 
     render() {
 
+        const Touchable = Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity
+
         return (
-            <View style={styles.container}>
-                <Image
-                    source={{uri: this.props.category.thumbnail}}
-                    style={styles.thumbnail}
-                    resizeMode={'contain'}/>
-                <Text style={styles.name}>{this.props.category.name}</Text>
-            </View>
+            <Touchable onPress={() => this.props.onPress(this.props.category)}>
+                <View style={styles.container}>
+                    <Image
+                        source={{uri: this.props.category.thumbnail}}
+                        style={styles.thumbnail}
+                        resizeMode={'contain'}/>
+                    <Text style={styles.name}>{this.props.category.name}</Text>
+                </View>
+            </Touchable>
         )
     }
 }
@@ -54,19 +58,4 @@ const styles = StyleSheet.create({
     }
 })
 
-function wrapWithTouchable(Component: React.Component): React.Component {
-    return class extends React.Component {
-
-        render() {
-            const Touchable = Platform.OS === 'ios' ? TouchableOpacity : TouchableNativeFeedback
-
-            return (<Touchable onPress={() => {this.props.onPress(this.props.category)}}>
-                    <Component {...this.props}/>
-                </Touchable>
-            )
-        }
-    }
-}
-
-
-export default wrapWithTouchable(CategoryItem)
+export default CategoryItem

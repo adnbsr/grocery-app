@@ -13,14 +13,14 @@ function loadParseQuery(type, query) {
                 // We don't want data loading to interfere with smooth animations
                 InteractionManager.runAfterInteractions(() => {
                     // Flow can't guarantee {type, list} is a valid action
-                    dispatch(({type, list}: any));
+                    dispatch(({type, list}: any))
                 });
             },
             error: (error) => {
                 console.error(error)
             }
-        });
-    };
+        })
+    }
 }
 
 export async function loadConfig(): Promise<Object> {
@@ -59,8 +59,6 @@ export async function signUp(newUser) {
             }
         }
     }
-
-
 }
 
 export async function checkCurrentUser() {
@@ -137,6 +135,15 @@ export function fetchProducts() {
     query.include('category')
 
     return loadParseQuery('FETCH_PRODUCTS', query)
+}
+
+export function fetchOffers() {
+
+    const query = new Parse.Query(_Product)
+    query.include('category')
+    query.equalTo("offer", true)
+
+    return loadParseQuery('FETCH_OFFERS', query)
 }
 
 export function searchProducts(keyword: string) {

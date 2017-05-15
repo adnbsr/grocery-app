@@ -4,7 +4,7 @@
 
 import React from 'react'
 import {View, Text, StyleSheet, TouchableNativeFeedback, TouchableOpacity, Platform} from 'react-native'
-import {MD_BLUE_GRAY_800, COLOR_WHITE} from '../utils/constants'
+import {MD_BLUE_GRAY_800, COLOR_WHITE} from '../utils/colors'
 
 class Button extends React.Component {
 

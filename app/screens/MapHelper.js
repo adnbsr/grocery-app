@@ -1,13 +1,31 @@
 /**
  * Created by adnanbasar on 04/05/2017.
+ *
+ * @flow
  */
 
 import React from 'react'
-import {View, Text, StyleSheet, Alert} from 'react-native'
+import {View, Text, StyleSheet, Alert, Dimensions} from 'react-native'
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'
-import {COLOR_WHITE, COLOR_PRIMARY} from '../utils/constants'
+import {COLOR_WHITE, COLOR_PRIMARY} from '../utils/colors'
 import {connect} from 'react-redux'
 import {updateUserAddress} from '../actions'
+
+import type {Region, Point} from '../types'
+
+const screen = Dimensions.get('window')
+const ASPECT_RATIO = screen.width / screen.height
+const INITIAL_LATITUDE = 37.78825
+const INITIAL_LONGITUDE = -122.4324
+const LATITUDE_DELTA = 0.0922
+const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO
+
+const INITIAL_REGION: Region = {
+    latitude: INITIAL_LATITUDE,
+    longitude: INITIAL_LONGITUDE,
+    latitudeDelta: LATITUDE_DELTA,
+    longitudeDelta: LONGITUDE_DELTA
+}
 
 class MapHelper extends React.Component {
 
@@ -18,21 +36,47 @@ class MapHelper extends React.Component {
         statusBarColor: COLOR_PRIMARY
     }
 
+    state: {
+        region: Region,
+        point: Point
+    }
+
+    map: any = undefined
+
     constructor(props) {
         super(props)
 
         this.state = {
-            region: {
-                latitude: 40.8273277,
-                longitude: 29.3557592,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-            },
             point: {
-                latitude: 40.8273277,
-                longitude: 29.3557592
-            }
+                latitude: INITIAL_LATITUDE,
+                longitude: INITIAL_LONGITUDE,
+            }, region: INITIAL_REGION
         }
+    }
+
+    componentDidMount() {
+        navigator.geolocation.getCurrentPosition((position) => {
+
+            const {coords} = position
+            const {latitude, longitude} = coords
+
+            this.setState({
+                point: {
+                    latitude: latitude,
+                    longitude: longitude
+                },
+                region: {
+                    ...this.state.region,
+                    latitude: latitude,
+                    longitude: longitude
+                }
+            })
+
+            this.map.animateToRegion(this.state.region)
+
+        }, (error) => {
+            console.error(error)
+        }, {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000})
     }
 
     render() {
@@ -40,9 +84,15 @@ class MapHelper extends React.Component {
             <View style={styles.container}>
                 <MapView
                     provider={PROVIDER_GOOGLE}
+                    ref={ref => {
+                        this.map = ref
+                    }}
                     initialRegion={this.state.region}
+                    showsUserLocation={true}
+                    showsMyLocationButton={true}
+                    userLocationAnnotationTitle={"You"}
                     style={styles.map}
-                    onRegionChange={(region) => this.onRegionChange(region)}>
+                    onRegionChange={this.onRegionChange.bind(this)}>
 
                     <MapView.Marker
                         coordinate={this.state.point}
@@ -55,8 +105,10 @@ class MapHelper extends React.Component {
         )
     }
 
-    onRegionChange(region: Object) {
-
+    onRegionChange(region) {
+        this.setState({
+            region: region
+        })
     }
 
     onUseThisLocation() {

@@ -4,7 +4,7 @@
 
 import React from 'react'
 import {View, Text, StyleSheet, Dimensions, Image} from 'react-native'
-import {COLOR_PRIMARY, COLOR_WHITE} from '../utils/constants'
+import {COLOR_PRIMARY, COLOR_WHITE} from '../utils/colors'
 
 import Swiper from 'react-native-swiper';
 

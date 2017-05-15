@@ -28,6 +28,10 @@ const productReducer = (state: State = initialState, action: Action) => {
         return {...state, categories: action.list.map(fromParseObjectToCategory)}
     }
 
+    if (action.type === 'FETCH_OFFERS'){
+        return {...state, results: action.list.map(fromParseObject)}
+    }
+
     return state
 }
 
@@ -50,7 +54,8 @@ const fromParseObject = (object: Object): Product => {
         category: {
             id: object.get('category') && object.get('category').id,
             name: object.get('category') && object.get('category').get('name')
-        }
+        },
+        offer: object.get('offer')
     }
 }
 

@@ -15,6 +15,8 @@ import ProductDetail from './screens/ProductDetail'
 import Account from './screens/Account'
 import Notifications from './screens/Notifications'
 import MapHelper from './screens/MapHelper'
+import ShopCategories from './screens/ShopCategories'
+import ShopOffers from './screens/ShopOffers'
 
 import {Provider} from 'react-redux'
 import {Store} from  'redux'
@@ -33,4 +35,6 @@ export function registerScreens(store: Store, provider: Provider) {
     Navigation.registerComponent('sepetim.Account', () => Account, store, provider)
     Navigation.registerComponent('sepetim.Notifications', () => Notifications, store, provider)
     Navigation.registerComponent('sepetim.MapHelper', () => MapHelper, store, provider)
+    Navigation.registerComponent('sepetim.ShopCategories', () => ShopCategories, store, provider)
+    Navigation.registerComponent('sepetim.ShopOffers', () => ShopOffers, store, provider)
 }

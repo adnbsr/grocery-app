@@ -6,7 +6,8 @@ import {configureStore} from './store'
 import {registerScreens} from './registerScreens'
 import {checkCurrentUser, getCurrentInstallation} from './actions'
 import {IconsLoaded} from './utils/icons'
-import {COLOR_PRIMARY, COLOR_WHITE, APPLICATION_ID, SERVER_URL, MASTER_KEY} from './utils/constants'
+import {COLOR_PRIMARY, COLOR_WHITE} from './utils/colors'
+import {APPLICATION_ID, SERVER_URL, MASTER_KEY} from './utils/constants'
 import Parse from 'parse/react-native'
 
 
@@ -55,7 +56,7 @@ function startApp() {
     })
 }
 
-function startWelcome(){
+function startWelcome() {
     IconsLoaded.then(() => {
         Navigation.startSingleScreenApp({
             screen: {
@@ -88,7 +89,7 @@ const App = () => {
 
             if (isUserLoggedIn) {
                 startApp()
-            }else {
+            } else {
                 startWelcome()
             }
         })

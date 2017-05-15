@@ -6,7 +6,7 @@
 
 import React from 'react'
 import {StyleSheet, View, Text} from 'react-native'
-import {COLOR_BLACK, COLOR_WHITE} from '../utils/constants'
+import {COLOR_BLACK, COLOR_WHITE} from '../utils/colors'
 
 import type {DrawerAbstractItem} from '../types'
 

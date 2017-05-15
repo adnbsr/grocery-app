@@ -10,7 +10,7 @@ import {
     TouchableOpacity
 } from 'react-native'
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons'
-import {MD_LIGHT_BLUE_500, MD_RED_400} from '../utils/constants'
+import {MD_LIGHT_BLUE_500, MD_RED_400} from '../utils/colors'
 
 class CartBottomBar extends React.Component {
 

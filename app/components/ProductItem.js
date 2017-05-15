@@ -3,7 +3,7 @@
 import React from 'react'
 import {View, Text, StyleSheet, Image} from 'react-native'
 import Parse from 'parse/react-native'
-import {MD_RED_400, COLOR_WHITE} from '../utils/constants'
+import {MD_RED_400, COLOR_WHITE} from '../utils/colors'
 
 import type {Product} from '../types'
 
@@ -40,7 +40,7 @@ class ProductItem extends React.Component {
                   <Text style={styles.price}>
                       {this.props.product.price && this.props.product.price.toFixed(2)}
                   </Text>
-                  <Text style={styles.addToCart} onPress={this.handleAddToCart.bind(this)}>
+                  <Text style={styles.quantity} onPress={this.handleAddToCart.bind(this)}>
                     Add
                   </Text>
                 </View>
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
         flex: 1,
 
     },
-    addToCart: {
+    quantity: {
         fontSize: 18,
         paddingTop: 4,
         paddingBottom: 4,

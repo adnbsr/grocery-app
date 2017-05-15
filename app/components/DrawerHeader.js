@@ -6,7 +6,7 @@
 
 import React from 'react'
 import {StyleSheet, View, Text, Platform, TouchableNativeFeedback, TouchableOpacity} from 'react-native'
-import {MD_BLUE_GRAY_800, COLOR_WHITE} from '../utils/constants'
+import {MD_BLUE_GRAY_800, COLOR_WHITE} from '../utils/colors'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 class DrawerHeader extends React.Component {
