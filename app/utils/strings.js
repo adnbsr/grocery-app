@@ -52,7 +52,7 @@ const strings = {
     },
     tm: {
         appName: 'Sebetim',
-        account: 'My Account',
+        account: 'Hesabim',
         add: 'Add',
         address: 'Address',
         cancel: 'Cancel',

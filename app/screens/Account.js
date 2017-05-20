@@ -114,11 +114,11 @@ class Account extends React.Component {
     }
 
     dismissLocaleBox(){
-        this.props.navigator.dismissLightBox()
         SnackBar.show({
             title: strings.localeUpdate,
             length: SnackBar.LENGTH_SHORT
         })
+        this.props.navigator.dismissLightBox()
     }
 }
 

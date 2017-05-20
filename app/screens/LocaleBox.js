@@ -9,6 +9,7 @@ import CompatListView from '../components/CompatListView'
 import LocaleItem from '../components/LocaleItem'
 import LocaleManager from '../utils/LocaleManager'
 import strings from '../utils/strings'
+import {COLOR_PRIMARY} from '../utils/colors'
 
 import type {LocaleType} from '../types'
 
@@ -20,6 +21,10 @@ const data: Array<LocaleType> = [
 
 
 class LocaleBox extends React.Component {
+
+    static navigatorStyle = {
+        statusBarColor: COLOR_PRIMARY
+    }
 
     render() {
         return (
