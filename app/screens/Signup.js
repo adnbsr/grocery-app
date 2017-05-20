@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {View, Text, StyleSheet, TextInput, Alert} from 'react-native'
 import TextField from 'react-native-md-textinput'
+import SnackBar from 'react-native-snackbar'
 import Button from '../components/Button'
 import {COLOR_PRIMARY, COLOR_WHITE} from '../utils/colors'
 import {IconsLoaded, IconsMap} from '../utils/icons'
@@ -18,13 +19,19 @@ class Signup extends Component {
         statusBarColor: COLOR_PRIMARY
     }
 
+    state: {
+        name: undefined,
+        password: undefined,
+        address: undefined,
+        phone: undefined
+    }
+
     constructor(props) {
         super(props)
 
         this.state = {
-            username: undefined,
-            password: undefined,
             name: undefined,
+            password: undefined,
             address: undefined,
             phone: undefined
         }
@@ -61,16 +68,6 @@ class Signup extends Component {
                            autoCorrect={false}
                            autoCapitalize={'none'}
                            onChangeText={(text) => this.setState({name: text})}/>
-
-                <TextField multiline={false}
-                           label={"Username"}
-                           value={this.state.username}
-                           inputStyle={styles.input}
-                           autoCapitalize={'none'}
-                           autoCorrect={false}
-                           highlightColor={COLOR_PRIMARY}
-                           returnKeyType={'done'}
-                           onChangeText={(text) => this.setState({username: text})}/>
 
                 <TextField multiline={false}
                            label={"Password"}
@@ -118,7 +115,24 @@ class Signup extends Component {
     }
 
     onSubmitPress() {
-        this.props.dispatch(signUp(this.state))
+
+        const {name, password, phone, address} = this.state
+
+        if (phone === undefined || phone.length < 10) {
+            SnackBar.show({
+                title: "Phone must be at least 10 characters"
+            })
+            return
+        }
+
+        const user = {
+            username: phone,
+            name,
+            password,
+            address
+        }
+
+        this.props.dispatch(signUp(user))
     }
 }
 

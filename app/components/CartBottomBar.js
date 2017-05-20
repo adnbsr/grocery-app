@@ -9,8 +9,9 @@ import {
     Platform,
     TouchableOpacity
 } from 'react-native'
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+import Icon from 'react-native-vector-icons/Ionicons'
 import {MD_LIGHT_BLUE_500, MD_RED_400} from '../utils/colors'
+import strings from '../utils/strings'
 
 class CartBottomBar extends React.Component {
 
@@ -31,15 +32,15 @@ class CartBottomBar extends React.Component {
             <View style={styles.container}>
                 <View style={styles.informationBar}>
                     <Text style={styles.informationText}>
-                        STANDART: Tomorrow 5:00 PM to 19:30 PM
+                        {strings.standardMessage}
                     </Text>
                     <Text style={styles.informationText}>
-                        EXPRESS: By Tomorrow 8:30 AM
+                        {strings.expressMessage}
                     </Text>
                 </View>
                 <Touchable onPress={this.props.goToCart} style={{flexGrow: 1, backgroundColor: 'blue', minWidth: 56}}>
                     <View style={styles.cartIconBar}>
-                        <MaterialIcon name="shopping" color="#FFFFFF" size={24}/>
+                        <Icon name="ios-cart" color="#FFFFFF" size={24}/>
                         <Text style={styles.quantity}>{this.props.quantity}</Text>
                     </View>
                 </Touchable>

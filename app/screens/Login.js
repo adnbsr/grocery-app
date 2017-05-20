@@ -4,6 +4,7 @@ import TextField from 'react-native-md-textinput'
 import Button from '../components/Button'
 import {COLOR_PRIMARY, COLOR_WHITE} from '../utils/colors'
 import {IconsLoaded, IconsMap} from '../utils/icons'
+import strings from '../utils/strings'
 import Parse from 'parse/react-native'
 import {logIn} from '../actions'
 import {connect} from 'react-redux'
@@ -18,11 +19,16 @@ class Login extends Component {
         statusBarColor: COLOR_PRIMARY
     }
 
+    state: {
+        phone: string,
+        password: string
+    }
+
     constructor(props) {
         super(props)
 
         this.state = {
-            username: undefined,
+            phone: undefined,
             password: undefined
         }
 
@@ -49,18 +55,18 @@ class Login extends Component {
         return (
             <View style={styles.container}>
 
-
                 <TextField multiline={false}
-                           label={"Username"}
-                           value={this.state.username}
+                           label={strings.phone}
+                           value={this.state.phone}
                            highlightColor={COLOR_PRIMARY}
                            inputStyle={styles.input}
                            autoCorrect={false}
                            autoCapitalize={'none'}
-                           onChangeText={(text) => this.setState({username: text})}/>
+                           maxLength={10}
+                           onChangeText={(text) => this.setState({phone: text})}/>
 
                 <TextField multiline={false}
-                           label={"Password"}
+                           label={strings.password}
                            value={this.state.password}
                            inputStyle={styles.input}
                            highlightColor={COLOR_PRIMARY}
@@ -68,7 +74,7 @@ class Login extends Component {
                            secureTextEntry={true}
                            onChangeText={(text) => this.setState({password: text})}/>
 
-                <Button title="Login" onPress={() => this.onSubmitPress()} style={styles.submit}/>
+                <Button title={strings.login} onPress={() => this.onSubmitPress()} style={styles.submit}/>
             </View>
         )
     }
@@ -82,24 +88,24 @@ class Login extends Component {
     }
 
     sendAlert(message: string){
-        Alert.alert("Sebetim", message)
+        Alert.alert(strings.appName, message)
     }
 
     onSubmitPress() {
 
-        const {username, password} = this.state
+        const {phone, password} = this.state
 
-        if (username === undefined || password === undefined) {
-            this.sendAlert('Username or Password is wrong!')
+        if (phone === undefined || password === undefined) {
+            this.sendAlert(strings.phonePasswordWrong)
             return
         }
 
         if (password !== undefined && password.length < 6){
-            this.sendAlert("Password must be at least 6 characters")
+            this.sendAlert(strings.password6Characters)
             return
         }
 
-        this.props.dispatch(logIn(this.state.username, this.state.password))
+        this.props.dispatch(logIn(this.state.phone, this.state.password))
     }
 }
 

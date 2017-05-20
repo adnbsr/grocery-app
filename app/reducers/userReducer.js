@@ -1,14 +1,18 @@
 /**
  * Created by adnanbasar on 02/05/2017.
+ *
+ * @flow
  */
 
 import SnackBar from 'react-native-snackbar'
+import strings from '../utils/strings'
 
 const initialState = {
     isUserLoggedIn: false,
     id: null,
     name: null,
-    address: null
+    address: null,
+    phone: null
 }
 
 export default function userReducer(state = initialState, action) {
@@ -31,6 +35,7 @@ export default function userReducer(state = initialState, action) {
         return {
             isUserLoggedIn: true,
             id: user.id,
+            phone: user.get('username'),
             name: user.get('name'),
             address: user.get('address')
         }
@@ -44,19 +49,19 @@ export default function userReducer(state = initialState, action) {
             return {
                 isUserLoggedIn: true,
                 id: user.id,
+                phone: user.get('username'),
                 name: user.get('name'),
                 address: user.get('address')
             }
         }
 
         return initialState
-
     }
 
     if (action.type === 'USERNAME_EXISTS') {
 
         SnackBar.show({
-            title: action.message,
+            title: strings.usernameExits,
             length: SnackBar.LENGTH_SHORT
         })
 

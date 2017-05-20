@@ -10,6 +10,7 @@ import DrawerItem from '../components/DrawerItem'
 import CompatListView from '../components/CompatListView'
 import {COLOR_WHITE, COLOR_PRIMARY} from '../utils/colors'
 import {connect} from 'react-redux'
+import strings from '../utils/strings'
 
 import type {DrawerAbstractItem} from '../types'
 
@@ -23,19 +24,20 @@ class Drawer extends React.Component {
     }
 
     static defaultProps = {
-        name: "Unknown",
-        address: "Unknown",
+        name: strings.unknown,
+        address: strings.unknown,
         data: [
-            {type: "home", label: "Home"},
-            {type: "account", label: "My Account"},
-            {type: "categories", label: "Shop By Category"},
-            {type: "offers", label: "Shop By Offers"},
-            {type: "notifications", label: "Notifications"},
-            {type: "logout", label: "Logout"}
+            {type: "home", label: strings.home},
+            {type: "account", label: strings.account},
+            {type: "categories", label: strings.shopCategory},
+            {type: "offers", label: strings.shopOffers},
+            {type: "notifications", label: strings.notifications},
+            {type: "logout", label: strings.logout}
         ]
     }
 
     render() {
+
         return (
             <View style={styles.container}>
                 <DrawerHeader

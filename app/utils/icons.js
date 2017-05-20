@@ -1,20 +1,12 @@
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import Evilicons from 'react-native-vector-icons/EvilIcons'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-
 
 const icons = {
-    "settings": [Evilicons, 'gear', 32, '#FFFFFF'],
-    "plus": [Ionicons, 'md-add', 32, '#FFFFFF'],
-    "camera": [Evilicons, 'camera', 32, '#FFFFFF'],
-    'cart': [Evilicons, 'cart', 32, '#FFFFFF'],
-    'add_to_cart': [MaterialIcons, 'add-shopping-cart', 32, '#000000'],
-    'add': [MaterialIcons, 'add', 32, '#FFFFFF'],
-    'menu': [MaterialIcons, 'menu', 24, '#FFFFFF'],
-    'ios-menu': [Ionicons, 'ios-menu-outline', 24, '#FFFFFF'],
+    'menu': [Ionicons, 'md-menu', 24, '#FFFFFF'],
     'notifications': [Ionicons, 'md-notifications', 24, '#FFFFFF'],
     'cancel': [Ionicons, 'md-close', 24, '#FFFFFF'],
-    'back': [Ionicons, 'ios-arrow-back', 24, '#FFFFFF']
+    'back': [Ionicons, 'ios-arrow-back', 24, '#FFFFFF'],
+    'trash': [Ionicons, 'md-trash', 24, '#FFFFFF'],
+    'globe': [Ionicons, 'ios-globe-outline', 24, '#FFFFFF']
 };
 
 const IconsMap = {};

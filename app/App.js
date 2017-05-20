@@ -8,6 +8,7 @@ import {checkCurrentUser, getCurrentInstallation} from './actions'
 import {IconsLoaded} from './utils/icons'
 import {COLOR_PRIMARY, COLOR_WHITE} from './utils/colors'
 import {APPLICATION_ID, SERVER_URL, MASTER_KEY} from './utils/constants'
+import strings from './utils/strings'
 import Parse from 'parse/react-native'
 
 
@@ -44,7 +45,7 @@ function startApp() {
         Navigation.startSingleScreenApp({
             screen: {
                 screen: 'sepetim.Home',
-                title: 'Sebetim ',
+                title:  strings.appName,
                 navigatorStyle
             },
             drawer: {
@@ -61,7 +62,7 @@ function startWelcome() {
         Navigation.startSingleScreenApp({
             screen: {
                 screen: 'sepetim.Welcome',
-                title: 'Register',
+                title: strings.welcome,
                 navigatorStyle
             }
         })

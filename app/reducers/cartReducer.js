@@ -2,6 +2,7 @@
 
 import {Map} from 'immutable'
 import SnackBar from 'react-native-snackbar'
+import strings from '../utils/strings'
 
 import type {Product, Action} from '../types'
 
@@ -20,7 +21,7 @@ export default function cartReducer(state: State = initialState, action: Action)
     if (action.type === 'ADD_TO_CART') {
 
         SnackBar.show({
-            title: 'Urun listeye eklendi',
+            title: strings.itemAdded,
             duration: SnackBar.LENGTH_SHORT
         })
 
@@ -48,7 +49,7 @@ export default function cartReducer(state: State = initialState, action: Action)
     if (action.type === 'REMOVE_FROM_CART') {
 
         SnackBar.show({
-            title: 'Urun listeden cikarildi!',
+            title: strings.itemRemoved,
             duration: SnackBar.LENGTH_SHORT
         })
 

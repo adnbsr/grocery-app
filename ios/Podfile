@@ -1,36 +1,11 @@
 # Uncomment the next line to define a global platform for your project
+source 'https://github.com/CocoaPods/Specs.git'
 
 platform :ios, '8.0'
 
-workspace 'Sepetim.xcworkspace'
-
-project './Sepetim'
-project '../node_modules/react-native-maps/lib/ios/AirMaps'
-
 target 'Sepetim' do
-  project './Sepetim'
   pod 'GoogleMaps', '2.1.1'
 end
 
-target 'AirMaps' do
-  project '../node_modules/react-native-maps/lib/ios/AirMaps'
-
-  pod 'GoogleMaps', '2.1.1'
-  pod 'Yoga', :path => '../node_modules/react-native/ReactCommon/yoga/Yoga.podspec'
-  pod 'React', path: '../node_modules/react-native', :subspecs => [
-    'Core',
-    'RCTActionSheet',
-    'RCTAnimation',
-    'RCTGeolocation',
-    'RCTImage',
-    'RCTLinkingIOS',
-    'RCTNetwork',
-    'RCTSettings',
-    'RCTText',
-    'RCTVibration',
-    'RCTWebSocket'
-  ]
-  
-end
 
 

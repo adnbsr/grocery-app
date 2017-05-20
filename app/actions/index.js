@@ -5,6 +5,7 @@ import type {Product} from '../types'
 
 const _Product = Parse.Object.extend('Product')
 const _Category = Parse.Object.extend('Category')
+const _Order = Parse.Object.extend('Order')
 
 function loadParseQuery(type, query) {
     return (dispatch) => {
@@ -14,7 +15,7 @@ function loadParseQuery(type, query) {
                 InteractionManager.runAfterInteractions(() => {
                     // Flow can't guarantee {type, list} is a valid action
                     dispatch(({type, list}: any))
-                });
+                })
             },
             error: (error) => {
                 console.error(error)
@@ -36,15 +37,10 @@ export async function loadConfig(): Promise<Object> {
 export async function signUp(newUser) {
 
     const user = new Parse.User()
-    user.set('username', newUser.username)
-    user.set('password', newUser.password)
-    user.set('name', newUser.name)
-    user.set('phone', newUser.phone)
-    user.set('address', newUser.address)
 
     try {
 
-        const parseUser = await user.signUp(null)
+        const parseUser = await user.signUp(newUser)
 
         return {
             type: 'SIGN_UP',
@@ -54,8 +50,7 @@ export async function signUp(newUser) {
 
         if (error.code === 202) {
             return {
-                type: 'USERNAME_EXISTS',
-                message: 'This username is already registered!'
+                type: 'USERNAME_EXISTS'
             }
         }
     }
@@ -194,6 +189,18 @@ export function clearOrder() {
     return {
         type: 'CLEAR_ORDER'
     }
+}
+
+export function fetchOrders(userId: String) {
+
+    const user = new Parse.User()
+    user.id = userId
+
+    const query = new Parse.Query(_Order)
+    query.include('user')
+    query.equalTo('user', user)
+
+    return loadParseQuery('FETCH_ORDERS', query)
 }
 
 /**

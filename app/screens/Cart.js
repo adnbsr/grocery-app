@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import {Text, View, ListView, StyleSheet, Platform, Picker} from 'react-native'
+import {Text, View, ListView, StyleSheet, Platform, Alert, ActionSheetIOS} from 'react-native'
 import {Map} from 'immutable'
 import CartListItem from '../components/CartListItem'
 import CartToolbar from '../components/CartToolbar'
@@ -10,6 +10,7 @@ import {addToCart, removeFromCart, giveOrder, clearCart, clearOrder} from '../ac
 import {connect} from 'react-redux'
 import {IconsLoaded, IconsMap} from '../utils/icons'
 import {COLOR_PRIMARY, COLOR_WHITE} from '../utils/colors'
+import strings from '../utils/strings'
 import SnackBar from 'react-native-snackbar'
 
 import type {Dispatch} from '../types'
@@ -61,7 +62,11 @@ class Cart extends React.Component {
 
     componentDidMount() {
 
+
+
         IconsLoaded.then(() => {
+
+            //TODO: Clear left icon implementation
 
             var icon = {
                 id: 'cancel'
@@ -72,7 +77,11 @@ class Cart extends React.Component {
             }
 
             this.props.navigator.setButtons({
-                leftButtons: [icon]
+                leftButtons: [icon],
+                rightButtons: [{
+                    id: 'clear_cart',
+                    icon: IconsMap['trash']
+                }]
             })
         })
     }
@@ -86,7 +95,7 @@ class Cart extends React.Component {
 
         if (nextProps.orderStatus  === 'given' && nextProps.cartTotal !== 0) {
             SnackBar.show({
-                title: 'Order is given and waiting for approval',
+                title: strings.orderGiven,
                 duration: SnackBar.LENGTH_LONG
             })
 
@@ -108,7 +117,7 @@ class Cart extends React.Component {
                     dataSource={this.state.dataSource}
                     renderRow={this.renderRow.bind(this)}
                     enableEmptySections={true}/>
-                <Text style={styles.checkout} onPress={() => this.onCheckout()}>CHECKOUT</Text>
+                <Text style={styles.checkout} onPress={() => this.onCheckout()}>{strings.checkout}</Text>
             </View>
         );
     }
@@ -119,6 +128,32 @@ class Cart extends React.Component {
                 animationType: 'slide-down'
             })
         }
+
+        if (event.id === 'clear_cart') {
+
+            if (Platform.OS === 'ios') {
+                ActionSheetIOS.showActionSheetWithOptions({
+                    options: [strings.clearCartTitle, strings.cancel],
+                    cancelButtonIndex: 1
+                }, (buttonIndex) => {
+
+                    if (buttonIndex === 0) {
+                        this.props.dispatch(clearCart())
+                    }
+
+                })
+            }else {
+                Alert.alert(strings.clearCartTitle, strings.clearCartMessage, [
+                    {text: strings.cancel},
+                    {text: strings.remove, onPress: () => {
+                        this.props.dispatch(clearCart())
+                    }}
+                ])
+            }
+
+        }
+
+
     }
 
     renderRow(row: Object, section: number) {

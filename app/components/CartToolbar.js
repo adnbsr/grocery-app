@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, Text, StyleSheet} from 'react-native'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import {COLOR_PRIMARY, COLOR_WHITE} from '../utils/colors'
+import strings from '../utils/strings'
 
 class CartToolbar extends React.Component {
 
@@ -13,7 +13,7 @@ class CartToolbar extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>{`${this.props.cartSize} Items - ${this.props.total} TMT`}</Text>
+                <Text style={styles.title}>{`${this.props.cartSize} ${strings.items} - ${this.props.total} ${strings.currency}`}</Text>
             </View>
         )
     }
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         textAlign: 'center',
         fontSize: 16,
-        fontWeight: 'bold'
+        fontWeight: '400'
     }
 })
 

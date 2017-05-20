@@ -2,7 +2,8 @@
 
 import React from 'react'
 import {View, Text, StyleSheet, TextInput} from 'react-native'
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
+import Icon from 'react-native-vector-icons/Ionicons'
+import strings from '../utils/strings'
 
 class SearchBarHolder extends React.Component {
 
@@ -19,10 +20,10 @@ class SearchBarHolder extends React.Component {
         return (
             <View style={styles.container}>
                 <View style={styles.barContainer}>
-                    <MaterialIcon name="search" color="#BDBDBD" backgroundColor="#ffffff" size={24} iconStyle={styles.icon}/>
+                    <Icon name="ios-search-outline" color="#BDBDBD" backgroundColor="#ffffff" size={24} iconStyle={styles.icon}/>
                     <TextInput
                         multiline={false}
-                        placeholder={"Search"}
+                        placeholder={strings.search}
                         autoCapitalize={'none'}
                         style={styles.input}
                         underlineColorAndroid={'transparent'}

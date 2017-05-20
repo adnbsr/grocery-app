@@ -4,6 +4,7 @@ import React from 'react'
 import {View, Text, StyleSheet, Image} from 'react-native'
 import Parse from 'parse/react-native'
 import {MD_RED_400, COLOR_WHITE} from '../utils/colors'
+import strings from '../utils/strings'
 
 import type {Product} from '../types'
 
@@ -41,7 +42,7 @@ class ProductItem extends React.Component {
                       {this.props.product.price && this.props.product.price.toFixed(2)}
                   </Text>
                   <Text style={styles.quantity} onPress={this.handleAddToCart.bind(this)}>
-                    Add
+                      {strings.add}
                   </Text>
                 </View>
               </View>

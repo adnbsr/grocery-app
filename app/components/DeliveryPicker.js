@@ -5,6 +5,7 @@
 import React from 'react'
 import {View,Text, StyleSheet} from 'react-native'
 import {MD_GREY_300, MD_DEEP_ORANGE_900} from '../utils/colors'
+import strings from '../utils/strings'
 
 class DeliveryPicker extends React.Component{
 
@@ -21,9 +22,9 @@ class DeliveryPicker extends React.Component{
 
         return (
             <View style={styles.container}>
-                <Text style={this.getStyle(this.props.type === STANDARD)} onPress={() => this.onChangeType(STANDARD)}>Standard</Text>
+                <Text style={this.getStyle(this.props.type === STANDARD)} onPress={() => this.onChangeType(STANDARD)}>{strings.standard}</Text>
                 <Text>I</Text>
-                <Text style={this.getStyle(this.props.type === EXPRESS)} onPress={() => this.onChangeType(EXPRESS)}>Express</Text>
+                <Text style={this.getStyle(this.props.type === EXPRESS)} onPress={() => this.onChangeType(EXPRESS)}>{strings.express}</Text>
             </View>
         )
     }

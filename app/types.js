@@ -4,6 +4,7 @@
  */
 
 type ParseObject = Object
+import {Map} from 'immutable'
 
 export type Category = {
     id: string,
@@ -18,6 +19,14 @@ export type Product = {
     thumbnail: string,
     category: Category,
     offer?: boolean
+}
+
+export type Order = {
+    total: number,
+    orderState: string,
+    items: Array<Array<any>>,
+    deliveryType: string,
+    address: string
 }
 
 export type DrawerAbstractItem = {
@@ -48,4 +57,12 @@ export type Region = {
 export type Point = {
     latitude: number,
     longitude: number
+}
+
+//Locale
+
+export type LocaleType = {
+    label: string,
+    locale: string,
+    icon: number
 }

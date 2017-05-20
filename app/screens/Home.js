@@ -17,6 +17,7 @@ import CategoryItem from "../components/CategoryItem";
 import {IconsLoaded, IconsMap} from '../utils/icons'
 import {connect} from 'react-redux'
 import {addToCart, fetchProducts, logOut, fetchCategories} from '../actions/index'
+import strings from '../utils/strings'
 
 import type {Product, Dispatch, Category} from '../types'
 
@@ -102,7 +103,14 @@ class Home extends React.Component {
     onNavigatorEvent(event) {
 
         if (event.id === 'cart') {
-            this.fetchProducts()
+
+            this.props.navigator.push({
+                screen: "sepetim.Notifications",
+                title: "Notifications",
+                backButtonTitle: "Back",
+                backButtonHidden: false
+            })
+
         } else if (event.id === 'sideMenu') {
             this.props.navigator.toggleDrawer({side: 'left', animated: true})
         } else if (event.type = "DeepLink") {
@@ -178,19 +186,14 @@ class Home extends React.Component {
         })
     }
 
-
     _addToCart(product: Product) {
         this.props.dispatch(addToCart(product))
-    }
-
-    fetchProducts() {
-        this.props.dispatch(fetchProducts())
     }
 
     _goToCart() {
         this.props.navigator.showModal({
             screen: 'sepetim.Cart',
-            title: 'Sepettekiler',
+            title: strings.cart,
             animationType: 'slide-up'
         })
     }

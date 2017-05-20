@@ -17,6 +17,7 @@ import Notifications from './screens/Notifications'
 import MapHelper from './screens/MapHelper'
 import ShopCategories from './screens/ShopCategories'
 import ShopOffers from './screens/ShopOffers'
+import LocaleBox from './screens/LocaleBox'
 
 import {Provider} from 'react-redux'
 import {Store} from  'redux'
@@ -37,4 +38,5 @@ export function registerScreens(store: Store, provider: Provider) {
     Navigation.registerComponent('sepetim.MapHelper', () => MapHelper, store, provider)
     Navigation.registerComponent('sepetim.ShopCategories', () => ShopCategories, store, provider)
     Navigation.registerComponent('sepetim.ShopOffers', () => ShopOffers, store, provider)
+    Navigation.registerComponent('sepetim.LocaleBox', () => LocaleBox)
 }
