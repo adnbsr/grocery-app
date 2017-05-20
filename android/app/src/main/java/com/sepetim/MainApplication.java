@@ -22,7 +22,8 @@ public class MainApplication extends NavigationApplication {
                 new VectorIconsPackage(),
                 new SnackbarPackage(),
                 new MapsPackage(),
-                new ReactNativePushNotificationPackage()
+                new ReactNativePushNotificationPackage(),
+                new LocaleManagerPackage()
         );
     }
 
