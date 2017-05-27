@@ -1,7 +1,8 @@
 //STRINGS
-export const APPLICATION_ID = "sepetim"
-export const SERVER_URL = "http://192.81.223.195:8080/api"
-export const MASTER_KEY = "masterKey"
+export const APPLICATION_ID = "taT6ySwwyza3B2MJucucqWz9pMqBZ00Pd7w7hoZf"
+export const SERVER_URL = "https://parseapi.back4app.com/"
+export const MASTER_KEY = "7DwERiVnMxxiCCHaGYOEW3ziAy6mcDufep7bmZWR"
+export const JAVASCRIPT_KEY = "naoWEixlrhxL7xWCnKOsFKXP74O8M8aTKZWmJUX8"
 
 // COLORS
 

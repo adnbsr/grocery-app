@@ -7,7 +7,7 @@ import {registerScreens} from './registerScreens'
 import {checkCurrentUser, getCurrentInstallation} from './actions'
 import {IconsLoaded} from './utils/icons'
 import {COLOR_PRIMARY, COLOR_WHITE} from './utils/colors'
-import {APPLICATION_ID, SERVER_URL, MASTER_KEY} from './utils/constants'
+import {APPLICATION_ID, SERVER_URL, MASTER_KEY, JAVASCRIPT_KEY} from './utils/constants'
 import strings from './utils/strings'
 import Parse from 'parse/react-native'
 
@@ -71,7 +71,7 @@ function startWelcome() {
 
 const App = () => {
 
-    Parse.initialize(APPLICATION_ID, MASTER_KEY)
+    Parse.initialize(APPLICATION_ID, JAVASCRIPT_KEY, MASTER_KEY)
     Parse.serverURL = SERVER_URL
 
     const store = configureStore()

@@ -84,7 +84,7 @@ class Signup extends Component {
                            inputStyle={styles.input}
                            highlightColor={COLOR_PRIMARY}
                            keyboardType={'phone-pad'}
-                           maxLength={10}
+                           maxLength={8}
                            onChangeText={(text) => this.setState({phone: text})}/>
 
                 <TextField multiline={false}
@@ -118,9 +118,9 @@ class Signup extends Component {
 
         const {name, password, phone, address} = this.state
 
-        if (phone === undefined || phone.length < 10) {
+        if (phone === undefined || phone.length < 8) {
             SnackBar.show({
-                title: "Phone must be at least 10 characters"
+                title: "Phone must be at least 8 characters"
             })
             return
         }
