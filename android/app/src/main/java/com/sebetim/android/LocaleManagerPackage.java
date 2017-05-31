@@ -1,4 +1,4 @@
-package com.sepetim;
+package com.sebetim.android;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;

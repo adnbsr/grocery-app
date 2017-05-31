@@ -42,11 +42,12 @@ const styles = StyleSheet.create({
         height: 48,
         backgroundColor: '#4cd762',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'stretch'
     },
     barContainer: {
         flexDirection: 'row',
         height: 36,
+        flexGrow: 1,
         marginTop: 6,
         marginBottom: 6,
         marginLeft: 16,
@@ -55,15 +56,18 @@ const styles = StyleSheet.create({
         paddingLeft: 8,
         overflow: 'hidden',
         backgroundColor: 'white',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     icon: {
         margin: 6
     },
     input: {
         height: 36,
-        alignSelf: 'stretch',
+        textAlign: 'left',
         flex: 1,
+        padding: 8,
+        fontSize: 18
 
     }
 })

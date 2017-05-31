@@ -45,6 +45,9 @@ class Welcome extends React.Component {
                 alert: true,
                 badge: true,
                 sound: true
+            },
+            onRemoteFetch: (data) => {
+                console.log(data)
             }
         })
 

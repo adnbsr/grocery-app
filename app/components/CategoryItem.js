@@ -4,6 +4,7 @@
 
 import React from 'react'
 import {View, Text, StyleSheet, Image, Platform, TouchableOpacity, TouchableNativeFeedback} from 'react-native'
+import Touchable from './Touchable'
 
 import type {Category} from '../types'
 
@@ -19,8 +20,6 @@ class CategoryItem extends React.Component {
     }
 
     render() {
-
-        const Touchable = Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity
 
         return (
             <Touchable onPress={() => this.props.onPress(this.props.category)}>

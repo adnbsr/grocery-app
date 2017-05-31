@@ -32,6 +32,12 @@ const strings = {
         name: 'Name',
         notifications: 'Notifications',
         orderGiven: 'Order is given and waiting for approval',
+        orderState: {
+            nonApproved: 'Not Approved',
+            approved: 'Approved - On Road',
+            delivered: 'Delivered',
+            canceled: 'Canceled'
+        },
         password: 'Password',
         password6Characters: 'Password must be at least 6 characters',
         phone: 'Phone',

@@ -1,4 +1,4 @@
-package com.sepetim;
+package com.sebetim.android;
 
 import android.content.Context;
 import android.content.SharedPreferences;

@@ -1,4 +1,4 @@
-package com.sepetim;
+package com.sebetim.android;
 
 import android.support.annotation.Nullable;
 
@@ -9,6 +9,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactnativenavigation.NavigationApplication;
+import com.sebetim.android.BuildConfig;
 
 import java.util.Arrays;
 import java.util.List;

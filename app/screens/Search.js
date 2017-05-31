@@ -1,7 +1,8 @@
 /**
  * Created by adnanbasar on 12/05/2017.
+ *
+ * @flow
  */
-
 
 import React from 'react'
 import {View, StyleSheet} from 'react-native'
@@ -9,10 +10,18 @@ import CompatListView from '../components/CompatListView'
 import ProductItem from '../components/ProductItem'
 import {connect} from 'react-redux'
 import {searchProducts,addToCart} from '../actions'
+import { COLOR_PRIMARY, COLOR_WHITE} from '../utils/colors'
 
 import type {Product, Dispatch} from '../types'
 
 class Search extends React.Component {
+
+    static navigatorStyle = {
+        statusBarColor: COLOR_PRIMARY,
+        navBarBackgroundColor: COLOR_PRIMARY,
+        navBarTextColor: COLOR_WHITE,
+        navBarButtonColor: COLOR_WHITE
+    }
 
     props: {
         keyword: string,
@@ -64,6 +73,5 @@ const styles = StyleSheet.create({
 function mapStateToProps(state) {
     return {data: state.product.results}
 }
-
 
 export default connect(mapStateToProps)(Search)

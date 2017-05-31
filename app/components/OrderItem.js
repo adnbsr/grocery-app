@@ -6,8 +6,9 @@
 
 import React from 'react'
 import {View, Text, StyleSheet} from 'react-native'
-import {ORDER_ITEMS_BACKGROUND, ORDER_LEFT_BORDER, MD_GREY_50} from '../utils/colors'
+import {ORDER_ITEMS_BACKGROUND, ORDER_LEFT_BORDER, MD_GREY_50, MD_RED_500} from '../utils/colors'
 import Icon from 'react-native-vector-icons/Ionicons'
+import strings from '../utils/strings'
 
 class OrderItem extends React.Component {
 
@@ -22,13 +23,16 @@ class OrderItem extends React.Component {
     render() {
 
         const orderIcon = this.props.order.deliveryType === 'standard' ? 'ios-bicycle-outline' : 'ios-car-outline'
+        const {orderState} = this.props.order
+        const orderStateText = strings.orderState[orderState]
+
 
         return (
             <View style={styles.container}>
                 <View style={styles.upContianer}>
                     <Icon name={orderIcon} size={24}/>
                     <Text>{`${this.props.order.total} TMT`}</Text>
-                    <Text>{this.props.order.orderState}</Text>
+                    <Text style={styles.orderState}>{orderStateText}</Text>
                 </View>
                 <View style={styles.addressContainer}>
                     <Icon name="ios-pin-outline" size={24}/>
@@ -84,6 +88,15 @@ const styles = StyleSheet.create({
     },
     address: {
         paddingLeft: 16
+    },
+    orderState: {
+        borderRadius: 12,
+        padding: 4,
+        textAlign: 'center',
+        borderWidth: 0.5,
+        borderColor: MD_RED_500,
+        color: MD_RED_500,
+        overflow: 'hidden'
     }
 })
 

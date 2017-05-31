@@ -1,4 +1,4 @@
-package com.sepetim;
+package com.sebetim.android;
 
 import com.reactnativenavigation.controllers.SplashActivity;
 

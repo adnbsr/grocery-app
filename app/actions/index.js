@@ -46,7 +46,7 @@ export async function signUp(newUser) {
             type: 'SIGN_UP',
             payload: parseUser
         }
-    }catch (error) {
+    } catch (error) {
 
         if (error.code === 202) {
             return {
@@ -214,7 +214,12 @@ export async function getCurrentInstallation(): Promise {
         installationId,
         appName: 'Sebetim',
         deviceType: Platform.OS,
-        appIdentifier: 'com.sebetim'
+        appIdentifier: Platform.select(
+            {
+                android: 'com.sebetim.android',
+                ios: 'com.sebetim.ios'
+            }
+        )
     });
 }
 
@@ -225,10 +230,12 @@ export async function updateInstallation(params: Object = {}): Promise {
 
 export async function storeDeviceToken(deviceToken: Object) {
     const pushType = Platform.OS === 'android' ? 'gcm' : undefined;
+
     await updateInstallation({
         pushType,
         deviceToken: deviceToken.token,
-        deviceTokenLastModified: Date.now()
+        deviceTokenLastModified: Date.now(),
+        GCMSenderId: '1000220300077'
     })
     return {
         type: "REGISTERED_NOTIFICATIONS"
