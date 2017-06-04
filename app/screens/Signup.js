@@ -125,6 +125,27 @@ class Signup extends Component {
             return
         }
 
+        if (address === undefined) {
+            SnackBar.show({
+                title: "Address cannot be empty!"
+            })
+            return
+        }
+
+        if (name === undefined) {
+            SnackBar.show({
+                title: "Name cannot be empty!"
+            })
+            return
+        }
+
+        if (password === undefined || password.length < 6) {
+            SnackBar.show({
+                title: "Password cannot be empty and must be 6+ characters!"
+            })
+            return
+        }
+
         const user = {
             username: phone,
             name,

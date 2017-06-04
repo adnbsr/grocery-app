@@ -1,12 +1,14 @@
 /**
  * Created by adnanbasar on 02/05/2017.
+ *
+ * @flow
  */
 
 import React from 'react'
 import {View, StyleSheet, Text, PushNotificationIOS, Platform} from 'react-native'
-import PushNotification from 'react-native-push-notification'
 import Button from '../components/Button'
 import {COLOR_WHITE, MD_BLUE_GRAY_800, COLOR_PRIMARY} from '../utils/colors'
+import {GCM_SENDER_ID} from '../utils/constants'
 import {connect} from 'react-redux'
 import {storeDeviceToken, updateInstallation} from '../actions'
 import SplashIcon from '../components/SplashIcon'
@@ -23,42 +25,9 @@ class Welcome extends React.Component {
 
     componentDidMount() {
 
-        const {dispatch} = this.props
-
-
-        PushNotificationIOS.addEventListener('notification', (notification) => {
-            console.log(notification)
-        })
-
-        PushNotification.configure({
-            onRegister: (token) => {
-                console.log(token)
-                dispatch(storeDeviceToken(token))
-            },
-            onNotification: (notification) => {
-                console.log(notification)
-            },
-            popInitialNotification: true,
-            senderID: "1000220300077",
-            requestPermissions: true,
-            permissions: {
-                alert: true,
-                badge: true,
-                sound: true
-            },
-            onRemoteFetch: (data) => {
-                console.log(data)
-            }
-        })
-
-        if (Platform.OS === 'ios') {
-            PushNotificationIOS.setApplicationIconBadgeNumber(2);
-            updateInstallation({badge: 2});
-        }
     }
 
     componentWillUnmount(){
-        PushNotificationIOS.removeEventListener('register')
     }
 
     render() {
@@ -88,6 +57,7 @@ class Welcome extends React.Component {
             animationType: 'slide-up'
         })
     }
+
 }
 
 const styles = StyleSheet.create({

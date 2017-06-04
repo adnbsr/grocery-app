@@ -1,5 +1,6 @@
 import Parse from 'parse/react-native'
 import {InteractionManager, AsyncStorage, Platform} from 'react-native'
+import {APPNAME, ANDROID_PACKAGE_NAME, IOS_BUNDLE_IDENTIFIER} from '../utils/constants'
 
 import type {Product} from '../types'
 
@@ -212,12 +213,12 @@ export async function getCurrentInstallation(): Promise {
     const installationId = await Parse._getInstallationId()
     return new Parse.Installation({
         installationId,
-        appName: 'Sebetim',
+        appName: APPNAME,
         deviceType: Platform.OS,
         appIdentifier: Platform.select(
             {
-                android: 'com.sebetim.android',
-                ios: 'com.sebetim.ios'
+                android: ANDROID_PACKAGE_NAME,
+                ios: IOS_BUNDLE_IDENTIFIER
             }
         )
     });
@@ -235,10 +236,20 @@ export async function storeDeviceToken(deviceToken: Object) {
         pushType,
         deviceToken: deviceToken.token,
         deviceTokenLastModified: Date.now(),
-        GCMSenderId: '1000220300077'
+        GCMSenderId: '487866672474'
     })
     return {
         type: "REGISTERED_NOTIFICATIONS"
     }
 }
 
+export async function updateInstallationUser() {
+
+    const user = await Parse.User.currentAsync()
+
+    await updateInstallation({user})
+
+    return {
+        type: 'UPDATE_INSTALLATION_USER'
+    }
+}

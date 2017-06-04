@@ -32,7 +32,6 @@ class Login extends Component {
             password: undefined
         }
 
-        this.onSubmitPress = this.onSubmitPress.bind(this)
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     }
 
@@ -62,7 +61,7 @@ class Login extends Component {
                            inputStyle={styles.input}
                            autoCorrect={false}
                            autoCapitalize={'none'}
-                           maxLength={10}
+                           maxLength={8}
                            onChangeText={(text) => this.setState({phone: text})}/>
 
                 <TextField multiline={false}
@@ -74,7 +73,7 @@ class Login extends Component {
                            secureTextEntry={true}
                            onChangeText={(text) => this.setState({password: text})}/>
 
-                <Button title={strings.login} onPress={() => this.onSubmitPress()} style={styles.submit}/>
+                <Button title={strings.login} onPress={this.onSubmitPress.bind(this)} style={styles.submit}/>
             </View>
         )
     }

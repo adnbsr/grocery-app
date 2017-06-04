@@ -5,9 +5,11 @@ import React from 'react'
 import {
     View,
     StyleSheet,
-    Platform,
-    ScrollView
+    ScrollView,
+    PushNotificationIOS,
+    Platform
 } from 'react-native'
+import PushNotification from 'react-native-push-notification'
 import ProductItem from '../components/ProductItem'
 import SearchBarHolder from '../components/SearchBarHolder'
 import CartBottomBar from '../components/CartBottomBar'
@@ -16,8 +18,16 @@ import GridView from '../components/GridView'
 import CategoryItem from "../components/CategoryItem";
 import {IconsLoaded, IconsMap} from '../utils/icons'
 import {connect} from 'react-redux'
-import {addToCart, fetchProducts, logOut, fetchCategories} from '../actions/index'
+import {
+    addToCart,
+    fetchProducts,
+    logOut,
+    fetchCategories,
+    storeDeviceToken,
+    updateInstallationUser
+} from '../actions/index'
 import strings from '../utils/strings'
+import {GCM_SENDER_ID} from '../utils/constants'
 
 import type {Product, Dispatch, Category} from '../types'
 
@@ -46,8 +56,48 @@ class Home extends React.Component {
         this.renderNavigationBarButtons()
     }
 
+    componentWillMount(){
+
+        console.log('componentWillMount')
+        PushNotificationIOS.addEventListener('register', (token) => {
+            console.log(token)
+        })
+        PushNotificationIOS.addEventListener('registrationError', (error) => {
+            console.log(error)
+        })
+
+    }
+
     componentDidMount() {
         this.props.dispatch(fetchCategories())
+
+
+        PushNotification.configure({
+            onRegister: (token) => {
+                console.log(token)
+                this.props.dispatch(storeDeviceToken(token))
+                this.props.dispatch(updateInstallationUser())
+            },
+            onNotification: (notification) => {
+                console.log(notification)
+                this.showLocalNotification(notification)
+            },
+            onError: (error) => {
+                console.log('Error', error)
+            },
+            popInitialNotification: true,
+            senderID: GCM_SENDER_ID,
+            requestPermissions: true,
+            permissions: {
+                alert: true,
+                badge: true,
+                sound: true
+            }
+        })
+
+        PushNotification.checkPermissions((permissions) => {
+            console.log('Permissions', permissions)
+        })
     }
 
     render() {
@@ -196,6 +246,23 @@ class Home extends React.Component {
             title: strings.cart,
             animationType: 'slide-up'
         })
+
+
+        PushNotification.localNotification({
+            title: "Title",
+            message: "Message"
+        })
+    }
+
+
+    showLocalNotification(notification) {
+
+        const {data} = notification
+
+        PushNotification.localNotification({
+            title: data.title,
+            message: data.message,
+        })
     }
 }
 
@@ -212,7 +279,8 @@ function mapStateToProps(state) {
 
     return {
         quantity: state.cart.items.entrySeq().toArray().length,
-        categories: state.product.categories
+        categories: state.product.categories,
+        user: state.user
     }
 }
 

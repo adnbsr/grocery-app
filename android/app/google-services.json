@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "487866672474",
+    "firebase_url": "https://sebetim-469fe.firebaseio.com",
+    "project_id": "sebetim-469fe",
+    "storage_bucket": "sebetim-469fe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:487866672474:android:8ecd50f89e59a53a",
+        "android_client_info": {
+          "package_name": "com.sebetim.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "487866672474-av88t0othh18q17oqere8792gphj86at.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7yW8Eh6Glzv9pdxx_4QezZ_SKbElS6_4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

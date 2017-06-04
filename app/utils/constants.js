@@ -1,8 +1,12 @@
 //STRINGS
+export const APPNAME = "Sebetim"
+export const ANDROID_PACKAGE_NAME = "com.sebetim.android"
+export const IOS_BUNDLE_IDENTIFIER = "com.sebetim.ios"
 export const APPLICATION_ID = "taT6ySwwyza3B2MJucucqWz9pMqBZ00Pd7w7hoZf"
 export const SERVER_URL = "https://parseapi.back4app.com/"
 export const MASTER_KEY = "7DwERiVnMxxiCCHaGYOEW3ziAy6mcDufep7bmZWR"
 export const JAVASCRIPT_KEY = "naoWEixlrhxL7xWCnKOsFKXP74O8M8aTKZWmJUX8"
+export const GCM_SENDER_ID = "487866672474"
 
 // COLORS
 

@@ -13,7 +13,8 @@ import {COLOR_PRIMARY, COLOR_WHITE} from '../utils/colors'
 import strings from '../utils/strings'
 import SnackBar from 'react-native-snackbar'
 
-import type {Dispatch} from '../types'
+import type {Dispatch, Product} from '../types'
+
 
 class Cart extends React.Component {
 
@@ -63,7 +64,6 @@ class Cart extends React.Component {
     componentDidMount() {
 
 
-
         IconsLoaded.then(() => {
 
             //TODO: Clear left icon implementation
@@ -93,7 +93,7 @@ class Cart extends React.Component {
             })
         }
 
-        if (nextProps.orderStatus  === 'given' && nextProps.cartTotal !== 0) {
+        if (nextProps.orderStatus === 'given' && nextProps.cartTotal !== 0) {
             SnackBar.show({
                 title: strings.orderGiven,
                 duration: SnackBar.LENGTH_LONG
@@ -112,7 +112,9 @@ class Cart extends React.Component {
         return (
             <View style={styles.container}>
                 <CartToolbar cartSize={this.props.data.length} total={this.props.cartTotal}/>
-                <DeliveryPicker type={this.state.deliveryType} onDeliverySelected={(type) => {this.setState({deliveryType: type})}}/>
+                <DeliveryPicker type={this.state.deliveryType} onDeliverySelected={(type) => {
+                    this.setState({deliveryType: type})
+                }}/>
                 <ListView
                     dataSource={this.state.dataSource}
                     renderRow={this.renderRow.bind(this)}
@@ -142,12 +144,14 @@ class Cart extends React.Component {
                     }
 
                 })
-            }else {
+            } else {
                 Alert.alert(strings.clearCartTitle, strings.clearCartMessage, [
                     {text: strings.cancel},
-                    {text: strings.remove, onPress: () => {
+                    {
+                        text: strings.remove, onPress: () => {
                         this.props.dispatch(clearCart())
-                    }}
+                    }
+                    }
                 ])
             }
 
@@ -157,16 +161,15 @@ class Cart extends React.Component {
     }
 
     renderRow(row: Object, section: number) {
-        return (<CartListItem item={row[0]} increment={(item) => this.increment(item)}
-                              decrement={(item) => this.decrement(item)} quantity={row[1]}/>)
-    }
 
-    increment(item) {
-        this.props.dispatch(addToCart(item))
-    }
-
-    decrement(item) {
-        this.props.dispatch(removeFromCart(item))
+        return (<CartListItem item={row[0]}
+                              increment={
+                                  (item) => this.props.dispatch(addToCart(item))
+                              }
+                              decrement={
+                                  (item) => this.props.dispatch(removeFromCart(item))
+                              }
+                              quantity={row[1]}/>)
     }
 
     onCheckout() {
