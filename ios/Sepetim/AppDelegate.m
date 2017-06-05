@@ -14,6 +14,7 @@
 #import "RCCManager.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import "RCTPushNotificationManager.h"
+#import <Parse/Parse.h>
 
 #if defined(__IPHONE_10_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
 @import UserNotifications;
@@ -32,6 +33,18 @@
 {
   
   [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleLightContent];
+  
+  [Parse initializeWithConfiguration: [ParseClientConfiguration configurationWithBlock:^(id<ParseMutableClientConfiguration>  _Nonnull configuration) {
+    
+    [configuration setApplicationId: @"taT6ySwwyza3B2MJucucqWz9pMqBZ00Pd7w7hoZf"];
+    [configuration setClientKey: @"qn4pWF8ISiGpQgBC93MrwP2shFFo5Mbx1OkGLGNb"];
+    [configuration setServer: @"https://parseapi.back4app.com/"];
+    
+    [configuration setLocalDatastoreEnabled: YES];
+    
+    
+    
+  }]];
   
   
   // Register for remote notifications. This shows a permission dialog on first run, to
@@ -96,6 +109,10 @@
   return YES;
 }
 
+/*
+  Registration and Configuration for Parse Push Notification!
+ */
+
 -(void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
 
   [RCTPushNotificationManager didRegisterUserNotificationSettings: notificationSettings];
@@ -105,6 +122,18 @@
 -(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 
   [RCTPushNotificationManager didRegisterForRemoteNotificationsWithDeviceToken: deviceToken];
+  
+  PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+  [currentInstallation setDeviceTokenFromData:deviceToken];
+  [currentInstallation saveInBackground];
+  
+  [PFPush subscribeToChannelInBackground:@"" block:^(BOOL succeeded, NSError *error) {
+    if (succeeded) {
+      NSLog(@"ParseStarterProject successfully subscribed to push notifications on the broadcast channel.");
+    } else {
+      NSLog(@"ParseStarterProject failed to subscribe to push notifications on the broadcast channel.");
+    }
+  }];
   
 }
 

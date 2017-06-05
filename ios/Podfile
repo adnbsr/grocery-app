@@ -5,6 +5,7 @@ platform :ios, '8.0'
 
 target 'Sepetim' do
   pod 'GoogleMaps', '2.1.1'
+  pod 'Parse'
 end
 
 
