@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
         borderBottomColor: '#757575'
     },
     icon: {
+        margin: 4,
         width: 72,
         height: 72,
         alignSelf: 'center',
@@ -95,8 +96,6 @@ const styles = StyleSheet.create({
     addButton: {
         maxHeight: 36,
         backgroundColor: MD_RED_400,
-        color: COLOR_WHITE,
-        textAlign: 'center',
         alignSelf: 'center',
         borderRadius: 4,
         padding: 8,

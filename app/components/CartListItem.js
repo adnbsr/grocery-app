@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0.5
     },
     icon: {
+        margin: 4,
         width: 72,
         height: 72,
         alignSelf: 'center',

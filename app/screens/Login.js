@@ -124,7 +124,8 @@ const styles = StyleSheet.create({
     },
     submit: {
         marginTop: 16,
-        margin: 8
+        margin: 8,
+        minHeight: 40
     }
 })
 
