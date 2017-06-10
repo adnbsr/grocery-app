@@ -5,8 +5,10 @@ import {View, Text, StyleSheet, Image} from 'react-native'
 import Parse from 'parse/react-native'
 import {MD_RED_400, COLOR_WHITE} from '../utils/colors'
 import strings from '../utils/strings'
+import {SCREEN_WIDTH} from '../utils'
 
 import type {Product} from '../types'
+import Button from "./Button";
 
 class ProductItem extends React.Component {
 
@@ -19,11 +21,10 @@ class ProductItem extends React.Component {
 
         return (
             <View style={styles.container}>
-              <Image
+                <Image
                   style={styles.icon}
                   source={{uri: this.props.product.thumbnail}}/>
-
-              <View style={styles.textContainer}>
+                <View style={styles.textContainer}>
                 <Text style={styles.title}>
                     {this.props.product.name}
                 </Text>
@@ -32,20 +33,15 @@ class ProductItem extends React.Component {
                     {this.props.product.category.name}
                 </Text>
 
-                <View style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    height: 36
-                }}>
                   <Text style={styles.price}>
                       {this.props.product.price && this.props.product.price.toFixed(2)}
                   </Text>
-                  <Text style={styles.quantity} onPress={this.handleAddToCart.bind(this)}>
-                      {strings.add}
-                  </Text>
-                </View>
+
               </View>
+                <Button
+                    style={styles.addButton}
+                    onPress={this.handleAddToCart.bind(this)}
+                    title={strings.add} />
             </View>
         )
     }
@@ -63,9 +59,9 @@ const styles = StyleSheet.create({
         borderBottomColor: '#757575'
     },
     icon: {
-        width: 112,
-        height: 112,
-        alignSelf: 'flex-start',
+        width: 72,
+        height: 72,
+        alignSelf: 'center',
         resizeMode: 'contain'
     },
     textContainer: {
@@ -73,43 +69,37 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'stretch',
         justifyContent: 'space-between',
-        flexGrow: 1
+        flexGrow: 1,
+        maxWidth: SCREEN_WIDTH - 144
 
     },
     title: {
         fontSize: 16,
         textAlign: 'left',
         fontWeight: '600',
-        padding: 8,
-        flex: 3,
+        padding: 4,
 
     },
     category: {
         fontStyle: 'italic',
-        flex: 3,
         textAlign: 'left',
-        padding: 8
+        padding: 4
     },
     price: {
-        padding: 8,
         fontSize: 16,
         fontWeight: '600',
         textAlign: 'left',
-        flex: 1,
+        padding: 4
 
     },
-    quantity: {
-        fontSize: 18,
-        paddingTop: 4,
-        paddingBottom: 4,
-        paddingLeft: 8,
-        paddingRight: 8,
-        marginRight: 8,
-        marginBottom: 8,
+    addButton: {
+        maxHeight: 36,
         backgroundColor: MD_RED_400,
         color: COLOR_WHITE,
         textAlign: 'center',
-        borderRadius: 2,
+        alignSelf: 'center',
+        borderRadius: 4,
+        padding: 8,
         overflow: 'hidden'
     }
 })

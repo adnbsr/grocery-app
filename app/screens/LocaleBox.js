@@ -4,12 +4,13 @@
 
 
 import React from 'react'
-import {View, Text, StyleSheet, Dimensions} from 'react-native'
+import {View, Text, StyleSheet} from 'react-native'
 import CompatListView from '../components/CompatListView'
 import LocaleItem from '../components/LocaleItem'
 import LocaleManager from '../utils/LocaleManager'
 import strings from '../utils/strings'
 import {COLOR_PRIMARY} from '../utils/colors'
+import {SCREEN_WIDTH} from '../utils'
 
 import type {LocaleType} from '../types'
 
@@ -43,18 +44,14 @@ class LocaleBox extends React.Component {
             }}/>
         )
     }
-
 }
 
-const styles = {
-
+const styles = StyleSheet.create({
     container: {
-        width: Dimensions.get('window').width * 0.7,
-        //height: Dimensions.get('window').height * 0.3,
+        width: SCREEN_WIDTH * 0.7,
         backgroundColor: '#ffffff',
         padding: 16
     }
-}
-
+})
 
 export default LocaleBox

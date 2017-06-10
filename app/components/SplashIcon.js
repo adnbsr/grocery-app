@@ -1,7 +1,6 @@
 import React from 'react'
-import {Image, Dimensions, StyleSheet} from 'react-native'
-
-const width = Dimensions.get('window').width
+import {Image, StyleSheet} from 'react-native'
+import {SCREEN_WIDTH} from '../utils'
 
 class SplashIcon extends React.Component {
 
@@ -12,8 +11,8 @@ class SplashIcon extends React.Component {
 
 const styles = StyleSheet.create({
     icon: {
-        width: width / 2,
-        height: width / 2,
+        width: SCREEN_WIDTH / 2,
+        height: SCREEN_WIDTH / 2,
         alignSelf: 'center'
     }
 })

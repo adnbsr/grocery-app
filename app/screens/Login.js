@@ -50,7 +50,6 @@ class Login extends Component {
     }
 
     render() {
-
         return (
             <View style={styles.container}>
 
@@ -126,7 +125,6 @@ const styles = StyleSheet.create({
     submit: {
         marginTop: 16,
         margin: 8
-
     }
 })
 

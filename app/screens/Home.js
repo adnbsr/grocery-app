@@ -10,7 +10,6 @@ import {
     Platform
 } from 'react-native'
 import PushNotification from 'react-native-push-notification'
-import ProductItem from '../components/ProductItem'
 import SearchBarHolder from '../components/SearchBarHolder'
 import CartBottomBar from '../components/CartBottomBar'
 import AppSwiper from '../components/AppSwiper'
@@ -19,18 +18,17 @@ import CategoryItem from "../components/CategoryItem";
 import {IconsLoaded, IconsMap} from '../utils/icons'
 import {connect} from 'react-redux'
 import {
-    addToCart,
-    fetchProducts,
     logOut,
     fetchCategories,
     storeDeviceToken,
-    updateInstallationUser
+    updateInstallationUser,
+    fetchOffers,
+    addToCart
 } from '../actions/index'
 import strings from '../utils/strings'
 import {GCM_SENDER_ID} from '../utils/constants'
 
-import type {Product, Dispatch, Category} from '../types'
-
+import type {Dispatch, Category, Product} from '../types'
 
 class Home extends React.Component {
 
@@ -38,11 +36,14 @@ class Home extends React.Component {
         navigator: any,
         quantity: number,
         dispatch: Dispatch,
-        categories: Array<Category>
+        categories: Array<Category>,
+        offers: Array<Product>
     }
 
     static defaultProps = {
-        quantity: 0
+        quantity: 0,
+        categories: [],
+        offers: []
     }
 
     static navigatorStyle = {
@@ -70,6 +71,7 @@ class Home extends React.Component {
 
     componentDidMount() {
         this.props.dispatch(fetchCategories())
+        this.props.dispatch(fetchOffers())
 
 
         PushNotification.configure({
@@ -95,9 +97,6 @@ class Home extends React.Component {
             }
         })
 
-        PushNotification.checkPermissions((permissions) => {
-            console.log('Permissions', permissions)
-        })
     }
 
     render() {
@@ -107,7 +106,7 @@ class Home extends React.Component {
                 <SearchBarHolder search={(keyword) => {
                     this.props.navigator.push({
                         screen: 'sepetim.Search',
-                        title: "Search",
+                        title: strings.search,
                         passProps: {
                             keyword: keyword
                         }
@@ -115,7 +114,12 @@ class Home extends React.Component {
                 }}/>
 
                 <ScrollView>
-                    <AppSwiper />
+                    <AppSwiper
+                        offers={this.props.offers}
+                        addToCart={(product: Product) => {
+                            this.props.dispatch(addToCart(product))
+                        }}
+                    />
                     <GridView
                         fillMissingItems={true}
                         itemsPerRow={3}
@@ -127,10 +131,6 @@ class Home extends React.Component {
 
             </View>
         )
-    }
-
-    renderRow(product: Product) {
-        return <ProductItem product={product} addToCart={this._addToCart.bind(this)}/>
     }
 
     renderCategoryItem(item: Category) {
@@ -236,21 +236,11 @@ class Home extends React.Component {
         })
     }
 
-    _addToCart(product: Product) {
-        this.props.dispatch(addToCart(product))
-    }
-
     _goToCart() {
         this.props.navigator.showModal({
             screen: 'sepetim.Cart',
             title: strings.cart,
             animationType: 'slide-up'
-        })
-
-
-        PushNotification.localNotification({
-            title: "Title",
-            message: "Message"
         })
     }
 
@@ -280,7 +270,8 @@ function mapStateToProps(state) {
     return {
         quantity: state.cart.items.entrySeq().toArray().length,
         categories: state.product.categories,
-        user: state.user
+        user: state.user,
+        offers: state.product.offers
     }
 }
 

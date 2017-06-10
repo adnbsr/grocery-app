@@ -6,7 +6,7 @@ import {Map} from 'immutable'
 import CartListItem from '../components/CartListItem'
 import CartToolbar from '../components/CartToolbar'
 import DeliveryPicker, {STANDARD, EXPRESS} from '../components/DeliveryPicker'
-import {addToCart, removeFromCart, giveOrder, clearCart, clearOrder} from '../actions'
+import {addToCart, removeFromCart, giveOrder, clearCart, clearOrder, loadConfig} from '../actions'
 import {connect} from 'react-redux'
 import {IconsLoaded, IconsMap} from '../utils/icons'
 import {COLOR_PRIMARY, COLOR_WHITE} from '../utils/colors'
@@ -22,6 +22,7 @@ class Cart extends React.Component {
         data: Array<Object>,
         cartTotal: number,
         navigator: any,
+        expressFee: number,
         address: string,
         dispatch: Dispatch,
         user: any
@@ -58,7 +59,6 @@ class Cart extends React.Component {
         }
 
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this))
-
     }
 
     componentDidMount() {
@@ -84,6 +84,8 @@ class Cart extends React.Component {
                 }]
             })
         })
+
+        this.props.dispatch(loadConfig())
     }
 
     componentWillReceiveProps(nextProps) {
@@ -119,6 +121,7 @@ class Cart extends React.Component {
                     dataSource={this.state.dataSource}
                     renderRow={this.renderRow.bind(this)}
                     enableEmptySections={true}/>
+
                 <Text style={styles.checkout} onPress={() => this.onCheckout()}>{strings.checkout}</Text>
             </View>
         );
@@ -174,14 +177,36 @@ class Cart extends React.Component {
 
     onCheckout() {
 
-        if (this.props.cartTotal === 0) {
+        if (this.props.cartTotal === 0 ) {
             return;
         }
 
-        this.props.dispatch(giveOrder(this.props.user, this.props.data, this.props.cartTotal, this.props.address, this.state.deliveryType))
+        this.props.navigator.showLightBox({
+            screen: 'sepetim.ReviewOrderBox',
+            passProps: {
+                address: this.props.address,
+                deliveryType: this.state.deliveryType,
+                expressFee: this.props.expressFee,
+                total: this.props.cartTotal,
+                onOrder: this.onOrder.bind(this),
+                onCancel: this.onCancel.bind(this),
+            },
+            style: {
+                backgroundColor: 'rgba(0, 0, 0, 0.1)',
+            }
+        })
 
     }
 
+    onOrder(){
+        this.onCancel()
+        const total = this.state.deliveryType === 'standard' ? this.props.cartTotal : (this.props.cartTotal + this.props.expressFee)
+        this.props.dispatch(giveOrder(this.props.user, this.props.data, total, this.props.address, this.state.deliveryType))
+    }
+
+    onCancel(){
+        this.props.navigator.dismissLightBox()
+    }
 }
 
 const cloneWithRows = (ds: ListView.DataSource, data: Array<Object>) => {
@@ -217,6 +242,7 @@ const styles = StyleSheet.create({
 function mapStateToProps(state) {
 
     const items = state.cart.items
+    const {expressFee} = state.config
 
     if (items instanceof Map) {
         return {
@@ -224,7 +250,8 @@ function mapStateToProps(state) {
             cartTotal: state.cart.total.toFixed(2) / 1,
             user: state.user,
             address: state.user.address,
-            orderStatus: state.order.orderStatus
+            orderStatus: state.order.orderStatus,
+            expressFee: expressFee
         }
     }
 

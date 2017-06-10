@@ -2,7 +2,7 @@ import Parse from 'parse/react-native'
 import {InteractionManager, AsyncStorage, Platform} from 'react-native'
 import {APPNAME, ANDROID_PACKAGE_NAME, IOS_BUNDLE_IDENTIFIER} from '../utils/constants'
 
-import type {Product} from '../types'
+import type {Product,Action} from '../types'
 
 const _Product = Parse.Object.extend('Product')
 const _Category = Parse.Object.extend('Category')
@@ -25,27 +25,31 @@ function loadParseQuery(type, query) {
     }
 }
 
-export async function loadConfig(): Promise<Object> {
 
-    const config = await AsyncStorage.getItem('@sepetim:config')
-
+export async function loadConfig(){
+    const config = await Parse.Config.get()
     return {
-        type: "LOAD_CONFIG",
-        payload: config
+        type: 'LOAD_CONFIG',
+        config
     }
 }
 
-export async function signUp(newUser) {
+export async function signUp(params) {
 
     const user = new Parse.User()
 
     try {
 
-        const parseUser = await user.signUp(newUser)
+        const newUser = await user.signUp(params)
 
         return {
             type: 'SIGN_UP',
-            payload: parseUser
+            user: {
+                id: newUser.id,
+                phone: newUser.get('username'),
+                name: newUser.get('name'),
+                address: newUser.get('address')
+            }
         }
     } catch (error) {
 
@@ -61,7 +65,12 @@ export async function checkCurrentUser() {
     const user = await Parse.User.currentAsync()
     return {
         type: "CHECK_CURRENT_USER",
-        payload: user
+        user: {
+            id: user.id,
+            phone: user.get('username'),
+            name: user.get('name'),
+            address: user.get('address')
+        }
     }
 }
 
@@ -75,14 +84,41 @@ export async function updateUserAddress(address: string) {
     }
 }
 
+export async function getCurrentUser() {
+    const user = await Parse.User.currentAsync()
+    return user
+}
 
-export async function logIn(username: string, password: string): Promise {
+export async function updateUser(params: Object = {}) {
+    const user = await getCurrentUser()
+
+    try {
+        const updatedUser = await user.save(params)
+        return {
+            type: 'UPDATE_USER',
+            params: params
+        }
+    }catch (error) {
+        //Todo: ParseError {code: 202, message: "Account already exists for this username."}
+    }
+}
+/**
+ * @param username: Parse Serverdaki username as User's phone number
+ * @param password
+ * @returns {Promise.<{type: string, payload: *}>}
+ */
+export async function logIn(username: string, password: string): Action {
 
     const user = await Parse.User.logIn(username, password)
 
     return {
         type: "LOGGED_IN",
-        payload: user
+        user: {
+            id: user.id,
+            phone: user.get('username'),
+            name: user.get('name'),
+            address: user.get('address')
+        }
     }
 }
 
@@ -182,6 +218,17 @@ export async function giveOrder(user: Object, items: Array<Object>, total: numbe
     }
 }
 
+export async function cancelOrder(id: string) {
+    const order = new Parse.Object('Order')
+    order.id = id
+    order.set('orderState', 'canceled')
+    const cancledOrder = await order.save(null)
+    return {
+        type: 'CANCEL_ORDER',
+        order: cancledOrder
+    }
+}
+
 /**
  * Action to clear order after order is given
  * @returns Action: {{type: string}}
@@ -230,7 +277,7 @@ export async function updateInstallation(params: Object = {}): Promise {
 }
 
 export async function storeDeviceToken(deviceToken: Object) {
-    const pushType = Platform.OS === 'android' ? 'gcm' : undefined;
+    const pushType = Platform.OS === 'android' ? 'gcm' : 'apns';
 
     await updateInstallation({
         pushType,

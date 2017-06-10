@@ -3,45 +3,53 @@
  */
 
 import React from 'react'
-import {View, Text, StyleSheet, Dimensions, Image} from 'react-native'
+import {View, Text, StyleSheet, Image, processColor} from 'react-native'
 import {COLOR_PRIMARY, COLOR_WHITE} from '../utils/colors'
-
 import Swiper from 'react-native-swiper';
+import strings from '../utils/strings'
+import {SCREEN_WIDTH} from '../utils'
+import Button from "./Button"
+
+import type {Product} from '../types'
+
 
 class AppSwiper extends React.Component {
 
     props: {
-        data: Array<Object>
+        offers: Array<Object>,
+        addToCart: (product: Product) => any
     }
 
     static defaultProps = {
-        data: [
-            "https://www.bigbasket.com/media/customPage/355c27b8-a44f-4900-a390-8e82c69b8021/3861a4f7-5911-4562-80fc-ed59345eadef/c824d22c-c86c-4dc6-8558-2e0fc8badbcd/DT_560x378-1.jpg",
-            "https://www.bigbasket.com/media/customPage/355c27b8-a44f-4900-a390-8e82c69b8021/3861a4f7-5911-4562-80fc-ed59345eadef/c824d22c-c86c-4dc6-8558-2e0fc8badbcd/DT_soyamilk_275x184_25TH_APRIL.jpg",
-            "https://www.bigbasket.com/media/customPage/355c27b8-a44f-4900-a390-8e82c69b8021/3861a4f7-5911-4562-80fc-ed59345eadef/c824d22c-c86c-4dc6-8558-2e0fc8badbcd/Juices-275-X-184-1.jpg",
-            "https://www.bigbasket.com/media/customPage/355c27b8-a44f-4900-a390-8e82c69b8021/3861a4f7-5911-4562-80fc-ed59345eadef/32ea79a1-bde2-44d1-9fca-1628c81a8af1/DT_spread_480x360_25TH_APRIL.jpg",
-            "https://www.bigbasket.com/media/customPage/355c27b8-a44f-4900-a390-8e82c69b8021/3861a4f7-5911-4562-80fc-ed59345eadef/32ea79a1-bde2-44d1-9fca-1628c81a8af1/DT_Chocolates_480x360_25TH_APRIL.jpg",
-            "https://www.bigbasket.com/media/customPage/355c27b8-a44f-4900-a390-8e82c69b8021/3861a4f7-5911-4562-80fc-ed59345eadef/6faa8834-1c45-40c0-a387-54d97caa2ab4/Curd-&-Lassi-480--360.jpg",
-            "https://www.bigbasket.com/media/customPage/355c27b8-a44f-4900-a390-8e82c69b8021/3861a4f7-5911-4562-80fc-ed59345eadef/6faa8834-1c45-40c0-a387-54d97caa2ab4/DT_Organic-Staples_480x360_25TH_APRIL.jpg"
-        ]
+        offers: []
     }
 
-
     render() {
-
 
         return (
             <Swiper style={styles.wrapper}
                     showsButtons={false}
-                    width={width}
+                    width={SCREEN_WIDTH}
                     height={height}
                     activeDotColor={COLOR_PRIMARY}
                     dotColor={COLOR_WHITE}
                     autoplay={true}>
-                {this.props.data.map((item, index) => {
+                {this.props.offers.map((item: Product, index) => {
                     return (
                         <View style={styles.slide} key={index}>
-                            <Image source={{uri: item}} style={{flex: 1}}/>
+                            <Image
+                                source={{uri: item.thumbnail}}
+                                style={styles.thumbnail}
+                                resizeMode={'contain'}/>
+                            <View style={styles.detailContainer}>
+                                <View style={styles.textContainer}>
+                                    <Text style={styles.name} numberOfLines={1}>{item.name}</Text>
+                                    <Text style={styles.category} numberOfLines={1}>{item.category.name}</Text>
+                                </View>
+                                <Text style={styles.price}>{`${item.price} ${strings.currency}`}</Text>
+                                <Button title={strings.add} onPress={() => this.props.addToCart(item)} style={styles.addButton}/>
+                            </View>
+
                         </View>
                     )
                 })}
@@ -51,20 +59,57 @@ class AppSwiper extends React.Component {
     }
 }
 
-const width = Dimensions.get('window').width
-const height = (width / 4 ) * 3
+const height = (SCREEN_WIDTH / 4 ) * 3
 
 
 const styles = StyleSheet.create({
     wrapper: {},
     slide: {
+        flexDirection: 'column',
         flex: 1,
-        alignItems: 'stretch'
+        alignItems: 'flex-start'
     },
-    text: {
+    detailContainer: {
+        flexDirection: 'row',
+        height: 56,
+        padding: 8,
+        marginTop: -1 * height,
+        width: SCREEN_WIDTH,
+        backgroundColor: 'rgba(3,169,244,0.5)',
+        alignItems: 'stretch',
+        justifyContent: 'center'
+    },
+    thumbnail: {
+        width: SCREEN_WIDTH,
+        height: height,
+    },
+    textContainer: {
+        flexDirection: 'column',
+        alignSelf: 'flex-start',
+        flexGrow: 3,
+        maxWidth: SCREEN_WIDTH / 2,
+    },
+    name: {
         color: '#fff',
-        fontSize: 30,
+        fontSize: 20,
+        fontWeight: '400',
+    },
+    category: {
+        color: '#fff',
+        fontSize: 16,
         fontWeight: 'bold',
+    },
+    price: {
+        color: '#fff',
+        textAlign: 'center',
+        alignSelf: 'center',
+        fontWeight: 'bold',
+        fontSize: 16,
+        flexGrow: 1
+    },
+    addButton: {
+        maxHeight: 40,
+        backgroundColor: COLOR_PRIMARY
     }
 })
 

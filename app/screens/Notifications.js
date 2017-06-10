@@ -4,19 +4,17 @@
  * @flow
  */
 
-
 import React from 'react'
-import {View, StyleSheet, Text} from 'react-native'
+import {View, StyleSheet, Alert} from 'react-native'
+import SnackBar from 'react-native-snackbar'
 import CompatListView from '../components/CompatListView'
 import OrderItem from '../components/OrderItem'
-import SplashIcon from '../components/SplashIcon'
-import {IconsLoaded, IconsMap} from '../utils/icons'
 import {COLOR_PRIMARY, COLOR_WHITE} from '../utils/colors'
 import {connect} from 'react-redux'
-import {fetchOrders} from '../actions'
+import {fetchOrders, cancelOrder} from '../actions'
+import strings from '../utils/strings'
 
-
-import type {Dispatch} from '../types'
+import type {Dispatch, Order} from '../types'
 
 class Notifications extends React.Component {
 
@@ -30,15 +28,27 @@ class Notifications extends React.Component {
     props: {
         userId: string,
         data: Array<Object>,
-        dispatch: Dispatch
+        dispatch: Dispatch,
+        cancel: boolean
     }
 
-    constructor(props){
+    constructor(props) {
         super(props)
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.props.dispatch(fetchOrders(this.props.userId))
+    }
+
+    componentWillReceiveProps(nextProps){
+
+        if (this.props.cancel === false && nextProps.cancel === true) {
+            SnackBar.show({
+                title: strings.orderCanceled
+            })
+            this.props.dispatch(fetchOrders(this.props.userId))
+        }
+
     }
 
     render() {
@@ -52,11 +62,29 @@ class Notifications extends React.Component {
         )
     }
 
-    //Todo: order type
-
-    renderRow(order) {
+    renderRow(order: Order) {
         return (
-            <OrderItem order={order} />
+            <OrderItem
+                order={order}
+                onPress={(order: Order) => {
+
+                    if (order.orderState === 'nonApproved') {
+
+                        Alert.alert(strings.cancelOrderTitle, undefined, [
+                            {
+                                text: strings.no,
+                                onDismiss: () => {
+                                }
+                            },
+                            {
+                                text: strings.yes,
+                                onPress: () => {
+                                    this.props.dispatch(cancelOrder(order.id))
+                                }
+                            }])
+                    }
+                }}
+            />
         )
     }
 }
@@ -70,7 +98,7 @@ const styles = StyleSheet.create({
 })
 
 function mapStateToProps(state) {
-    return {data: state.order.list, userId: state.user.id}
+    return {data: state.order.list, userId: state.user.id, cancel: state.order.cancel}
 }
 
 export default connect(mapStateToProps)(Notifications)

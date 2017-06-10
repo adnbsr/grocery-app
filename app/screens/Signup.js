@@ -118,6 +118,8 @@ class Signup extends Component {
 
         const {name, password, phone, address} = this.state
 
+        //Todo: Textleri strings'e tasi!
+
         if (phone === undefined || phone.length < 8) {
             SnackBar.show({
                 title: "Phone must be at least 8 characters"

@@ -6,21 +6,36 @@
 
 import SnackBar from 'react-native-snackbar'
 import strings from '../utils/strings'
+import type {Action, User} from '../types'
+
+type State = {
+    isUserLoggedIn: boolean,
+    id: string,
+    name: string,
+    address: string,
+    phone: string
+}
 
 const initialState = {
     isUserLoggedIn: false,
-    id: null,
-    name: null,
-    address: null,
-    phone: null
+    id: "",
+    name: "",
+    address: "",
+    phone: ""
 }
 
-export default function userReducer(state = initialState, action) {
+export default function userReducer(state: State = initialState, action: Action) {
 
-    if (action.type === "LOAD_CONFIG") {
+    if (action.type === 'LOGGED_IN') {
+
+        const {user} = action
 
         return {
-            isUserLoggedIn: action.payload
+            isUserLoggedIn: true,
+            id: user.id,
+            phone: user.phone,
+            name: user.name,
+            address: user.address
         }
     }
 
@@ -28,30 +43,17 @@ export default function userReducer(state = initialState, action) {
         return initialState
     }
 
-    if (action.type === 'LOGGED_IN') {
+    if (['CHECK_CURRENT_USER', 'SIGN_UP'].indexOf(action.type) > -1) {
 
-        const user = action.payload
-
-        return {
-            isUserLoggedIn: true,
-            id: user.id,
-            phone: user.get('username'),
-            name: user.get('name'),
-            address: user.get('address')
-        }
-    }
-
-    if (['CHECK_CURRENT_USER','SIGN_UP'].indexOf(action.type) > -1) {
-
-        const user = action.payload
+        const {user} = action
 
         if (user) {
             return {
                 isUserLoggedIn: true,
                 id: user.id,
-                phone: user.get('username'),
-                name: user.get('name'),
-                address: user.get('address')
+                phone: user.phone,
+                name: user.name,
+                address: user.address
             }
         }
 
@@ -68,9 +70,18 @@ export default function userReducer(state = initialState, action) {
         return initialState
     }
 
-
     if (action.type === 'UPDATE_USER_ADDRESS') {
         return {...state, address: action.payload}
+    }
+
+    if (action.type === 'UPDATE_USER') {
+        const {params} = action
+        return {
+            ...state,
+            name: params.name,
+            username: params.username,
+            address: params.address
+        }
     }
 
     return state

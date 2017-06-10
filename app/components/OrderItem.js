@@ -9,15 +9,18 @@ import {View, Text, StyleSheet} from 'react-native'
 import {ORDER_ITEMS_BACKGROUND, ORDER_LEFT_BORDER, MD_GREY_50, MD_RED_500} from '../utils/colors'
 import Icon from 'react-native-vector-icons/Ionicons'
 import strings from '../utils/strings'
+import Touchable from "./Touchable";
 
 class OrderItem extends React.Component {
 
     props: {
-        order: Object
+        order: Object,
+        onPress: (order) => any
     }
 
     static propTypes = {
-        order: React.PropTypes.object.isRequired
+        order: React.PropTypes.object.isRequired,
+        onPress: React.PropTypes.func
     }
 
     render() {
@@ -28,7 +31,9 @@ class OrderItem extends React.Component {
 
 
         return (
-            <View style={styles.container}>
+            <Touchable
+                onPress={ () => this.props.onPress(this.props.order)}
+                style={styles.container}>
                 <View style={styles.upContianer}>
                     <Icon name={orderIcon} size={24}/>
                     <Text>{`${this.props.order.total} TMT`}</Text>
@@ -51,7 +56,7 @@ class OrderItem extends React.Component {
                             </View>)
                     })}
                 </View>
-            </View>
+            </Touchable>
         )
     }
 }

@@ -5,16 +5,16 @@
  */
 
 import React from 'react'
-import {View, Text, StyleSheet, Alert, Dimensions} from 'react-native'
+import {View, Text, StyleSheet, Alert} from 'react-native'
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'
 import {COLOR_WHITE, COLOR_PRIMARY} from '../utils/colors'
 import {connect} from 'react-redux'
 import {updateUserAddress} from '../actions'
+import {SCREEN_WIDTH, SCREEN_HEIGHT} from '../utils'
 
 import type {Region, Point} from '../types'
 
-const screen = Dimensions.get('window')
-const ASPECT_RATIO = screen.width / screen.height
+const ASPECT_RATIO = SCREEN_WIDTH / SCREEN_HEIGHT
 const INITIAL_LATITUDE = 37.78825
 const INITIAL_LONGITUDE = -122.4324
 const LATITUDE_DELTA = 0.0922

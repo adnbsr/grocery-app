@@ -7,11 +7,11 @@ import React, {
     PropTypes,
 } from 'react';
 import {
-    Dimensions,
     ListView,
     StyleSheet,
     View,
 } from 'react-native';
+import {SCREEN_WIDTH, SCREEN_HEIGHT} from '../utils'
 
 class GridView extends Component {
 
@@ -120,8 +120,8 @@ class GridView extends Component {
         const {itemsPerRowPortrait, itemsPerRowLandscape} = this.props;
 
         if (itemsPerRowPortrait || itemsPerRowLandscape) {
-            const {width, height} = Dimensions.get('window');
-            const isLandscape = width > height;
+
+            const isLandscape = SCREEN_WIDTH > SCREEN_HEIGHT;
 
             if (isLandscape && itemsPerRowLandscape)
                 itemsPerRow = itemsPerRowLandscape;

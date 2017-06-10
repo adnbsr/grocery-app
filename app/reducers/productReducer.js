@@ -6,12 +6,14 @@ import type {Category, Product, Action} from '../types'
 
 const initialState = {
     categories: [],
-    results: []
+    results: [],
+    offers: []
 }
 
 type State = {
     categories: Array<Category>,
-    results: Array<Product>
+    results: Array<Product>,
+    offers: Array<Product>
 }
 
 const productReducer = (state: State = initialState, action: Action) => {
@@ -29,7 +31,7 @@ const productReducer = (state: State = initialState, action: Action) => {
     }
 
     if (action.type === 'FETCH_OFFERS'){
-        return {...state, results: action.list.map(fromParseObject)}
+        return {...state, offers: action.list.map(fromParseObject)}
     }
 
     return state

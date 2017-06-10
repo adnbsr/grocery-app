@@ -5,9 +5,10 @@
  */
 
 import React from 'react'
-import {StyleSheet, View, Text, Platform, TouchableNativeFeedback, TouchableOpacity} from 'react-native'
+import {StyleSheet, View, Text} from 'react-native'
 import {MD_BLUE_GRAY_800, COLOR_WHITE} from '../utils/colors'
 import Icon from 'react-native-vector-icons/Ionicons'
+import Touchable from './Touchable'
 
 class DrawerHeader extends React.Component {
 
@@ -18,16 +19,11 @@ class DrawerHeader extends React.Component {
     }
 
     static defaultProps = {
-        name: "Bekir Eymenoglu",
-        address: "10 ýyl Abadançylyk köçesi, Aşkabat"
+        name: "Unnamed",
+        address: "Unknown"
     }
 
-
-
     render() {
-
-
-        const Touchable = Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity
 
         return (
             <View style={styles.container}>
@@ -67,11 +63,11 @@ const styles = StyleSheet.create({
     addressTitle: {
         color: COLOR_WHITE,
         textAlign: 'left',
+        alignSelf: 'center',
         fontSize: 12,
         flex: 4,
         paddingLeft: 8,
         paddingRight: 8
-
     }
 })
 

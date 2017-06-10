@@ -13,6 +13,7 @@ const strings = {
         add: 'Add',
         address: 'Address',
         cancel: 'Cancel',
+        cancelOrderTitle: 'Cancel This Order?',
         cart: 'Cart',
         checkout: 'Checkout',
         clearCartMessage: 'Do you want to remove all items from cart?',
@@ -30,7 +31,9 @@ const strings = {
         login: 'Login',
         logout: 'Logout',
         name: 'Name',
+        no: 'No',
         notifications: 'Notifications',
+        orderCanceled: 'Order has been canceled',
         orderGiven: 'Order is given and waiting for approval',
         orderState: {
             nonApproved: 'Not Approved',
@@ -54,6 +57,7 @@ const strings = {
         turkmen: 'Turkmence',
         unknown: 'Unknown',
         usernameExits: 'This phone is already registered!',
+        yes: 'Yes',
         welcome: 'Welcome'
     },
     tm: {

@@ -22,6 +22,7 @@ export type Product = {
 }
 
 export type Order = {
+    id: string,
     total: number,
     orderState: string,
     items: Array<Array<any>>,
@@ -34,12 +35,23 @@ export type DrawerAbstractItem = {
     label: string
 }
 
+export type User = {
+    id: string,
+    phone: string,
+    name: string,
+    address: string
+}
+
 export type Action = { type: 'FETCH_PRODUCTS', list: Array<ParseObject> }
     | { type: 'SEARCH_PRODUCTS', list: Array<ParseObject> }
     | { type: 'FETCH_CATEGORIES', list: Array<ParseObject> }
     | { type: 'ADD_TO_CART', product: Product }
     | { type: 'REMOVE_FROM_CART', product: Product }
     | { type: 'CLEAR_CART' }
+    | { type: 'LOGGED_IN', user: User }
+    | { type: 'LOGGED_OUT' }
+    | { type: 'CHECK_CURRENT_USER', user: User }
+    | { type: 'SIGN_UP', user: User }
 
 
 export type Dispatch = (action: Action) => any;

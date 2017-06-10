@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
 
 
 function mapStateToProps(state) {
-    return {data: state.product.results}
+    return {data: state.product.offers}
 }
 
 

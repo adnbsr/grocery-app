@@ -8,7 +8,8 @@ import type {Order} from '../types'
 
 const initialState = {
     orderStatus: null,
-    list: []
+    list: [],
+    cancel: false
 }
 
 export default function orderReducer(state = initialState, action) {
@@ -31,8 +32,13 @@ export default function orderReducer(state = initialState, action) {
 
         return {
             ...state,
+            cancel: false,
             list: action.list.map(fromParseObjectToOrder)
         }
+    }
+
+    if (action.type === 'CANCEL_ORDER') {
+        return {...state, cancel: true}
     }
 
     return state
@@ -42,6 +48,7 @@ export default function orderReducer(state = initialState, action) {
 
 function fromParseObjectToOrder(object: Object): Order {
     return {
+        id: object.id,
         total: object.get('total'),
         orderState: object.get('orderState'),
         items: object.get('items'),

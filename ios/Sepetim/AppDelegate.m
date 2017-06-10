@@ -125,13 +125,12 @@
   
   PFInstallation *currentInstallation = [PFInstallation currentInstallation];
   [currentInstallation setDeviceTokenFromData:deviceToken];
-  [currentInstallation saveInBackground];
-  
-  [PFPush subscribeToChannelInBackground:@"" block:^(BOOL succeeded, NSError *error) {
+  [currentInstallation setObject: @"from native" forKey: @"osPlatform"];
+  [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
     if (succeeded) {
-      NSLog(@"ParseStarterProject successfully subscribed to push notifications on the broadcast channel.");
-    } else {
-      NSLog(@"ParseStarterProject failed to subscribe to push notifications on the broadcast channel.");
+      NSLog(@"ParseSDK is ok!");
+    }else {
+      NSLog(@"Error: %@", error);
     }
   }];
   

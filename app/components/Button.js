@@ -3,8 +3,9 @@
  */
 
 import React from 'react'
-import {View, Text, StyleSheet, TouchableNativeFeedback, TouchableOpacity, Platform} from 'react-native'
+import {Text, StyleSheet} from 'react-native'
 import {MD_BLUE_GRAY_800, COLOR_WHITE} from '../utils/colors'
+import Touchable from './Touchable'
 
 class Button extends React.Component {
 
@@ -19,21 +20,17 @@ class Button extends React.Component {
         onPress: React.PropTypes.func.isRequired
     }
 
-    render(){
-
-        const Touchable = Platform.OS === 'android' ? TouchableNativeFeedback: TouchableOpacity
+    render() {
 
         const buttonStyles = [styles.button]
 
-        if (this.props.style){
+        if (this.props.style) {
             buttonStyles.push(this.props.style)
         }
 
-            return (
-            <Touchable onPress={this.props.onPress}>
-                <View style={buttonStyles}>
-                    <Text style={styles.text}>{this.props.title}</Text>
-                </View>
+        return (
+            <Touchable onPress={this.props.onPress} style={buttonStyles}>
+                <Text style={styles.text}>{this.props.title}</Text>
             </Touchable>
         )
     }
@@ -43,14 +40,17 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: MD_BLUE_GRAY_800,
         borderRadius: 4,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        justifyContent: 'center',
+        paddingLeft: 4,
+        paddingRight: 4
     },
     text: {
         color: COLOR_WHITE,
-        padding: 15,
         fontSize: 18,
         fontWeight: 'bold',
         textAlign: 'center',
+        alignSelf: 'center'
     }
 })
 
