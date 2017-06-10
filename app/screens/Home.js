@@ -59,10 +59,10 @@ class Home extends React.Component {
 
     componentWillMount(){
 
-        console.log('componentWillMount')
         PushNotificationIOS.addEventListener('register', (token) => {
             console.log(token)
         })
+
         PushNotificationIOS.addEventListener('registrationError', (error) => {
             console.log(error)
         })
