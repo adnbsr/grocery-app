@@ -249,10 +249,20 @@ class Home extends React.Component {
 
         const {data} = notification
 
-        PushNotification.localNotification({
-            title: data.title,
-            message: data.message,
-        })
+        if (data === undefined) {
+            return
+        }
+
+        if (data.alert === undefined) {
+            return
+        }
+
+        if (notification.foreground) {
+            PushNotification.localNotification({
+                title: data.title,
+                message: data.alert,
+            })
+        }
     }
 }
 
