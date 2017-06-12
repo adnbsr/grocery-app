@@ -5,7 +5,7 @@
  */
 
 import React from 'react'
-import {View, Text, StyleSheet, Alert} from 'react-native'
+import {View, Text, StyleSheet, Alert, PermissionsAndroid} from 'react-native'
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'
 import {COLOR_WHITE, COLOR_PRIMARY} from '../utils/colors'
 import {connect} from 'react-redux'
@@ -55,6 +55,7 @@ class MapHelper extends React.Component {
     }
 
     componentDidMount() {
+        requestLocation()
         navigator.geolocation.getCurrentPosition((position) => {
 
             const {coords} = position
@@ -75,7 +76,7 @@ class MapHelper extends React.Component {
             this.map.animateToRegion(this.state.region)
 
         }, (error) => {
-            console.error(error)
+            console.warn(error)
         }, {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000})
     }
 
@@ -143,6 +144,24 @@ class MapHelper extends React.Component {
         })()
     }
 
+}
+
+async function requestLocation() {
+    try {
+        const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION, {
+            title: "Title",
+            message: "Meesage"
+        })
+
+        if (granted) {
+            console.log('Hey!')
+        }else {
+            console.log('Ahh!')
+        }
+
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 const styles = StyleSheet.create({

@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
         borderColor: 'black',
         alignItems: 'stretch',
         justifyContent: 'center',
-        margin: 4
+        margin: 4,
+        borderRadius: 2
     },
     thumbnail: {
         flexGrow: 1,
