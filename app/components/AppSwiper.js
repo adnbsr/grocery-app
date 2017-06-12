@@ -5,7 +5,7 @@
 import React from 'react'
 import {View, Text, StyleSheet, Image, processColor} from 'react-native'
 import {COLOR_PRIMARY, COLOR_WHITE} from '../utils/colors'
-import Swiper from 'react-native-swiper';
+import Swiper from './Swiper';
 import strings from '../utils/strings'
 import {SCREEN_WIDTH} from '../utils'
 import Button from "./Button"
@@ -26,34 +26,41 @@ class AppSwiper extends React.Component {
 
     render() {
 
-        return (
-            <Swiper style={styles.wrapper}
-                    showsButtons={false}
-                    width={SCREEN_WIDTH}
-                    height={height}
-                    activeDotColor={COLOR_PRIMARY}
-                    dotColor={COLOR_WHITE}
-                    autoplay={true}>
-                {this.props.offers.map((item: Product, index) => {
-                    return (
-                        <View style={styles.slide} key={index}>
-                            <Image
-                                source={{uri: item.thumbnail}}
-                                style={styles.thumbnail}
-                                resizeMode={'contain'}/>
-                            <View style={styles.detailContainer}>
-                                <View style={styles.textContainer}>
-                                    <Text style={styles.name} numberOfLines={1}>{item.name}</Text>
-                                    <Text style={styles.category} numberOfLines={1}>{item.category.name}</Text>
-                                </View>
-                                <Text style={styles.price}>{`${item.price} ${strings.currency}`}</Text>
-                                <Button title={strings.add} onPress={() => this.props.addToCart(item)} style={styles.addButton}/>
-                            </View>
-
+        const offerPages = this.props.offers.map((product: Product, index: number) => {
+            return (
+                <View style={styles.slide} key={index}>
+                    <Image
+                        source={{uri: product.thumbnail}}
+                        style={styles.thumbnail}
+                        resizeMode={'contain'}/>
+                    <View style={styles.detailContainer}>
+                        <View style={styles.textContainer}>
+                            <Text style={styles.name} numberOfLines={1}>{product.name}</Text>
+                            <Text style={styles.category} numberOfLines={1}>{product.category.name}</Text>
                         </View>
-                    )
-                })}
+                        <Text style={styles.price}>{`${product.price} ${strings.currency}`}</Text>
+                        <Button title={strings.add} onPress={() => this.props.addToCart(item)}
+                                style={styles.addButton}/>
+                    </View>
+                </View>
+            )
+        })
 
+        return (
+            <Swiper
+                ref={ref => {
+                    this.swiper = ref
+                }}
+                style={styles.wrapper}
+                width={SCREEN_WIDTH}
+                height={height}
+                activeDotColor={COLOR_PRIMARY}
+                dotColor={COLOR_WHITE}
+                initialPage={0}
+                removeClippedSubviews={false}
+                autoplay={true}>
+
+                {offerPages}
             </Swiper>
         )
     }

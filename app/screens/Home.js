@@ -57,18 +57,6 @@ class Home extends React.Component {
         this.renderNavigationBarButtons()
     }
 
-    componentWillMount(){
-
-        PushNotificationIOS.addEventListener('register', (token) => {
-            console.log(token)
-        })
-
-        PushNotificationIOS.addEventListener('registrationError', (error) => {
-            console.log(error)
-        })
-
-    }
-
     componentDidMount() {
         this.props.dispatch(fetchCategories())
         this.props.dispatch(fetchOffers())
