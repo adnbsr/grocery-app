@@ -92,7 +92,7 @@
   
   NSURL *jsCodeLocation;
   
-  [GMSServices provideAPIKey:@"AIzaSyDNHnkJkLt3XSQBeeor_qtuBmF_otQHsZo"];
+  [GMSServices provideAPIKey:@"AIzaSyA60tMrYYvbPzI2edj_OWPFMzpqLQXjzU4"];
   
 
 #ifdef DEBUG
@@ -139,6 +139,7 @@
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
   
   NSLog(@"%@", userInfo);
+  NSLog(@"didReceiveRemoteNotification");
   
   [RCTPushNotificationManager didReceiveRemoteNotification:userInfo];
 }
@@ -155,11 +156,12 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+  NSLog(@"didReceiveLocalNotification");
   [RCTPushNotificationManager didReceiveLocalNotification: notification];
 }
 
 -(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler{
-
+  NSLog(@"willPresentNotification");
   completionHandler(UNNotificationPresentationOptionBadge);
 }
 

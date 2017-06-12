@@ -46,7 +46,7 @@
         <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBAefhRlXEH3vCko-zZTX6PHllTR6av4WI"/>
+            android:value="AIzaSyB7yW8Eh6Glzv9pdxx_4QezZ_SKbElS6_4"/>
 
         <!-- Integration for Push Notification -->
 
