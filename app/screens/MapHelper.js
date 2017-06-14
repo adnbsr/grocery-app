@@ -149,14 +149,14 @@ class MapHelper extends React.Component {
 async function requestLocation() {
     try {
         const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION, {
-            title: "Title",
-            message: "Meesage"
+            title: "Sebetim",
+            message: "Sebetim needs your location for delivery!"
         })
 
         if (granted) {
-            console.log('Hey!')
+            console.log('granted')
         }else {
-            console.log('Ahh!')
+            console.log('not granted!')
         }
 
     } catch (error) {
