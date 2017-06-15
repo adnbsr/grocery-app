@@ -11,6 +11,7 @@ import {COLOR_WHITE, COLOR_PRIMARY} from '../utils/colors'
 import {connect} from 'react-redux'
 import {updateUserAddress} from '../actions'
 import {SCREEN_WIDTH, SCREEN_HEIGHT} from '../utils'
+import strings from '../utils/strings'
 
 import type {Region, Point} from '../types'
 
@@ -122,14 +123,14 @@ class MapHelper extends React.Component {
 
                 const address = data.results[0].formatted_address
 
-                Alert.alert("Address Found",
+                Alert.alert( strings.addressFound,
                     address,
                     [{
-                        text: 'Cancel', onDismiss: () => {
+                        text: strings.cancel, onDismiss: () => {
 
                         }
                     }, {
-                        text: "Use This", onPress: () => {
+                        text: strings.useThis, onPress: () => {
                             this.props.dispatch(updateUserAddress(address))
                             this.props.navigator.popToRoot({
                                 animated: true
@@ -149,8 +150,8 @@ class MapHelper extends React.Component {
 async function requestLocation() {
     try {
         const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION, {
-            title: "Sebetim",
-            message: "Sebetim needs your location for delivery!"
+            title: strings.appName,
+            message: strings.locationNeeded
         })
 
         if (granted) {

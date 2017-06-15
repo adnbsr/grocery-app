@@ -36,13 +36,13 @@ const styles = StyleSheet.create({
     container: {
         height: 48,
         backgroundColor: COLOR_WHITE,
-        alignItems: 'flex-start'
+        alignItems: 'stretch',
+        justifyContent: 'flex-start'
     },
     text: {
         color: COLOR_BLACK,
         fontSize: 18,
-        padding: 8,
-        flex: 1
+        padding: 8
     }
 })
 

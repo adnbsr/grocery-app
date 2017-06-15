@@ -66,8 +66,6 @@ class Cart extends React.Component {
 
         IconsLoaded.then(() => {
 
-            //TODO: Clear left icon implementation
-
             var icon = {
                 id: 'cancel'
             }

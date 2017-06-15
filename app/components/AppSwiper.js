@@ -39,7 +39,7 @@ class AppSwiper extends React.Component {
                             <Text style={styles.category} numberOfLines={1}>{product.category.name}</Text>
                         </View>
                         <Text style={styles.price}>{`${product.price} ${strings.currency}`}</Text>
-                        <Button title={strings.add} onPress={() => this.props.addToCart(item)}
+                        <Button title={strings.add} onPress={() => this.props.addToCart(product)}
                                 style={styles.addButton}/>
                     </View>
                 </View>

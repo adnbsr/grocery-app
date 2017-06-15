@@ -60,7 +60,7 @@ class Account extends React.Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps !== this.props) {
             SnackBar.show({
-                title: "New Profile is saved. Thanks"
+                title: strings.newProfile
             })
         }
     }
@@ -127,21 +127,21 @@ class Account extends React.Component {
 
         if (username === undefined || username.length !== 8) {
             SnackBar.show({
-                title: "Phone cannot be empty or less than 8 digits"
+                title: strings.phone8Characters
             })
             return
         }
 
         if (name === undefined || name.length === 0) {
             SnackBar.show({
-                title: "Name cannot be empty"
+                title: strings.nameNotEmpty
             })
             return
         }
 
         if (address === undefined || address.length === 0) {
             SnackBar.show({
-                title: "Address cannot be empty"
+                title: strings.addressNotEmpty
             })
             return
         }
@@ -185,7 +185,8 @@ const styles = StyleSheet.create({
         padding: 8
     },
     save: {
-        marginTop: 32
+        marginTop: 32,
+        minHeight: 40
     }
 })
 

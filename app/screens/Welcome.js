@@ -5,13 +5,12 @@
  */
 
 import React from 'react'
-import {View, StyleSheet, Text, PushNotificationIOS, Platform} from 'react-native'
+import {View, StyleSheet, Text} from 'react-native'
 import Button from '../components/Button'
 import {COLOR_WHITE, MD_BLUE_GRAY_800, COLOR_PRIMARY} from '../utils/colors'
-import {GCM_SENDER_ID} from '../utils/constants'
 import {connect} from 'react-redux'
-import {storeDeviceToken, updateInstallation} from '../actions'
 import SplashIcon from '../components/SplashIcon'
+import strings from '../utils/strings'
 
 class Welcome extends React.Component {
 
@@ -23,21 +22,13 @@ class Welcome extends React.Component {
         statusBarColor: MD_BLUE_GRAY_800
     }
 
-    componentDidMount() {
-
-    }
-
-    componentWillUnmount(){
-    }
-
     render() {
         return (
             <View style={styles.container}>
-
                 <SplashIcon />
-                <Text style={styles.slogan}>Turkmenistan Largest Online Supermarket</Text>
-                <Button title="LOGIN" style={styles.button} onPress={() => this.onLogin()}/>
-                <Button title="SIGN UP" style={styles.button} onPress={() => this.onSignup()}/>
+                <Text style={styles.slogan}>{strings.welcomeSlogan}</Text>
+                <Button title={strings.loginUppercase} style={styles.button} onPress={() => this.onLogin()}/>
+                <Button title={strings.signupUppercase} style={styles.button} onPress={() => this.onSignup()}/>
             </View>
         )
     }
@@ -45,7 +36,7 @@ class Welcome extends React.Component {
     onLogin() {
         this.props.navigator.showModal({
             screen: 'sepetim.Login',
-            title: 'Login',
+            title: strings.login,
             animationType: 'slide-up'
         })
     }
@@ -53,11 +44,10 @@ class Welcome extends React.Component {
     onSignup() {
         this.props.navigator.showModal({
             screen: 'sepetim.Signup',
-            title: 'Sign Up',
+            title: strings.signup,
             animationType: 'slide-up'
         })
     }
-
 }
 
 const styles = StyleSheet.create({
