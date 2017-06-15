@@ -109,16 +109,26 @@ export async function updateUser(params: Object = {}) {
  */
 export async function logIn(username: string, password: string): Action {
 
-    const user = await Parse.User.logIn(username, password)
+    try{
+        const user = await Parse.User.logIn(username, password)
 
-    return {
-        type: "LOGGED_IN",
-        user: {
-            id: user.id,
-            phone: user.get('username'),
-            name: user.get('name'),
-            address: user.get('address')
+        return {
+            type: "LOGGED_IN",
+            user: {
+                id: user.id,
+                phone: user.get('username'),
+                name: user.get('name'),
+                address: user.get('address')
+            }
         }
+    }catch (error){
+
+        if (error.code === 101) {
+            return {
+                type: 'LOGIN_ERROR'
+            }
+        }
+
     }
 }
 

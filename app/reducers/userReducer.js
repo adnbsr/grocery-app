@@ -39,6 +39,16 @@ export default function userReducer(state: State = initialState, action: Action)
         }
     }
 
+    if (action.type === 'LOGIN_ERROR'){
+
+        SnackBar.show({
+            title: strings.phonePasswordWrong
+        })
+
+        return state
+    }
+
+
     if (action.type === 'LOGGED_OUT') {
         return initialState
     }
