@@ -14,6 +14,7 @@ const strings = {
         address: 'Address',
         addressFound: 'Address Found',
         addressNotEmpty: 'Address cannot be empty',
+        back: 'Back',
         cancel: 'Cancel',
         cancelOrderTitle: 'Cancel This Order?',
         cart: 'Cart',
@@ -21,6 +22,7 @@ const strings = {
         clearCartMessage: 'Do you want to remove all items from cart?',
         clearCartTitle: 'Clear Items from Cart',
         currency: 'TMT',
+        editAddress: 'Edit Address',
         english: 'English',
         express: 'Express',
         expressMessage: 'EXPRESS: By Tomorrow 8:30 AM',
@@ -96,6 +98,12 @@ const strings = {
         name: 'Adyňyz',
         notifications: 'Bildirişler',
         orderGiven: 'Sargydyňyz kabul edildi we tassyklanmagyna garaşylýar',
+        orderState: {
+            nonApproved: 'Not Approved',
+            approved: 'Approved - On Road',
+            delivered: 'Delivered',
+            canceled: 'Canceled'
+        },
         password: 'Açar Sözi',
         password6Characters: 'Açar sözi azyndan 6 harp bolmaly',
         phone: 'Telefon Belgiňiz',

@@ -144,7 +144,7 @@ class Home extends React.Component {
 
             this.props.navigator.push({
                 screen: "sepetim.Notifications",
-                title: "Notifications",
+                title: strings.notifications,
                 backButtonTitle: "Back",
                 backButtonHidden: false
             })
@@ -156,23 +156,23 @@ class Home extends React.Component {
             if (event.link === "notifications") {
                 this.props.navigator.push({
                     screen: "sepetim.Notifications",
-                    title: "Notifications",
-                    backButtonTitle: "Back",
+                    title: strings.notifications,
+                    backButtonTitle: strings.back,
                     backButtonHidden: false
                 })
             } else if (event.link === "account") {
                 this.props.navigator.push({
                     screen: "sepetim.Account",
-                    title: "My Account",
-                    backButtonTitle: "Back",
+                    title: strings.account,
+                    backButtonTitle: strings.back,
                     backButtonHidden: false
                 })
             } else if (event.link === 'categories') {
 
                 this.props.navigator.push({
                     screen: "sepetim.ShopCategories",
-                    title: "Categories",
-                    backButtonTitle: "Back",
+                    title: strings.shopCategory,
+                    backButtonTitle: strings.back,
                     backButtonHidden: false
                 })
 
@@ -180,8 +180,8 @@ class Home extends React.Component {
 
                 this.props.navigator.push({
                     screen: "sepetim.ShopOffers",
-                    title: "Offers",
-                    backButtonTitle: "Back",
+                    title: strings.shopOffers,
+                    backButtonTitle: strings.back,
                     backButtonHidden: false
                 })
 
@@ -193,8 +193,8 @@ class Home extends React.Component {
 
                 this.props.navigator.push({
                     screen: "sepetim.MapHelper",
-                    title: "Edit Address",
-                    backButtonTitle: "Back",
+                    title: strings.editAddress,
+                    backButtonTitle: strings.back,
                     backButtonHidden: false
                 })
             }
