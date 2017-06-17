@@ -140,12 +140,12 @@ class Home extends React.Component {
 
     onNavigatorEvent(event) {
 
-        if (event.id === 'cart') {
+        if (event.id === 'notifications') {
 
             this.props.navigator.push({
                 screen: "sepetim.Notifications",
                 title: strings.notifications,
-                backButtonTitle: "Back",
+                backButtonTitle: strings.back,
                 backButtonHidden: false
             })
 
@@ -205,7 +205,7 @@ class Home extends React.Component {
         IconsLoaded.then(() => {
             this.props.navigator.setButtons({
                 rightButtons: [{
-                    id: 'cart',
+                    id: 'notifications',
                     disableIconTint: true,
                     icon: IconsMap['notifications']
                 }],
