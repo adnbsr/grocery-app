@@ -35,7 +35,7 @@ public class LocaleManagerModule extends ReactContextBaseJavaModule {
     }
 
     private String getCurrentLocale(){
-        return getSharedPrefs().getString(LOCALE, "en");
+        return getSharedPrefs().getString(LOCALE, "tm");
     }
 
 

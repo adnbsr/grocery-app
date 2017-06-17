@@ -35,7 +35,7 @@ RCT_EXPORT_METHOD(getCurrentLocale: (RCTResponseSenderBlock)callback){
 - (NSString *) getCurrentLocale {
   NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
   NSString *currentLocale = [userDefaults valueForKey:@"locale"];
-  return currentLocale == nil ? @"en": currentLocale;
+  return currentLocale == nil ? @"tm": currentLocale;
 }
 
 - (NSDictionary *) constantsToExport
