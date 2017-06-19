@@ -101,7 +101,7 @@ class MapHelper extends React.Component {
                         onDragEnd={(e) => this.setState({point: e.nativeEvent.coordinate})}
                         draggable/>
                 </MapView>
-                <Text style={styles.useButton} onPress={() => this.onUseThisLocation()}>USE THIS LOCATION</Text>
+                <Text style={styles.useButton} onPress={() => this.onUseThisLocation()}>{strings.useLocation}</Text>
 
             </View>
         )

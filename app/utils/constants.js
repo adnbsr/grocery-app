@@ -7,6 +7,9 @@ export const SERVER_URL = "https://parseapi.back4app.com/"
 export const MASTER_KEY = "7DwERiVnMxxiCCHaGYOEW3ziAy6mcDufep7bmZWR"
 export const JAVASCRIPT_KEY = "naoWEixlrhxL7xWCnKOsFKXP74O8M8aTKZWmJUX8"
 export const GCM_SENDER_ID = "487866672474"
+export const CONTACT_1 = "+99369070700"
+export const CONTACT_2 = "+99361234004"
+
 
 // COLORS
 

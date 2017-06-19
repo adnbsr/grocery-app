@@ -7,7 +7,8 @@ import {
     StyleSheet,
     ScrollView,
     PushNotificationIOS,
-    Platform
+    Platform,
+    Text
 } from 'react-native'
 import PushNotification from 'react-native-push-notification'
 import SearchBarHolder from '../components/SearchBarHolder'
@@ -16,6 +17,7 @@ import AppSwiper from '../components/AppSwiper'
 import GridView from '../components/GridView'
 import CategoryItem from "../components/CategoryItem";
 import {IconsLoaded, IconsMap} from '../utils/icons'
+import Icon from 'react-native-vector-icons/Ionicons'
 import {connect} from 'react-redux'
 import {
     logOut,
@@ -26,7 +28,8 @@ import {
     addToCart
 } from '../actions/index'
 import strings from '../utils/strings'
-import {GCM_SENDER_ID} from '../utils/constants'
+import {GCM_SENDER_ID, CONTACT_1, CONTACT_2} from '../utils/constants'
+import {COLOR_PRIMARY, COLOR_WHITE} from '../utils/colors'
 
 import type {Dispatch, Category, Product} from '../types'
 
@@ -102,6 +105,11 @@ class Home extends React.Component {
                 }}/>
 
                 <ScrollView>
+                    <View style={styles.contactContainer}>
+                        <Icon name="md-call" size={24} style={{margin: 4}} color={COLOR_WHITE}/>
+                        <Text style={styles.contactText}>{CONTACT_1}</Text>
+                        <Text style={styles.contactText}>{CONTACT_2}</Text>
+                    </View>
                     <AppSwiper
                         offers={this.props.offers}
                         addToCart={(product: Product) => {
@@ -257,6 +265,21 @@ class Home extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 2
+    },
+    contactContainer: {
+        backgroundColor: COLOR_PRIMARY,
+        minHeight: 48,
+        flexDirection: 'row',
+        alignItems: 'stretch',
+        justifyContent: 'space-around',
+        padding: 8
+    },
+    contactText: {
+        color: COLOR_WHITE,
+        textAlign: 'center',
+        alignSelf: 'center',
+        fontSize: 16,
+        fontWeight: '600'
     },
     list: {
         flex: 1
