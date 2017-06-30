@@ -5,7 +5,7 @@
  */
 
 import React from 'react'
-import {StyleSheet, View, Text} from 'react-native'
+import {StyleSheet, View, Text, Platform} from 'react-native'
 import {MD_BLUE_GRAY_800, COLOR_WHITE} from '../utils/colors'
 import Icon from 'react-native-vector-icons/Ionicons'
 import Touchable from './Touchable'
@@ -25,15 +25,19 @@ class DrawerHeader extends React.Component {
 
     render() {
 
+        const MapEdit = Platform.OS === 'android' ? (
+            <Touchable onPress={() => this.props.editAddress()}>
+                <Icon name="md-create" color={COLOR_WHITE} size={24}/>
+            </Touchable>
+        ) : (<Text/>)
+
         return (
             <View style={styles.container}>
                 <Text style={styles.text}>{this.props.name}</Text>
                 <View style={styles.addressBar}>
                     <Icon name="ios-pin" color={COLOR_WHITE} size={24}/>
                     <Text style={styles.addressTitle} numberOfLines={1}>{this.props.address}</Text>
-                    <Touchable onPress={() => this.props.editAddress()}>
-                        <Icon name="md-create" color={COLOR_WHITE} size={24}/>
-                    </Touchable>
+                    {MapEdit}
                 </View>
             </View>
         )

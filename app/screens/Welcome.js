@@ -9,8 +9,10 @@ import {View, StyleSheet, Text} from 'react-native'
 import Button from '../components/Button'
 import {COLOR_WHITE, MD_BLUE_GRAY_800, COLOR_PRIMARY} from '../utils/colors'
 import {connect} from 'react-redux'
+import {skipLogin} from '../actions'
 import SplashIcon from '../components/SplashIcon'
 import strings from '../utils/strings'
+import Touchable from "../components/Touchable";
 
 class Welcome extends React.Component {
 
@@ -29,6 +31,11 @@ class Welcome extends React.Component {
                 <Text style={styles.slogan}>{strings.welcomeSlogan}</Text>
                 <Button title={strings.loginUppercase} style={styles.button} onPress={() => this.onLogin()}/>
                 <Button title={strings.signupUppercase} style={styles.button} onPress={() => this.onSignup()}/>
+                <Touchable onPress={() => {
+                    this.props.dispatch(skipLogin())
+                }} >
+                    <Text style={styles.skip}>(Skip)</Text>
+                </Touchable>
             </View>
         )
     }
@@ -72,6 +79,12 @@ const styles = StyleSheet.create({
         marginLeft: 16,
         marginRight: 16,
         backgroundColor: MD_BLUE_GRAY_800
+    },
+    skip: {
+        textAlign: 'center',
+        color: 'red',
+        fontSize: 18,
+        padding: 8,
     }
 })
 

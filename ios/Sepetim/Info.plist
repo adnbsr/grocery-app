@@ -17,11 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.2</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>3</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -38,7 +38,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Siparis vermek icin konumuz gerekli</string>
+	<string>Your location is needed to delivery your order in exact position.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>
@@ -54,7 +54,6 @@
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>location</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>

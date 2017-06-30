@@ -10,6 +10,7 @@ import type {Action, User} from '../types'
 
 type State = {
     isUserLoggedIn: boolean,
+    isLoginSkipped: boolean,
     id: string,
     name: string,
     address: string,
@@ -18,6 +19,7 @@ type State = {
 
 const initialState = {
     isUserLoggedIn: false,
+    isLoginSkipped: false,
     id: "",
     name: "",
     address: "",
@@ -32,6 +34,7 @@ export default function userReducer(state: State = initialState, action: Action)
 
         return {
             isUserLoggedIn: true,
+            isLoginSkipped: false,
             id: user.id,
             phone: user.phone,
             name: user.name,
@@ -60,6 +63,7 @@ export default function userReducer(state: State = initialState, action: Action)
         if (user) {
             return {
                 isUserLoggedIn: true,
+                isLoginSkipped: false,
                 id: user.id,
                 phone: user.phone,
                 name: user.name,
@@ -91,6 +95,13 @@ export default function userReducer(state: State = initialState, action: Action)
             name: params.name,
             username: params.username,
             address: params.address
+        }
+    }
+
+    if (action.type === 'SKIP_LOGIN') {
+        return {
+            ...state,
+            isLoginSkipped: true
         }
     }
 

@@ -144,6 +144,12 @@ export function logOut() {
     }
 }
 
+export function skipLogin() {
+    return {
+        type: 'SKIP_LOGIN'
+    }
+}
+
 export function addToCart(product: Product) {
     return {
         type: 'ADD_TO_CART',

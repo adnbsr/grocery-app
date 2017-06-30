@@ -82,13 +82,11 @@ const App = () => {
 
     observeStore(store, (store) => {
             const {user} = store
-            const {isUserLoggedIn} = user
-
-            return isUserLoggedIn
+            return user
         },
-        (isUserLoggedIn) => {
+        (user) => {
 
-            if (isUserLoggedIn) {
+            if (user.isUserLoggedIn || user.isLoginSkipped) {
                 startApp()
             } else {
                 startWelcome()

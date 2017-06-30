@@ -5,8 +5,8 @@
  */
 
 import React from 'react'
-import {View, Text, StyleSheet, Alert, PermissionsAndroid} from 'react-native'
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'
+import {View, Text, StyleSheet, Alert, PermissionsAndroid, Platform} from 'react-native'
+import MapView, {PROVIDER_GOOGLE, PROVIDER_DEFAULT} from 'react-native-maps'
 import {COLOR_WHITE, COLOR_PRIMARY} from '../utils/colors'
 import {connect} from 'react-redux'
 import {updateUserAddress} from '../actions'
@@ -82,10 +82,13 @@ class MapHelper extends React.Component {
     }
 
     render() {
+
+        const provider = Platform.OS === 'ios' ? PROVIDER_DEFAULT : PROVIDER_GOOGLE
+
         return (
             <View style={styles.container}>
                 <MapView
-                    provider={PROVIDER_GOOGLE}
+                    provider={provider}
                     ref={ref => {
                         this.map = ref
                     }}

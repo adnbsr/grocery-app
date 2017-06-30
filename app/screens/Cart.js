@@ -179,6 +179,14 @@ class Cart extends React.Component {
             return;
         }
 
+        if (!this.props.user.isUserLoggedIn) {
+            SnackBar.show({
+                title: 'Login first',
+                duration: SnackBar.LENGTH_SHORT
+            })
+            return
+        }
+
         this.props.navigator.showLightBox({
             screen: 'sepetim.ReviewOrderBox',
             passProps: {
